@@ -15,7 +15,7 @@ const visionItems = [
     title: 'Accompagnement Personnalisé',
     description: 'Un suivi sur mesure tout au long du projet, adapté à votre rythme et vos contraintes opérationnelles.',
     icon: '🤝',
-    impact: 'Vous n'êtes jamais seul face à l'outil.',
+    impact: 'Vous n&apos;êtes jamais seul face à l&apos;outil.',
     color: 'from-purple-500 to-pink-500',
   },
   {
@@ -27,7 +27,7 @@ const visionItems = [
   },
   {
     title: 'Impact Business',
-    description: 'Notre seule boussole : est-ce que ça crée de la valeur mesurable et génère du chiffre d'affaires pour vous ?',
+    description: 'Notre seule boussole : est-ce que ça crée de la valeur mesurable et génère du chiffre d&apos;affaires pour vous ?',
     icon: '📈',
     impact: 'Pas de gadget. Juste de la performance.',
     color: 'from-green-500 to-emerald-500',
