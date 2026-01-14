@@ -1,46 +1,104 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import ProjectModal from './ProjectModal';
 
 const projects = [
   {
+    id: 'prodorga',
     name: 'ProdOrga',
     status: 'En production',
     statusColor: 'bg-green-100 text-green-800 border-green-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
     description: 'Outil de gestion et d&apos;organisation de la production pour les PME. Permet de suivre en temps réel l&apos;avancement des tâches, d&apos;optimiser les flux et de réduire les temps morts.',
+    descriptionShort: 'Fini les planning Excel qui prennent des heures à mettre à jour. ProdOrga calcule automatiquement vos charges, détecte les surcharges, et vous montre en temps réel ce qui est réalisable ou pas.',
     impact: [
       'Réduction de 30% du temps de planification',
       'Diminution de 45% des erreurs de suivi',
       'Visibilité temps réel sur l&apos;activité',
     ],
+    kpis: [
+      { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
+      { label: 'Erreurs de saisie', value: '-45%', note: 'grâce à l&apos;automatisation' },
+      { label: 'Visibilité', value: 'Temps réel', note: 'capacité / charge' }
+    ],
+    points: [
+      'Calcul automatique de la charge vs capacité par poste',
+      'Détection instantanée des surcharges et conflits',
+      'Import Excel existant pour démarrage rapide',
+      'Tableaux de bord adaptés au rythme de production',
+      'Accès mobile pour les chefs d&apos;atelier'
+    ],
+    link: {
+      label: 'Voir la démo ProdOrga',
+      href: '#'
+    }
   },
   {
+    id: 'jetc-immo',
     name: 'JETC Immo',
     status: 'En cours de développement',
     statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
     emoji: '🏢',
     gradient: 'from-blue-400 to-cyan-500',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
+    descriptionShort: 'Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d&apos;ensemble financière.',
     impact: [
       'Centralisation des documents et contrats',
       'Automatisation des relances et rappels',
       'Gain de temps administratif estimé : 60%',
     ],
+    kpis: [
+      { label: 'Modules actifs', value: '6/10', note: 'en développement continu' },
+      { label: 'Multi-devises', value: '✓', note: 'EUR, USD, CHF' },
+      { label: 'Gain de temps', value: '~60%', note: 'vs gestion manuelle' }
+    ],
+    points: [
+      'Génération automatique des quittances de loyer',
+      'Suivi des charges locatives et régularisations',
+      'Alertes sur échéances (révisions loyers, fins de bail)',
+      'Gestion multi-biens et multi-devises',
+      'Export comptable pour votre expert-comptable',
+      'Module travaux et suivi budgétaire'
+    ],
+    link: {
+      label: 'Découvrir JETC Immo',
+      href: '#'
+    }
   },
   {
+    id: 'tracabilite',
     name: 'Traçabilité & Spotting Produits',
     status: 'Recherche de partenaires',
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
     emoji: '📦',
     gradient: 'from-amber-400 to-orange-500',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
+    descriptionShort: 'Vous devez prouver que chaque produit est conforme ? Cette solution enregistre automatiquement les lots, les dates, les contrôles, et génère tous les documents pour vos audits.',
     impact: [
       'Transparence totale de la chaîne d&apos;approvisionnement',
       'Lutte contre la contrefaçon',
       'Conformité réglementaire facilitée',
     ],
+    kpis: [
+      { label: 'Traçabilité', value: '100%', note: 'lot → produit fini' },
+      { label: 'Délais réduits', value: '-40%', note: 'en cas de rappel' },
+      { label: 'Conformité', value: 'Garantie', note: 'audits réglementaires' }
+    ],
+    points: [
+      'Enregistrement automatique à chaque étape de production',
+      'Suivi des numéros de lots matières premières',
+      'Traçabilité ascendante et descendante',
+      'Export des données pour audits (FDA, ISO, etc.)',
+      'Alertes sur anomalies de production',
+      'Interface simple pour opérateurs terrains'
+    ],
+    link: {
+      label: 'En savoir plus',
+      href: '/contact'
+    }
   },
 ];
 
@@ -64,6 +122,19 @@ const itemVariants = {
 };
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
+
   return (
     <section id="projects" className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -88,7 +159,8 @@ export default function Projects() {
               key={index}
               variants={itemVariants}
               whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3 } }}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+              onClick={() => handleProjectClick(project)}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
             >
               {/* Header avec gradient et emoji */}
               <div className={`bg-gradient-to-br ${project.gradient} p-8 text-white relative overflow-hidden`}>
@@ -135,6 +207,14 @@ export default function Projects() {
                     ))}
                   </ul>
                 </div>
+
+                {/* Indicateur clic */}
+                <div className="mt-6 flex items-center gap-2 text-sm text-gray-500 group-hover:text-primary-600 transition-colors">
+                  <span>Cliquez pour voir les détails</span>
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -148,6 +228,13 @@ export default function Projects() {
           </p>
         </div>
       </div>
+
+      {/* Modal */}
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={isModalOpen} 
+        onClose={closeModal}
+      />
     </section>
   );
 }
