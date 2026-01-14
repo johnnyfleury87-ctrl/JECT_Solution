@@ -4,24 +4,24 @@ import { motion } from 'framer-motion';
 
 const solutions = [
   {
-    title: 'Développement Web',
-    description: 'Sites web et applications modernes, rapides et responsive, développés avec les dernières technologies.',
-    icon: '🌐',
+    title: 'Écoute Active',
+    description: 'Nous prenons le temps de comprendre votre activité, vos défis et vos objectifs pour construire une solution qui vous ressemble.',
+    icon: '👂',
   },
   {
-    title: 'Solutions E-commerce',
-    description: 'Boutiques en ligne performantes et sécurisées pour développer votre activité commerciale.',
-    icon: '🛒',
+    title: 'Accompagnement Personnalisé',
+    description: 'Un suivi sur mesure tout au long du projet, avec des solutions adaptées à votre réalité métier et vos ambitions.',
+    icon: '🤝',
   },
   {
-    title: 'Applications Sur Mesure',
-    description: 'Applications web personnalisées adaptées à vos processus métier et besoins spécifiques.',
-    icon: '⚙️',
+    title: 'Immersion Métier',
+    description: 'Nous nous imprégnons de votre secteur d&apos;activité pour concevoir des outils digitaux réellement utiles et efficaces.',
+    icon: '🎯',
   },
   {
-    title: 'Consulting Digital',
-    description: 'Accompagnement stratégique pour optimiser votre présence en ligne et votre performance digitale.',
-    icon: '💡',
+    title: 'Impact Business',
+    description: 'Notre priorité : créer de la valeur concrète et générer du chiffre d&apos;affaires pour votre entreprise.',
+    icon: '📈',
   },
 ];
 
@@ -50,10 +50,10 @@ export default function Solutions() {
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Nos Solutions
+            Notre Approche
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Des solutions digitales complètes pour répondre à tous vos besoins
+            Nous construisons avec vous des solutions digitales sur mesure, adaptées à votre activité et orientées résultats
           </p>
         </div>
 
