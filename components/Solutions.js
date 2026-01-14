@@ -73,7 +73,7 @@ export default function Solutions() {
           </h2>
           <div className="max-w-4xl mx-auto space-y-4 text-lg md:text-xl text-gray-700 leading-relaxed">
             <p>
-              Les solutions <span className="font-semibold text-gray-900">"standards"</span> sont 
+              Les solutions <span className="font-semibold text-gray-900">&quot;standards&quot;</span> sont 
               souvent lourdes, coûteuses et rigides.
             </p>
             <p>
@@ -172,7 +172,7 @@ export default function Solutions() {
                       {/* Impact */}
                       <div className={`bg-gradient-to-r ${item.color} bg-opacity-10 border-l-4 border-current pl-4 py-3 rounded-r`}>
                         <p className="text-sm font-semibold text-gray-900 italic">
-                          "{item.impact}"
+                          &quot;{item.impact}&quot;
                         </p>
                       </div>
                     </motion.div>
