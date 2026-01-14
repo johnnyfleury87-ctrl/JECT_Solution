@@ -41,7 +41,7 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <p className="text-gray-400">
-              Des questions ? N'hésitez pas à nous contacter.
+              Des questions ? N&apos;hésitez pas à nous contacter.
             </p>
             <Link href="/contact" className="inline-block mt-4 text-primary-400 hover:text-primary-300 transition-colors">
               Nous contacter →

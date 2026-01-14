@@ -15,7 +15,7 @@ export default function ContactPage() {
               Contactez-nous
             </h1>
             <p className="text-lg text-gray-600">
-              Vous avez un projet ? Une question ? N'hésitez pas à nous contacter.
+              Vous avez un projet ? Une question ? N&apos;hésitez pas à nous contacter.
               Nous vous répondrons dans les plus brefs délais.
             </p>
           </div>
