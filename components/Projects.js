@@ -71,33 +71,33 @@ const projects = [
   {
     id: 'tracabilite',
     name: 'Traçabilité & Spotting Produits',
-    status: 'Recherche de partenaires',
+    status: 'Prototype',
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
     emoji: '📦',
     gradient: 'from-amber-400 to-orange-500',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
-    descriptionShort: 'Vous devez prouver que chaque produit est conforme ? Cette solution enregistre automatiquement les lots, les dates, les contrôles, et génère tous les documents pour vos audits.',
+    descriptionShort: 'Projet en phase d&apos;expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.',
     impact: [
       'Transparence totale de la chaîne d&apos;approvisionnement',
       'Lutte contre la contrefaçon',
       'Conformité réglementaire facilitée',
     ],
     kpis: [
-      { label: 'Traçabilité', value: '100%', note: 'lot → produit fini' },
-      { label: 'Délais réduits', value: '-40%', note: 'en cas de rappel' },
-      { label: 'Conformité', value: 'Garantie', note: 'audits réglementaires' }
+      { label: 'Traçabilité', value: '100%', note: 'lot → produit fini (démo)' },
+      { label: 'Délais réduits', value: '-40%', note: 'estimation en cas de rappel' },
+      { label: 'Conformité', value: 'Simulée', note: 'audits réglementaires' }
     ],
     points: [
-      'Enregistrement automatique à chaque étape de production',
+      'Enregistrement automatique à chaque étape de production (prototype)',
       'Suivi des numéros de lots matières premières',
       'Traçabilité ascendante et descendante',
       'Export des données pour audits (FDA, ISO, etc.)',
-      'Alertes sur anomalies de production',
+      'Alertes sur anomalies de production (fonctionnalité démonstrée)',
       'Interface simple pour opérateurs terrains'
     ],
     link: {
-      label: 'En savoir plus',
-      href: '/contact'
+      label: 'Voir le prototype QHSE',
+      href: 'https://product-simulation-one.vercel.app/qhse'
     }
   },
 ];
