@@ -25,11 +25,11 @@ export default function Navbar() {
             <Link href="/#solutions" className="text-gray-700 hover:text-primary-600 transition-colors">
               Approche
             </Link>
+            <Link href="/#process" className="text-gray-700 hover:text-primary-600 transition-colors">
+              Méthode
+            </Link>
             <Link href="/#projects" className="text-gray-700 hover:text-primary-600 transition-colors">
               Projets
-            </Link>
-            <Link href="/#benefits" className="text-gray-700 hover:text-primary-600 transition-colors">
-              Avantages
             </Link>
             <Link href="/contact" className="btn-primary">
               Contact
@@ -79,18 +79,18 @@ export default function Navbar() {
                 Approche
               </Link>
               <Link
+                href="/#process"
+                className="text-gray-700 hover:text-primary-600 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Méthode
+              </Link>
+              <Link
                 href="/#projects"
                 className="text-gray-700 hover:text-primary-600 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Projets
-              </Link>
-              <Link
-                href="/#benefits"
-                className="text-gray-700 hover:text-primary-600 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Avantages
               </Link>
               <Link
                 href="/contact"

@@ -7,6 +7,8 @@ const projects = [
     name: 'ProdOrga',
     status: 'En production',
     statusColor: 'bg-green-100 text-green-800 border-green-200',
+    emoji: '🏭',
+    gradient: 'from-green-400 to-emerald-500',
     description: 'Outil de gestion et d&apos;organisation de la production pour les PME. Permet de suivre en temps réel l&apos;avancement des tâches, d&apos;optimiser les flux et de réduire les temps morts.',
     impact: [
       'Réduction de 30% du temps de planification',
@@ -18,6 +20,8 @@ const projects = [
     name: 'JETC Immo',
     status: 'En cours de développement',
     statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
+    emoji: '🏢',
+    gradient: 'from-blue-400 to-cyan-500',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
     impact: [
       'Centralisation des documents et contrats',
@@ -29,6 +33,8 @@ const projects = [
     name: 'Traçabilité & Spotting Produits',
     status: 'Recherche de partenaires',
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
+    emoji: '📦',
+    gradient: 'from-amber-400 to-orange-500',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
     impact: [
       'Transparence totale de la chaîne d&apos;approvisionnement',
@@ -75,49 +81,60 @@ export default function Projects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="space-y-8 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
         >
           {projects.map((project, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow"
+              whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3 } }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
             >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2 md:mb-0">
-                  {project.name}
-                </h3>
-                <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold border ${project.statusColor}`}>
-                  {project.status}
-                </span>
+              {/* Header avec gradient et emoji */}
+              <div className={`bg-gradient-to-br ${project.gradient} p-8 text-white relative overflow-hidden`}>
+                <div className="absolute top-0 right-0 text-9xl opacity-10 transform translate-x-4 -translate-y-4">
+                  {project.emoji}
+                </div>
+                <div className="relative z-10">
+                  <div className="text-5xl mb-4">{project.emoji}</div>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {project.name}
+                  </h3>
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${project.statusColor} bg-white`}>
+                    {project.status}
+                  </span>
+                </div>
               </div>
 
-              <p className="text-gray-700 text-lg mb-6 leading-relaxed">
-                {project.description}
-              </p>
+              {/* Contenu */}
+              <div className="p-6">
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  {project.description}
+                </p>
 
-              <div>
-                <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                  Impact mesuré / attendu
-                </h4>
-                <ul className="space-y-2">
-                  {project.impact.map((item, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <svg
-                        className="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                    Impact mesuré / attendu
+                  </h4>
+                  <ul className="space-y-2">
+                    {project.impact.map((item, idx) => (
+                      <li key={idx} className="flex items-start text-sm">
+                        <svg
+                          className="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span className="text-gray-700">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </motion.div>
           ))}
