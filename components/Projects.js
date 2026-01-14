@@ -65,7 +65,7 @@ const projects = [
     ],
     link: {
       label: 'Découvrir JETC Immo',
-      href: '#'
+      href: 'https://jetc-immo-saa-s.vercel.app/'
     }
   },
   {
