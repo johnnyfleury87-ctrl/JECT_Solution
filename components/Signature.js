@@ -24,14 +24,7 @@ export default function Signature() {
               className="relative"
             >
               <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
-                {/* TODO: Remplacer par votre vraie photo */}
-                {/* <Image src="/images/photo-profile.jpg" alt="Johnny Fleury" fill className="object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-8xl mb-4">👨‍💻</div>
-                    <p className="text-sm text-gray-600">Photo à venir</p>
-                  </div>
-                </div>
+                <Image src="/images/photo-profile.jpg" alt="Johnny Fleury" fill className="object-cover" priority />
               </div>
               
               {/* Logo en incrustation */}
@@ -42,10 +35,13 @@ export default function Signature() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-xl border-4 border-primary-600"
               >
-                {/* TODO: Remplacer par votre vrai logo */}
-                <div className="text-4xl font-bold text-primary-600">
-                  JETC
-                </div>
+                <Image 
+                  src="/images/logo-jetc.png" 
+                  alt="JETC Solution Logo" 
+                  width={60} 
+                  height={60}
+                  className="object-contain"
+                />
               </motion.div>
             </motion.div>
 

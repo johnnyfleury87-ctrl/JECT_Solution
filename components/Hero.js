@@ -150,8 +150,14 @@ export default function Hero() {
                     >
                       <div className="text-center space-y-6">
                         {/* Logo JETC */}
-                        <div className="text-7xl font-bold text-primary-600 tracking-tight">
-                          JETC
+                        <div className="flex justify-center">
+                          <Image 
+                            src="/images/logo-jetc.png" 
+                            alt="JETC Solution Logo" 
+                            width={120} 
+                            height={120}
+                            className="object-contain"
+                          />
                         </div>
                         <div className="h-1 w-20 bg-primary-600 mx-auto rounded-full"></div>
                         <p className="text-lg text-gray-700 font-medium px-8">
@@ -170,36 +176,13 @@ export default function Hero() {
                         isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                       }`}
                     >
-                      {/* 
-                        📸 INSTRUCTIONS POUR AJOUTER VOTRE PHOTO :
-                        
-                        1. Placez votre photo dans : /public/images/johnny-hero.jpg
-                        2. Format recommandé : portrait (ratio 4:5), minimum 800x1000px
-                        3. Décommentez la ligne Image ci-dessous
-                        4. Commentez ou supprimez le placeholder (div avec emoji)
-                        
-                        Exemple de ligne à décommenter :
-                        <Image 
-                          src="/images/johnny-hero.jpg" 
-                          alt="Johnny Fleury - Fondateur JETC Solution" 
-                          fill 
-                          className="object-cover"
-                          priority
-                        />
-                      */}
-                      
-                      {/* Placeholder - À SUPPRIMER quand vous ajoutez votre photo */}
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                        <div className="text-center p-8">
-                          <div className="text-8xl mb-4">👨‍💼</div>
-                          <p className="text-gray-600 font-medium text-sm">
-                            Votre photo ici
-                          </p>
-                          <p className="text-xs text-gray-500 mt-2">
-                            /public/images/johnny-hero.jpg
-                          </p>
-                        </div>
-                      </div>
+                      <Image 
+                        src="/images/johnny-hero.jpg" 
+                        alt="Johnny Fleury - Fondateur JETC Solution" 
+                        fill 
+                        className="object-cover"
+                        priority
+                      />
                     </div>
                   </div>
                   
