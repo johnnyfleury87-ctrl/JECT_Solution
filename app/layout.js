@@ -9,6 +9,9 @@ export const metadata = {
   title: 'JETC Solution - Solutions Digitales Innovantes',
   description: 'JETC Solution accompagne votre transformation digitale avec des solutions modernes et performantes.',
   keywords: 'solutions digitales, développement web, transformation digitale',
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
