@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,6 +26,8 @@ const itemVariants = {
 };
 
 export default function Hero() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <section className="min-h-[85vh] flex items-center bg-gradient-to-b from-gray-50 via-white to-gray-50">
       <div className="container-custom py-16">
@@ -122,111 +125,108 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Partie droite : Photo */}
+            {/* Partie droite : Carte identité interactive */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotateZ: -2 }}
-              animate={{ opacity: 1, scale: 1, rotateZ: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="order-1 lg:order-2"
             >
-              <motion.div 
-                className="relative"
-                whileHover={{ scale: 1.02, rotateZ: 1 }}
-                transition={{ duration: 0.3 }}
+              <div 
+                className="relative group cursor-pointer"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() => setIsHovered(!isHovered)}
               >
-                {/* Décoration d'arrière-plan animée */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-primary-200 to-primary-100 rounded-3xl opacity-50"
-                  animate={{ 
-                    rotateZ: [3, -3, 3],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{ 
-                    duration: 6, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                ></motion.div>
-                
-                {/* Photo */}
-                <motion.div 
-                  className="relative bg-white p-4 rounded-3xl shadow-2xl"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                >
-                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                    {/* TODO: Remplacer par votre vraie photo */}
-                    {/* <Image src="/images/johnny-hero.jpg" alt="Johnny Fleury" fill className="object-cover" /> */}
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-center p-8">
-                        <motion.div 
-                          className="text-9xl mb-4"
-                          animate={{ rotateZ: [0, 5, -5, 0] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          👨‍💼
-                        </motion.div>
-                        <p className="text-gray-600 font-medium">Photo à ajouter</p>
-                        <p className="text-sm text-gray-500 mt-2">johnny-hero.jpg</p>
-                        <p className="text-xs text-gray-400 mt-1 italic">
-                          (promis, je souris mieux en vrai)
+                {/* Carte principale */}
+                <div className="relative bg-white p-8 rounded-3xl shadow-2xl border-2 border-gray-100 hover:border-primary-200 transition-all duration-500">
+                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100">
+                    
+                    {/* État par défaut : Logo + Texte */}
+                    <div 
+                      className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${
+                        isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
+                      }`}
+                    >
+                      <div className="text-center space-y-6">
+                        {/* Logo JETC */}
+                        <div className="text-7xl font-bold text-primary-600 tracking-tight">
+                          JETC
+                        </div>
+                        <div className="h-1 w-20 bg-primary-600 mx-auto rounded-full"></div>
+                        <p className="text-lg text-gray-700 font-medium px-8">
+                          Johnny Fleury<br />
+                          <span className="text-sm text-gray-500">Fondateur</span>
                         </p>
+                        <p className="text-xs text-gray-400 italic px-8">
+                          Passez la souris pour me découvrir
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* État hover : Photo */}
+                    <div 
+                      className={`absolute inset-0 transition-all duration-700 ${
+                        isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                      }`}
+                    >
+                      {/* 
+                        📸 INSTRUCTIONS POUR AJOUTER VOTRE PHOTO :
+                        
+                        1. Placez votre photo dans : /public/images/johnny-hero.jpg
+                        2. Format recommandé : portrait (ratio 4:5), minimum 800x1000px
+                        3. Décommentez la ligne Image ci-dessous
+                        4. Commentez ou supprimez le placeholder (div avec emoji)
+                        
+                        Exemple de ligne à décommenter :
+                        <Image 
+                          src="/images/johnny-hero.jpg" 
+                          alt="Johnny Fleury - Fondateur JETC Solution" 
+                          fill 
+                          className="object-cover"
+                          priority
+                        />
+                      */}
+                      
+                      {/* Placeholder - À SUPPRIMER quand vous ajoutez votre photo */}
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
+                        <div className="text-center p-8">
+                          <div className="text-8xl mb-4">👨‍💼</div>
+                          <p className="text-gray-600 font-medium text-sm">
+                            Votre photo ici
+                          </p>
+                          <p className="text-xs text-gray-500 mt-2">
+                            /public/images/johnny-hero.jpg
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Badge confiance avec animation */}
+                  {/* Badge expérience */}
                   <motion.div
                     initial={{ opacity: 0, y: 20, scale: 0.8 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.6, type: "spring" }}
-                    whileHover={{ scale: 1.05 }}
-                    className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-primary-500 cursor-default"
+                    transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
+                    className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-primary-500"
                   >
                     <p className="text-sm font-semibold text-gray-900 flex items-center gap-2">
                       <span className="text-primary-600">⚡</span>
                       10+ ans d&apos;expérience terrain
                     </p>
                   </motion.div>
-                </motion.div>
+                </div>
 
-                {/* Petits éléments décoratifs flottants */}
-                <motion.div
-                  className="absolute -top-4 -right-4 bg-yellow-400 rounded-full w-16 h-16 flex items-center justify-center shadow-lg"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotateZ: [0, 10, -10, 0]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    ease: "easeInOut",
-                    delay: 0.5 
-                  }}
-                >
-                  <span className="text-3xl">✨</span>
-                </motion.div>
-
-                <motion.div
-                  className="absolute -bottom-6 -left-6 bg-green-400 rounded-full w-20 h-20 flex items-center justify-center shadow-lg"
-                  animate={{ 
-                    y: [0, 10, 0],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                >
-                  <span className="text-3xl">🎯</span>
-                </motion.div>
-              </motion.div>
+                {/* Indicateur subtil d'interaction */}
+                <div className="mt-4 text-center">
+                  <p className="text-xs text-gray-400 italic lg:hidden">
+                    Touchez pour voir la photo
+                  </p>
+                  <p className="text-xs text-gray-400 italic hidden lg:block">
+                    Passez la souris pour voir la photo
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
           </div>
