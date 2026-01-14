@@ -22,7 +22,7 @@ const visionItems = [
     title: 'Immersion Métier',
     description: 'Nous nous imprégnons de votre secteur pour concevoir des solutions qui parlent votre langue et répondent aux vrais problèmes.',
     icon: '🎯',
-    impact: 'Des outils pensés par quelqu'un qui connaît votre réalité.',
+    impact: 'Des outils pensés par quelqu&apos;un qui connaît votre réalité.',
     color: 'from-orange-500 to-red-500',
   },
   {
