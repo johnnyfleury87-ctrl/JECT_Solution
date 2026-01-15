@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProdOrga - Comparaison Avant/Après</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+        }
+        .before .panel-header {
+            border-color: #ef4444;
+        }
+        .after .panel-header {
+            border-color: #10b981;
+        }
+        .panel-icon {
+            font-size: 2.5rem;
+        }
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .before .panel-title {
+            color: #ef4444;
+        }
+        .after .panel-title {
+            color: #10b981;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-content {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #e5e7eb;
+        }
+        .before .section-content {
+            border-left-color: #fecaca;
+        }
+        .after .section-content {
+            border-left-color: #a7f3d0;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .kpi-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+        .kpi-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #111827;
+        }
+        .kpi-note {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+        .feature-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 10px;
+            align-items: start;
+            border: 2px solid #e5e7eb;
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+        .feature-content {
+            flex: 1;
+        }
+        .feature-title {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.95rem;
+        }
+        .feature-desc {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .cta {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        .old-text {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .improvements {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .improvements h2 {
+            color: #10b981;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .improvement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .improvement-item {
+            display: flex;
+            gap: 12px;
+            padding: 15px;
+            background: #f0fdf4;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+        .improvement-check {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .improvement-text {
+            color: #374151;
+            line-height: 1.5;
+        }
+        @media (max-width: 1024px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏭 Refonte ProdOrga</h1>
+        <p class="subtitle">Comparaison Avant / Après - Présentation Plus Visuelle et Professionnelle</p>
+
+        <div class="comparison">
+            <!-- AVANT -->
+            <div class="panel before">
+                <div class="panel-header">
+                    <span class="panel-icon">❌</span>
+                    <div>
+                        <div class="panel-title">Avant</div>
+                        <span class="badge badge-error">Trop statique</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📝 Accroche</div>
+                    <div class="section-content">
+                        <p style="font-size: 0.9rem; color: #4b5563;">
+                            "Fini les planning Excel qui prennent des heures à mettre à jour. ProdOrga calcule automatiquement vos charges, détecte les surcharges, et vous montre en temps réel ce qui est réalisable ou pas."
+                        </p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #ef4444;">
+                            ⚠️ Trop long, "&apos;" visible, pas assez direct
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📊 Indicateurs</div>
+                    <div class="section-content">
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Temps</div>
+                                <div class="kpi-value">-30%</div>
+                                <div class="kpi-note">planning</div>
+                            </div>
+                            <div class="kpi-card" style="border-color: #fca5a5;">
+                                <div class="kpi-label">Erreurs</div>
+                                <div class="kpi-value">-45%</div>
+                                <div class="kpi-note">❌ saisie</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Visibilité</div>
+                                <div class="kpi-value">Temps réel</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #ef4444;">
+                            ⚠️ "Erreurs de saisie" pas pertinent
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📋 Fonctionnalités</div>
+                    <div class="section-content">
+                        <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #4b5563;">
+                            <li style="margin-bottom: 6px;">✓ Calcul automatique de la charge...</li>
+                            <li style="margin-bottom: 6px;">✓ Détection instantanée des surcharges...</li>
+                            <li style="margin-bottom: 6px;">✓ Import Excel existant...</li>
+                            <li style="margin-bottom: 6px;">✓ Tableaux de bord adaptés...</li>
+                            <li>✓ Accès mobile pour les chefs d&apos;atelier</li>
+                        </ul>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #ef4444;">
+                            ⚠️ Liste texte, pas visuel, "&apos;" visible
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🎯 Call-to-Action</div>
+                    <div class="section-content">
+                        <div style="background: #e5e7eb; padding: 12px; border-radius: 8px; text-align: center; color: #6b7280;">
+                            <span class="old-text">Voir la démo ProdOrga →</span>
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #ef4444;">
+                            ⚠️ Fausse promesse (pas de démo)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APRÈS -->
+            <div class="panel after">
+                <div class="panel-header">
+                    <span class="panel-icon">✅</span>
+                    <div>
+                        <div class="panel-title">Après</div>
+                        <span class="badge badge-success">Visuel & dynamique</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📝 Accroche</div>
+                    <div class="section-content">
+                        <p style="font-size: 0.95rem; color: #111827; font-weight: 500;">
+                            "Pilotez votre production en temps réel. ProdOrga calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non."
+                        </p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #10b981;">
+                            ✓ Plus court, direct, pas d'artefacts HTML
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📊 Indicateurs</div>
+                    <div class="section-content">
+                        <div class="kpi-grid">
+                            <div class="kpi-card" style="border-color: #10b981;">
+                                <div class="kpi-label">Données</div>
+                                <div class="kpi-value" style="font-size: 1.3rem;">100%</div>
+                                <div class="kpi-note">✓ fiables</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Temps</div>
+                                <div class="kpi-value">-30%</div>
+                                <div class="kpi-note">planning</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Visibilité</div>
+                                <div class="kpi-value" style="font-size: 1.1rem;">Temps réel</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #10b981;">
+                            ✓ KPIs pertinents, chiffres mis en avant
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🎨 Fonctionnalités</div>
+                    <div class="section-content">
+                        <div class="feature-card">
+                            <span class="feature-icon">⚡</span>
+                            <div class="feature-content">
+                                <div class="feature-title">Charge vs capacité</div>
+                                <div class="feature-desc">Calcul automatique par poste</div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🚨</span>
+                            <div class="feature-content">
+                                <div class="feature-title">Alertes immédiates</div>
+                                <div class="feature-desc">Surcharges détectées en temps réel</div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📊</span>
+                            <div class="feature-content">
+                                <div class="feature-title">Tableaux de bord</div>
+                                <div class="feature-desc">Adaptés au rythme de production</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #10b981;">
+                            ✓ Cartes visuelles, icônes, hiérarchie claire
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🎯 Call-to-Action</div>
+                    <div class="section-content">
+                        <div class="cta">
+                            Découvrir le fonctionnement →
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #10b981;">
+                            ✓ Honnête, redirige vers contact
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📸 Nouveau : Screenshots</div>
+                    <div class="section-content">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                            <div style="background: #ecfdf5; padding: 15px; border-radius: 8px; text-align: center; border: 2px solid #10b981;">
+                                <div style="font-size: 1.5rem;">📊</div>
+                                <div style="font-size: 0.75rem; margin-top: 5px; font-weight: 600;">Planning</div>
+                            </div>
+                            <div style="background: #ecfdf5; padding: 15px; border-radius: 8px; text-align: center; border: 2px solid #10b981;">
+                                <div style="font-size: 1.5rem;">📊</div>
+                                <div style="font-size: 0.75rem; margin-top: 5px; font-weight: 600;">Fiche</div>
+                            </div>
+                            <div style="background: #ecfdf5; padding: 15px; border-radius: 8px; text-align: center; border: 2px solid #10b981;">
+                                <div style="font-size: 1.5rem;">📊</div>
+                                <div style="font-size: 0.75rem; margin-top: 5px; font-weight: 600;">Dashboard</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #10b981;">
+                            ✓ Section visuelle montrant l'outil réel
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="improvements">
+            <h2>✨ Améliorations Clés</h2>
+            <div class="improvement-list">
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>Caractères HTML corrigés</strong><br>
+                        Plus de &apos; visible - texte propre et professionnel
+                    </div>
+                </div>
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>Accroche terrain</strong><br>
+                        Plus courte, directe, orientée problème/solution
+                    </div>
+                </div>
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>KPIs pertinents</strong><br>
+                        Suppression "erreurs", ajout "données fiables"
+                    </div>
+                </div>
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>Présentation visuelle</strong><br>
+                        Cartes avec icônes au lieu de liste texte
+                    </div>
+                </div>
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>Section screenshots</strong><br>
+                        Montre l'outil en action (structure prête)
+                    </div>
+                </div>
+                <div class="improvement-item">
+                    <span class="improvement-check">✅</span>
+                    <div class="improvement-text">
+                        <strong>CTA honnête</strong><br>
+                        Pas de fausse démo, redirection vers contact
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

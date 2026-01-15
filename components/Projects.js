@@ -12,28 +12,34 @@ const projects = [
     statusColor: 'bg-green-100 text-green-800 border-green-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
-    description: 'Outil de gestion et d&apos;organisation de la production pour les PME. Permet de suivre en temps réel l&apos;avancement des tâches, d&apos;optimiser les flux et de réduire les temps morts.',
-    descriptionShort: 'Fini les plannings Excel chronophages. ProdOrga calcule automatiquement vos charges, détecte les surcharges et vous montre en temps réel ce qui est réalisable ou non.',
+    description: "Outil de gestion et d'organisation de la production pour les PME. Permet de suivre en temps réel l'avancement des tâches, d'optimiser les flux et de réduire les temps morts.",
+    descriptionShort: "Pilotez votre production en temps réel. ProdOrga calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
     impact: [
-      'Réduction de 30% du temps de planification',
-      'Diminution de 45% des erreurs de suivi',
-      'Visibilité temps réel sur l&apos;activité',
+      "Réduction de 30% du temps de planification",
+      "Visibilité temps réel sur l'activité",
+      "Données horaires 100% fiables",
     ],
     kpis: [
+      { label: 'Données horaires', value: '100% fiables', note: 'issues du timbrage' },
       { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
-      { label: 'Erreurs de saisie', value: '-45%', note: 'grâce à l&apos;automatisation' },
       { label: 'Visibilité', value: 'Temps réel', note: 'capacité / charge' }
     ],
-    points: [
-      'Calcul automatique de la charge vs capacité par poste',
-      'Détection instantanée des surcharges et conflits',
-      'Import Excel existant pour démarrage rapide',
-      'Tableaux de bord adaptés au rythme de production',
-      'Accès mobile pour les chefs d&apos;atelier'
+    features: [
+      { icon: '⚡', title: 'Charge vs capacité', description: 'Calcul automatique par poste' },
+      { icon: '🚨', title: 'Alertes immédiates', description: 'Surcharges détectées en temps réel' },
+      { icon: '📊', title: 'Tableaux de bord', description: 'Adaptés au rythme de production' },
+      { icon: '📱', title: 'Accès terrain', description: "Mobile pour chefs d'atelier" },
+      { icon: '📥', title: 'Démarrage rapide', description: 'Import de vos fichiers Excel' }
+    ],
+    screenshots: [
+      { id: 1, title: 'Planning 28 jours', description: 'Vue complète charge/capacité' },
+      { id: 2, title: 'Fiche collaborateur', description: 'Suivi individuel détaillé' },
+      { id: 3, title: 'Dashboard temps réel', description: 'Pilotage de la production' }
     ],
     link: {
-      label: 'Voir la démo ProdOrga',
-      href: '#'
+      label: 'Découvrir le fonctionnement',
+      href: '#contact',
+      type: 'contact'
     }
   },
   {
@@ -44,7 +50,7 @@ const projects = [
     emoji: '🏢',
     gradient: 'from-blue-400 to-cyan-500',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
-    descriptionShort: 'Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d&apos;ensemble financière.',
+    descriptionShort: "Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d'ensemble financière.",
     impact: [
       'Centralisation des documents et contrats',
       'Automatisation des relances et rappels',
@@ -76,11 +82,11 @@ const projects = [
     emoji: '📦',
     gradient: 'from-amber-400 to-orange-500',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
-    descriptionShort: 'Projet en phase d&apos;expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.',
+    descriptionShort: "Projet en phase d'expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.",
     impact: [
-      'Transparence totale de la chaîne d&apos;approvisionnement',
-      'Lutte contre la contrefaçon',
-      'Conformité réglementaire facilitée',
+      "Transparence totale de la chaîne d'approvisionnement",
+      "Lutte contre la contrefaçon",
+      "Conformité réglementaire facilitée",
     ],
     kpis: [
       { label: 'Traçabilité', value: '100%', note: 'lot → produit fini (démo)' },

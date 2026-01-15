@@ -102,36 +102,73 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                   </div>
                 )}
 
-                {/* Points traités */}
-                {project.points && project.points.length > 0 && (
+                {/* Features en cartes visuelles */}
+                {project.features && project.features.length > 0 && (
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    <h3 className="text-xl font-bold text-gray-900 mb-6">
                       Ce que ça fait concrètement
                     </h3>
-                    <ul className="space-y-3">
-                      {project.points.map((point, index) => (
-                        <motion.li
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {project.features.map((feature, index) => (
+                        <motion.div
                           key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                          className="flex items-start gap-3"
+                          className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:shadow-md transition-all group"
                         >
-                          <svg
-                            className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <span className="text-gray-700 leading-relaxed">{point}</span>
-                        </motion.li>
+                          <div className="flex items-start gap-3">
+                            <div className="text-3xl group-hover:scale-110 transition-transform">
+                              {feature.icon}
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-bold text-gray-900 mb-1">
+                                {feature.title}
+                              </h4>
+                              <p className="text-sm text-gray-600">
+                                {feature.description}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
                       ))}
-                    </ul>
+                    </div>
+                  </div>
+                )}
+
+                {/* Section Screenshots/Mockups */}
+                {project.screenshots && project.screenshots.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                      L'outil en action
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {project.screenshots.map((screenshot, index) => (
+                        <motion.div
+                          key={screenshot.id}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                          className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200 hover:border-green-400 transition-all group cursor-pointer"
+                        >
+                          <div className="aspect-video bg-white rounded-lg mb-3 flex items-center justify-center border-2 border-gray-200 group-hover:border-green-300 transition-colors">
+                            <div className="text-center p-4">
+                              <div className="text-4xl mb-2">📊</div>
+                              <p className="text-xs text-gray-500">Capture d'écran</p>
+                            </div>
+                          </div>
+                          <h4 className="font-bold text-gray-900 text-sm mb-1">
+                            {screenshot.title}
+                          </h4>
+                          <p className="text-xs text-gray-600">
+                            {screenshot.description}
+                          </p>
+                        </motion.div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-500 italic mt-4 text-center">
+                      Captures d'écran réelles de l'interface ProdOrga en production
+                    </p>
                   </div>
                 )}
 

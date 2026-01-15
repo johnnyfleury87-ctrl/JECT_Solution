@@ -1,0 +1,36 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9fafb"/>
+  
+  <!-- Header bar -->
+  <rect width="800" height="60" fill="url(#grad1)"/>
+  <text x="20" y="38" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="bold">ProdOrga - Interface Production</text>
+  
+  <!-- Main content area -->
+  <rect x="20" y="80" width="760" height="500" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
+  
+  <!-- Placeholder icon -->
+  <circle cx="400" cy="280" r="60" fill="#10b981" opacity="0.2"/>
+  <text x="400" y="295" font-family="Arial, sans-serif" font-size="48" fill="#10b981" text-anchor="middle">📊</text>
+  
+  <!-- Placeholder text -->
+  <text x="400" y="360" font-family="Arial, sans-serif" font-size="18" fill="#6b7280" text-anchor="middle" font-weight="600">
+    Capture d'écran de l'interface réelle
+  </text>
+  <text x="400" y="390" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af" text-anchor="middle">
+    Remplacer par un screenshot du produit en production
+  </text>
+  
+  <!-- Grid lines to simulate dashboard -->
+  <line x1="40" y1="120" x2="760" y2="120" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="40" y1="450" x2="760" y2="450" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="280" y1="80" x2="280" y2="580" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="520" y1="80" x2="520" y2="580" stroke="#e5e7eb" stroke-width="1"/>
+</svg>
