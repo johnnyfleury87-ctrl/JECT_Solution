@@ -32,9 +32,9 @@ const projects = [
       { icon: '📥', title: 'Démarrage rapide', description: 'Import de vos fichiers Excel' }
     ],
     screenshots: [
-      { id: 1, title: 'Planning 28 jours', description: 'Vue complète charge/capacité' },
-      { id: 2, title: 'Fiche collaborateur', description: 'Suivi individuel détaillé' },
-      { id: 3, title: 'Dashboard temps réel', description: 'Pilotage de la production' }
+      { id: 1, title: 'Planning 28 jours', description: 'Vue complète charge/capacité', image: '/images/prodorga/planning-28-jours.png' },
+      { id: 2, title: 'Fiche collaborateur', description: 'Suivi individuel détaillé', image: '/images/prodorga/fiche-collaborateur.png' },
+      { id: 3, title: 'Dashboard temps réel', description: 'Pilotage de la production', image: '/images/prodorga/dashboard-temps-reel.png' }
     ],
     link: {
       label: 'Découvrir le fonctionnement',

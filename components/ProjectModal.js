@@ -151,11 +151,19 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                           transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
                           className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200 hover:border-green-400 transition-all group cursor-pointer"
                         >
-                          <div className="aspect-video bg-white rounded-lg mb-3 flex items-center justify-center border-2 border-gray-200 group-hover:border-green-300 transition-colors">
-                            <div className="text-center p-4">
-                              <div className="text-4xl mb-2">📊</div>
-                              <p className="text-xs text-gray-500">Capture d&apos;écran</p>
-                            </div>
+                          <div className="aspect-video bg-white rounded-lg mb-3 flex items-center justify-center border-2 border-gray-200 group-hover:border-green-300 transition-colors overflow-hidden">
+                            {screenshot.image ? (
+                              <img 
+                                src={screenshot.image} 
+                                alt={screenshot.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="text-center p-4">
+                                <div className="text-4xl mb-2">📊</div>
+                                <p className="text-xs text-gray-500">Capture d&apos;écran</p>
+                              </div>
+                            )}
                           </div>
                           <h4 className="font-bold text-gray-900 text-sm mb-1">
                             {screenshot.title}
