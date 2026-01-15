@@ -7,6 +7,8 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    company: '',
+    requestType: '',
     message: '',
     honeypot: '', // Champ anti-spam caché
   });
@@ -44,6 +46,8 @@ export default function ContactForm() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
+          company: formData.company,
+          requestType: formData.requestType,
           message: formData.message,
         }),
       });
@@ -53,19 +57,21 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus({
           type: 'success',
-          message: 'Message envoyé avec succès ! Nous vous répondrons rapidement.',
+          message: 'Merci, votre message a bien été envoyé. Un email de confirmation vient de vous être transmis.',
         });
         // Réinitialiser le formulaire
         setFormData({
           name: '',
           email: '',
+          company: '',
+          requestType: '',
           message: '',
           honeypot: '',
         });
       } else {
         setStatus({
           type: 'error',
-          message: data.error || 'Une erreur est survenue. Veuillez réessayer.',
+          message: data.error || 'Une erreur est survenue lors de l\'envoi. Merci de réessayer ou de nous contacter par email.',
         });
       }
     } catch (error) {
@@ -127,6 +133,44 @@ export default function ContactForm() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
             placeholder="votre@email.com"
           />
+        </div>
+
+        {/* Entreprise */}
+        <div>
+          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+            Entreprise
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            placeholder="Nom de votre entreprise (optionnel)"
+          />
+        </div>
+
+        {/* Type de demande */}
+        <div>
+          <label htmlFor="requestType" className="block text-sm font-medium text-gray-700 mb-2">
+            Type de demande *
+          </label>
+          <select
+            id="requestType"
+            name="requestType"
+            value={formData.requestType}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+          >
+            <option value="">Sélectionnez un type de demande</option>
+            <option value="Site web / plateforme">Site web / plateforme</option>
+            <option value="Amélioration ou optimisation existante">Amélioration ou optimisation existante</option>
+            <option value="Besoin métier concret">Besoin métier concret</option>
+            <option value="Discussion / échange">Discussion / échange</option>
+            <option value="Autre">Autre</option>
+          </select>
         </div>
 
         {/* Message */}

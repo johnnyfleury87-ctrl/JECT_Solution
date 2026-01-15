@@ -4,12 +4,12 @@ import nodemailer from 'nodemailer';
 // Configuration de l'API route
 export async function POST(request) {
   try {
-    const { name, email, message } = await request.json();
+    const { name, email, company, requestType, message } = await request.json();
 
-    // Validation des données
-    if (!name || !email || !message) {
+    // Validation des champs requis
+    if (!name || !email || !requestType || !message) {
       return NextResponse.json(
-        { error: 'Tous les champs sont requis' },
+        { error: 'Tous les champs obligatoires doivent être remplis' },
         { status: 400 }
       );
     }
@@ -31,65 +31,75 @@ export async function POST(request) {
       );
     }
 
-    if (message.length < 10 || message.length > 1000) {
+    if (message.length < 10 || message.length > 2000) {
       return NextResponse.json(
-        { error: 'Le message doit contenir entre 10 et 1000 caractères' },
+        { error: 'Le message doit contenir entre 10 et 2000 caractères' },
         { status: 400 }
       );
     }
 
-    // Configuration du transporteur email
-    // NOTE: Configurez vos variables d'environnement dans .env.local
+    // Configuration du transporteur email SMTP Infomaniak
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true pour port 465, false pour les autres
+      secure: false, // false pour port 587 (STARTTLS)
       auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
+        pass: process.env.SMTP_PASS,
       },
     });
 
-    // Contenu de l'email
-    const mailOptions = {
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: process.env.MAIL_TO,
+    // Email n°1 : Notification à JETC (contact@jetc-immo.ch)
+    const jetcMailOptions = {
+      from: process.env.SMTP_FROM,
+      to: 'contact@jetc-immo.ch',
       replyTo: email,
-      subject: `Nouveau message de ${name} - JETC Solution`,
+      subject: 'Nouvelle demande de contact – JETC',
       text: `
-Nouveau message depuis le formulaire de contact JETC Solution
+Nom : ${name}
+Email : ${email}
+Entreprise : ${company || 'Non renseignée'}
+Type de demande : ${requestType}
 
-Nom: ${name}
-Email: ${email}
-
-Message:
+Message :
 ${message}
-      `,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #0284c7;">Nouveau message depuis JETC Solution</h2>
-          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p><strong>Nom:</strong> ${name}</p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          </div>
-          <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
-            <h3>Message:</h3>
-            <p style="line-height: 1.6;">${message.replace(/\n/g, '<br>')}</p>
-          </div>
-        </div>
-      `,
+      `.trim(),
     };
 
-    // Envoi de l'email
-    await transporter.sendMail(mailOptions);
+    // Email n°2 : Accusé de réception au client
+    const clientMailOptions = {
+      from: process.env.SMTP_FROM,
+      to: email,
+      subject: 'JETC – Nous avons bien reçu votre demande',
+      text: `
+Bonjour ${name},
+
+Nous avons bien reçu votre message et vous remercions pour l'intérêt porté à JETC.
+
+Votre demande a été transmise et sera analysée dans les plus brefs délais.
+Nous reviendrons vers vous rapidement si des informations complémentaires sont nécessaires.
+
+Cordialement,
+
+L'équipe JETC
+contact@jetc-immo.ch
+      `.trim(),
+    };
+
+    // Envoi des deux emails
+    await Promise.all([
+      transporter.sendMail(jetcMailOptions),
+      transporter.sendMail(clientMailOptions),
+    ]);
 
     return NextResponse.json(
-      { message: 'Email envoyé avec succès' },
+      { message: 'Emails envoyés avec succès' },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error('Erreur lors de l\'envoi de l\'email:', error);
+    // Ne pas logger les données sensibles en production
+    console.error('Erreur lors de l\'envoi des emails:', error.message);
     
     return NextResponse.json(
       { error: 'Erreur lors de l\'envoi du message. Veuillez réessayer.' },
@@ -97,6 +107,7 @@ ${message}
     );
   }
 }
+
 
 // Bloquer les autres méthodes HTTP
 export async function GET() {
