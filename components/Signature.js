@@ -24,7 +24,7 @@ export default function Signature() {
               className="relative"
             >
               <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
-                <Image src="/images/photo-profile.jpg" alt="Johnny Fleury" fill className="object-cover" priority />
+                <Image src="/images/photo-profile.png" alt="Johnny Fleury" fill className="object-cover" priority />
               </div>
               
               {/* Logo en incrustation */}
