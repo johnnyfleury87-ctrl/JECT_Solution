@@ -65,10 +65,11 @@ export default function Signature() {
                 </p>
                 
                 <p>
-                  J'ai vécu ce que beaucoup vivent : perte de temps sur des saisies manuelles, erreurs dues 
-                  à des fichiers Excel mal structurés, outils lourds et chers qui ne répondent pas vraiment 
-                  aux besoins du terrain. Alors j'ai appris Excel avancé, puis VBA, pour construire mes propres 
-                  solutions. Des outils simples, fiables, adaptés.
+                  J’ai vécu ce que beaucoup vivent : perte de temps liée aux saisies manuelles, erreurs dues à des fichiers Excel mal structurés, outils lourds et coûteux qui ne répondent pas réellement aux besoins du terrain.
+
+Alors j’ai appris Excel avancé, puis le VBA, puis Python, puis Java. Une passion découverte il y a six ans pour le développement, avec une envie claire : construire mes propres solutions.
+
+Des outils simples, fiables et adaptés.
                 </p>
                 
                 <p>
