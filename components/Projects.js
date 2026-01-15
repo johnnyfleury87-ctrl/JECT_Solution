@@ -13,7 +13,7 @@ const projects = [
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
     description: 'Outil de gestion et d&apos;organisation de la production pour les PME. Permet de suivre en temps réel l&apos;avancement des tâches, d&apos;optimiser les flux et de réduire les temps morts.',
-    descriptionShort: 'Fini les planning Excel qui prennent des heures à mettre à jour. ProdOrga calcule automatiquement vos charges, détecte les surcharges, et vous montre en temps réel ce qui est réalisable ou pas.',
+    descriptionShort: 'Fini les plannings Excel chronophages. ProdOrga calcule automatiquement vos charges, détecte les surcharges et vous montre en temps réel ce qui est réalisable ou non.',
     impact: [
       'Réduction de 30% du temps de planification',
       'Diminution de 45% des erreurs de suivi',

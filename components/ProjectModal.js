@@ -89,12 +89,12 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: index * 0.1 }}
-                          className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200"
+                          className="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-colors shadow-sm"
                         >
-                          <p className="text-sm text-gray-600 mb-2">{kpi.label}</p>
-                          <p className="text-3xl font-bold text-gray-900 mb-1">{kpi.value}</p>
+                          <p className="text-sm font-medium text-gray-600 mb-3">{kpi.label}</p>
+                          <p className="text-4xl font-bold text-gray-900 mb-2">{kpi.value}</p>
                           {kpi.note && (
-                            <p className="text-xs text-gray-500 italic">{kpi.note}</p>
+                            <p className="text-xs text-gray-500">{kpi.note}</p>
                           )}
                         </motion.div>
                       ))}
@@ -118,7 +118,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                           className="flex items-start gap-3"
                         >
                           <svg
-                            className={`w-6 h-6 text-${project.gradient.split('-')[1]}-600 mt-0.5 flex-shrink-0`}
+                            className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
