@@ -16,25 +16,31 @@ export default function StatsWidget() {
   });
   const [showTooltip, setShowTooltip] = useState(false);
 
-  // Ping pour enregistrer la visite
-  useEffect(() => {
-    fetch('/api/ping', { method: 'POST' }).catch(() => {});
-  }, []);
+  // Ping déjà géré par PingClient dans layout.js - on n'a plus besoin de ça ici
 
-  // Récupérer les visiteurs actifs (toutes les 30 secondes)
+  // Récupérer les visiteurs actifs (toutes les 15 secondes)
   useEffect(() => {
     const fetchActive = async () => {
       try {
-        const res = await fetch('/api/active');
+        const res = await fetch('/api/active', {
+          cache: 'no-store'
+        });
         const data = await res.json();
         setActive(data.active || 0);
+        setTodayVisits(data.active || 0); // Pour le tooltip
+        
+        if (process.env.NODE_ENV === 'development') {
+          console.debug('[StatsWidget] Visiteurs actifs:', data.active);
+        }
       } catch (error) {
-        console.error('Error fetching active visitors:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('[StatsWidget] Erreur fetch active:', error);
+        }
       }
     };
 
     fetchActive();
-    const interval = setInterval(fetchActive, 30000);
+    const interval = setInterval(fetchActive, 15000);
     return () => clearInterval(interval);
   }, []);
 
@@ -43,12 +49,16 @@ export default function StatsWidget() {
     if (isOpen) {
       const fetchStats = async () => {
         try {
-          const res = await fetch('/api/stats');
+          const res = await fetch('/api/stats', {
+            cache: 'no-store'
+          });
           const data = await res.json();
           setStats(data);
           setTodayVisits(data.today || 0);
         } catch (error) {
-          console.error('Error fetching stats:', error);
+          if (process.env.NODE_ENV === 'development') {
+            console.error('[StatsWidget] Erreur fetch stats:', error);
+          }
         }
       };
       fetchStats();

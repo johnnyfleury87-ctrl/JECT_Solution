@@ -1,5 +1,7 @@
 import { Redis } from '@upstash/redis';
 
+export const dynamic = 'force-dynamic';
+
 let redis = null;
 
 if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
@@ -11,7 +13,9 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 
 export async function GET() {
   if (!redis) {
-    return Response.json({ active: 0 });
+    return Response.json({ active: 0 }, {
+      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+    });
   }
 
   try {
@@ -31,7 +35,9 @@ export async function GET() {
       }).length;
     }
     
-    return Response.json({ active: activeCount });
+    return Response.json({ active: activeCount }, {
+      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+    });
   } catch (error) {
     console.error('Active visitors error:', error);
     return Response.json({ active: 0 });

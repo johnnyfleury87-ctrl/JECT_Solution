@@ -1,5 +1,7 @@
 import { Redis } from '@upstash/redis';
 
+export const dynamic = 'force-dynamic';
+
 let redis = null;
 
 if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
@@ -74,6 +76,8 @@ export async function GET() {
       month: 0,
       currentMonth: 0,
       year: 0
+    }, {
+      headers: { 'Cache-Control': 'no-store, must-revalidate' }
     });
   }
 
@@ -104,6 +108,8 @@ export async function GET() {
       month,
       currentMonth,
       year
+    }, {
+      headers: { 'Cache-Control': 'no-store, must-revalidate' }
     });
   } catch (error) {
     console.error('Stats error:', error);
@@ -113,6 +119,8 @@ export async function GET() {
       month: 0,
       currentMonth: 0,
       year: 0
+    }, {
+      headers: { 'Cache-Control': 'no-store, must-revalidate' }
     });
   }
 }
