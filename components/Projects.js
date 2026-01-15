@@ -12,6 +12,7 @@ const projects = [
     statusColor: 'bg-green-100 text-green-800 border-green-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
+    backgroundImage: '/images/prodorga-bg.svg',
     description: "Outil de gestion et d'organisation de la production pour les PME. Permet de suivre en temps réel l'avancement des tâches, d'optimiser les flux et de réduire les temps morts.",
     descriptionShort: "Pilotez votre production en temps réel. ProdOrga calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
     impact: [
@@ -49,6 +50,7 @@ const projects = [
     statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
     emoji: '🏢',
     gradient: 'from-blue-400 to-cyan-500',
+    backgroundImage: '/images/jetc-immo-bg.svg',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
     descriptionShort: "Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d'ensemble financière.",
     impact: [
@@ -81,6 +83,7 @@ const projects = [
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
     emoji: '📦',
     gradient: 'from-amber-400 to-orange-500',
+    backgroundImage: '/images/tracabilite-bg.svg',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
     descriptionShort: "Projet en phase d'expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.",
     impact: [
@@ -168,14 +171,29 @@ export default function Projects() {
               onClick={() => handleProjectClick(project)}
               className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
             >
-              {/* Header avec gradient et emoji */}
-              <div className={`bg-gradient-to-br ${project.gradient} p-8 text-white relative overflow-hidden`}>
+              {/* Header avec image de fond et overlay */}
+              <div className="relative p-8 text-white overflow-hidden h-64">
+                {/* Image de fond */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${project.backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+                {/* Overlay gradient pour lisibilité */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-85`} />
+                
+                {/* Emoji décoratif en arrière-plan */}
                 <div className="absolute top-0 right-0 text-9xl opacity-10 transform translate-x-4 -translate-y-4">
                   {project.emoji}
                 </div>
+                
+                {/* Contenu */}
                 <div className="relative z-10">
-                  <div className="text-5xl mb-4">{project.emoji}</div>
-                  <h3 className="text-2xl font-bold mb-2">
+                  <div className="text-5xl mb-4 drop-shadow-lg">{project.emoji}</div>
+                  <h3 className="text-2xl font-bold mb-2 drop-shadow-md">
                     {project.name}
                   </h3>
                   <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${project.statusColor} bg-white`}>

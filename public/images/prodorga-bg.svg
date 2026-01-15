@@ -1,0 +1,66 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="prodorga-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:0.08" />
+    </linearGradient>
+    <linearGradient id="prodorga-grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" fill="url(#prodorga-grad1)"/>
+  
+  <!-- Atelier isométrique stylisé -->
+  <!-- Sol -->
+  <path d="M 150 280 L 400 150 L 650 280 L 400 410 Z" fill="#d1fae5" opacity="0.3"/>
+  
+  <!-- Bâtiment principal -->
+  <path d="M 300 180 L 500 80 L 500 240 L 300 340 Z" fill="#10b981" opacity="0.15"/>
+  <path d="M 500 80 L 650 160 L 650 320 L 500 240 Z" fill="#059669" opacity="0.2"/>
+  <path d="M 300 180 L 500 80 L 650 160 L 450 260 Z" fill="#34d399" opacity="0.1"/>
+  
+  <!-- Machines / Postes de travail (rectangles isométriques) -->
+  <g opacity="0.4">
+    <rect x="320" y="220" width="40" height="60" fill="#10b981" transform="skewY(-25)"/>
+    <rect x="380" y="195" width="40" height="60" fill="#059669" transform="skewY(-25)"/>
+    <rect x="440" y="170" width="40" height="60" fill="#10b981" transform="skewY(-25)"/>
+  </g>
+  
+  <!-- Planning / Gantt stylisé -->
+  <g transform="translate(120, 80)">
+    <!-- Barres horizontales représentant planning -->
+    <rect x="0" y="0" width="120" height="8" rx="4" fill="#10b981" opacity="0.6"/>
+    <rect x="0" y="20" width="160" height="8" rx="4" fill="#10b981" opacity="0.5"/>
+    <rect x="0" y="40" width="90" height="8" rx="4" fill="#10b981" opacity="0.7"/>
+    <rect x="0" y="60" width="140" height="8" rx="4" fill="#059669" opacity="0.6"/>
+    <rect x="0" y="80" width="110" height="8" rx="4" fill="#10b981" opacity="0.5"/>
+  </g>
+  
+  <!-- Indicateurs / KPI (cercles et graphiques) -->
+  <g transform="translate(600, 100)">
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#10b981" stroke-width="4" opacity="0.4"/>
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="110 157" opacity="0.7" transform="rotate(-90 30 30)"/>
+    <circle cx="30" cy="80" r="20" fill="#34d399" opacity="0.3"/>
+    <circle cx="30" cy="130" r="15" fill="#059669" opacity="0.4"/>
+  </g>
+  
+  <!-- Flux / flèches -->
+  <g opacity="0.3" stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round">
+    <path d="M 200 200 Q 250 180 300 200"/>
+    <path d="M 350 180 Q 400 160 450 180"/>
+    <polygon points="445,175 455,180 445,185" fill="#10b981"/>
+  </g>
+  
+  <!-- Grille en arrière-plan -->
+  <g opacity="0.08" stroke="#10b981" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+  </g>
+</svg>
