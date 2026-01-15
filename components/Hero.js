@@ -45,7 +45,7 @@ export default function Hero() {
                 variants={itemVariants}
                 className="text-primary-600 font-medium mb-3 text-sm uppercase tracking-wide"
               >
-                👋 Bonjour, je suis Johnny
+                Automatisez vos processus & gagnez en efficacité
               </motion.p>
               
               <motion.h1 
