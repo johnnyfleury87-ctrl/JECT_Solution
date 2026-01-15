@@ -5,48 +5,50 @@ import { motion } from 'framer-motion';
 const pricingExamples = [
   {
     icon: '🌐',
-    title: 'Création de site vitrine / site professionnel',
+    title: 'Création de solution digitale',
     items: [
-      'Site clair et moderne',
-      'Présentation de l\'activité',
-      'Formulaire de contact fonctionnel',
-      'Mise en ligne et configuration de base',
+      'Présentation claire de l\'activité',
+      'Outil simple et fonctionnel',
+      'Mise en place rapide',
+      'Solution installée et utilisable immédiatement',
     ],
     price: 'En général entre 400 € et 600 €',
     subPrice: 'selon le contenu et les besoins',
-    note: 'Il s\'agit d\'exemples indicatifs. Le périmètre est toujours défini ensemble.',
+    note: 'Exemple indicatif, périmètre défini ensemble.',
   },
   {
     icon: '⚙️',
-    title: 'Évolutions, ajustements et entretien',
+    title: 'Évolution et accompagnement dans le temps',
     items: [
-      'Corrections',
-      'Ajustements visuels',
-      'Petites évolutions',
-      'Maintenance légère',
+      'Ajustements selon l\'usage réel',
+      'Améliorations progressives',
+      'Corrections si besoin',
+      'Suivi léger, sans obligation',
     ],
-    description: 'Pas d\'obligation. Possible sous forme d\'entretien mensuel léger si le client le souhaite.',
-    price: 'À partir de quelques dizaines d\'euros par mois',
-    subPrice: 'selon le site et les besoins réels',
+    description: 'La rémunération peut prendre la forme d\'un entretien mensuel simple, uniquement si cela apporte une vraie valeur.',
+    price: 'Contribution mensuelle légère',
+    subPrice: 'adaptée au besoin réel',
   },
   {
     icon: '⚡',
-    title: 'Outils sur mesure & automatisation',
+    title: 'Solution métier sur mesure',
     items: [
-      'Automatisation Excel / logique métier',
-      'Outils adaptés au terrain',
-      'Pas de logiciel inutile',
+      'Réponse à un besoin précis',
+      'Adaptée à la réalité du terrain',
+      'Pensée pour simplifier le quotidien',
+      'Pas de solution générique imposée',
     ],
-    description: 'La rémunération dépend du temps gagné, de la simplification apportée et de l\'impact réel sur le quotidien.',
-    price: 'Projet ponctuel, discuté au cas par cas',
+    description: 'Approche "vous gagnez / je gagne" : gain de temps, meilleure visibilité, moins d\'erreurs, solution qui travaille à votre place.',
+    price: 'Définie en fonction de la valeur créée',
+    subPrice: 'du périmètre et de l\'impact réel',
   },
 ];
 
 const notIncluded = [
-  "Pas de taux horaire imposé",
-  "Pas d'abonnement forcé",
-  "Pas de logiciel inutile",
-  "Pas de solution miracle",
+  "Pas de vente d'outils inutiles",
+  "Pas d'abonnement imposé",
+  "Pas de dépendance forcée",
+  "Pas de jargon technique",
   "Pas de promesses irréalistes",
 ];
 
@@ -85,20 +87,17 @@ export default function Pricing() {
         {/* En-tête */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Une rémunération simple, adaptée à vos besoins
+            Une logique simple : vous gagnez, je gagne
           </h2>
           <div className="max-w-3xl mx-auto space-y-4 text-lg text-gray-600">
             <p>
-              JETC ne vend pas des heures, ni des solutions standardisées.
+              JETC fonctionne sur une approche simple et honnête.
             </p>
             <p>
-              Chaque projet est construit pour répondre à un besoin concret.
+              Chaque projet est différent, chaque besoin aussi.
             </p>
             <p>
-              La rémunération s'adapte donc au projet, à sa complexité et à son impact réel.
-            </p>
-            <p className="font-medium text-gray-700">
-              Pour être transparent, voici quelques exemples indicatifs.
+              La rémunération est donc adaptée à la valeur réelle apportée, pas à un nombre d'heures ou à un outil imposé.
             </p>
           </div>
         </div>
@@ -205,11 +204,13 @@ export default function Pricing() {
           className="text-center max-w-3xl mx-auto"
         >
           <div className="bg-primary-50 border-l-4 border-primary-600 rounded-lg p-8">
-            <p className="text-xl text-gray-800 leading-relaxed">
-              Le but n'est pas de facturer plus, mais de proposer une solution juste, utile et durable.
+            <p className="text-xl text-gray-800 leading-relaxed mb-4">
+              L'objectif n'est pas de vendre plus.
+              <br />
+              L'objectif est que la solution soit utile.
             </p>
-            <p className="text-lg text-gray-700 mt-4">
-              Si une solution simple suffit, elle sera privilégiée.
+            <p className="text-lg text-gray-700">
+              Si vous gagnez du temps et de la clarté, alors la collaboration a du sens pour tout le monde.
             </p>
           </div>
         </motion.div>
