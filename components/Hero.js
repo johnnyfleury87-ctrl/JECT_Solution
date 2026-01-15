@@ -71,8 +71,7 @@ export default function Hero() {
                 </motion.p>
                 
                 <motion.p variants={itemVariants}>
-                  Depuis 10 ans, j'accompagne des entreprises comme la vôtre pour transformer 
-                  ces irritants quotidiens en processus{' '}
+                  Je transforme ces irritants quotidiens en processus{' '}
                   <span className="text-green-600 font-semibold">fluides</span> et{' '}
                   <span className="text-blue-600 font-semibold">automatisés</span>.
                 </motion.p>
@@ -185,19 +184,6 @@ export default function Hero() {
                       />
                     </div>
                   </div>
-                  
-                  {/* Badge expérience */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
-                    className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-primary-500"
-                  >
-                    <p className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                      <span className="text-primary-600">⚡</span>
-                      10+ ans d'expérience terrain
-                    </p>
-                  </motion.div>
                 </div>
 
                 {/* Indicateur subtil d'interaction */}
