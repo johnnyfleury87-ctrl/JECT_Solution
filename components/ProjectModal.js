@@ -140,7 +140,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                 {project.screenshots && project.screenshots.length > 0 && (
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-4">
-                      L&apos;outil en action
+                      L'outil en action
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {project.screenshots.map((screenshot, index) => (
@@ -161,7 +161,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                             ) : (
                               <div className="text-center p-4">
                                 <div className="text-4xl mb-2">📊</div>
-                                <p className="text-xs text-gray-500">Capture d&apos;écran</p>
+                                <p className="text-xs text-gray-500">Capture d'écran</p>
                               </div>
                             )}
                           </div>
@@ -175,7 +175,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                       ))}
                     </div>
                     <p className="text-xs text-gray-500 italic mt-4 text-center">
-                      Captures d&apos;écran réelles de l&apos;interface ProdOrga en production
+                      Captures d'écran réelles de l'interface ProdOrga en production
                     </p>
                   </div>
                 )}

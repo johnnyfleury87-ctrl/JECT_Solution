@@ -13,7 +13,7 @@ const steps = [
   {
     number: '02',
     title: 'Immersion Métier',
-    description: 'Je m&apos;imprègne de votre secteur pour identifier les vrais leviers d&apos;efficacité et les points de friction.',
+    description: "Je m'imprègne de votre secteur pour identifier les vrais leviers d'efficacité et les points de friction.",
     icon: '🔍',
     color: 'from-purple-500 to-pink-500',
   },
@@ -27,7 +27,7 @@ const steps = [
   {
     number: '04',
     title: 'Déploiement & Suivi',
-    description: 'Mise en production progressive, formation et accompagnement pour garantir l&apos;adoption et les résultats.',
+    description: "Mise en production progressive, formation et accompagnement pour garantir l'adoption et les résultats.",
     icon: '🚀',
     color: 'from-green-500 to-emerald-500',
   },

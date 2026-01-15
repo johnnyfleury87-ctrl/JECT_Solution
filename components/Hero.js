@@ -71,7 +71,7 @@ export default function Hero() {
                 </motion.p>
                 
                 <motion.p variants={itemVariants}>
-                  Depuis 10 ans, j&apos;accompagne des entreprises comme la vôtre pour transformer 
+                  Depuis 10 ans, j'accompagne des entreprises comme la vôtre pour transformer 
                   ces irritants quotidiens en processus{' '}
                   <span className="text-green-600 font-semibold">fluides</span> et{' '}
                   <span className="text-blue-600 font-semibold">automatisés</span>.
@@ -82,7 +82,7 @@ export default function Hero() {
                   className="font-medium text-gray-900 bg-primary-50 border-l-4 border-primary-600 pl-4 py-3 rounded-r"
                 >
                   Pas de solution miracle <span className="text-sm">(désolé 😅)</span>.<br />
-                  Juste de l&apos;écoute, du travail sur mesure, et des résultats mesurables.
+                  Juste de l'écoute, du travail sur mesure, et des résultats mesurables.
                 </motion.p>
               </div>
 
@@ -195,7 +195,7 @@ export default function Hero() {
                   >
                     <p className="text-sm font-semibold text-gray-900 flex items-center gap-2">
                       <span className="text-primary-600">⚡</span>
-                      10+ ans d&apos;expérience terrain
+                      10+ ans d'expérience terrain
                     </p>
                   </motion.div>
                 </div>

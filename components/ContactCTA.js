@@ -18,7 +18,7 @@ export default function ContactCTA() {
             Prêt à démarrer votre projet ?
           </h2>
           <p className="text-xl mb-10 max-w-2xl mx-auto opacity-90">
-            Contactez-nous dès aujourd&apos;hui pour discuter de vos besoins et 
+            Contactez-nous dès aujourd'hui pour discuter de vos besoins et 
             transformer vos idées en réalité.
           </p>
           <Link 

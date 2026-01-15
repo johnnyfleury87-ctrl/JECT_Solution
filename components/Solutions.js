@@ -15,19 +15,19 @@ const visionItems = [
     title: 'Accompagnement Personnalisé',
     description: 'Un suivi sur mesure tout au long du projet, adapté à votre rythme et vos contraintes opérationnelles.',
     icon: '🤝',
-    impact: 'Vous n&apos;êtes jamais seul face à l&apos;outil.',
+    impact: "Vous n'êtes jamais seul face à l'outil.",
     color: 'from-purple-500 to-pink-500',
   },
   {
     title: 'Immersion Métier',
     description: 'Nous nous imprégnons de votre secteur pour concevoir des solutions qui parlent votre langue et répondent aux vrais problèmes.',
     icon: '🎯',
-    impact: 'Des outils pensés par quelqu&apos;un qui connaît votre réalité.',
+    impact: "Des outils pensés par quelqu'un qui connaît votre réalité.",
     color: 'from-orange-500 to-red-500',
   },
   {
     title: 'Impact Business',
-    description: 'Notre seule boussole : est-ce que ça crée de la valeur mesurable et génère du chiffre d&apos;affaires pour vous ?',
+    description: "Notre seule boussole : est-ce que ça crée de la valeur mesurable et génère du chiffre d'affaires pour vous ?",
     icon: '📈',
     impact: 'Pas de gadget. Juste de la performance.',
     color: 'from-green-500 to-emerald-500',
@@ -73,7 +73,7 @@ export default function Solutions() {
           </h2>
           <div className="max-w-4xl mx-auto space-y-4 text-lg md:text-xl text-gray-700 leading-relaxed">
             <p>
-              Les solutions <span className="font-semibold text-gray-900">&quot;standards&quot;</span> sont 
+              Les solutions <span className="font-semibold text-gray-900">"standards"</span> sont 
               souvent lourdes, coûteuses et rigides.
             </p>
             <p>
@@ -172,7 +172,7 @@ export default function Solutions() {
                       {/* Impact */}
                       <div className={`bg-gradient-to-r ${item.color} bg-opacity-10 border-l-4 border-current pl-4 py-3 rounded-r`}>
                         <p className="text-sm font-semibold text-gray-900 italic">
-                          &quot;{item.impact}&quot;
+                          "{item.impact}"
                         </p>
                       </div>
                     </motion.div>

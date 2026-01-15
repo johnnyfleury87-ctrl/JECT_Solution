@@ -53,23 +53,32 @@ export default function Signature() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Une démarche centrée sur <span className="text-primary-600">vos résultats</span>
+                Un parcours terrain, <span className="text-primary-600">des solutions concrètes</span>
               </h2>
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Je ne vends pas de solutions toutes faites. Je construis avec vous des outils digitaux 
-                  qui correspondent réellement à votre activité et vos ambitions.
+                  Mon parcours m'a mené de la restauration (CAP, BP, licence économie & management) 
+                  à la logistique (préparation de commandes, assistance opérationnelle, coordination projet), 
+                  puis aux ressources humaines et à la qualité. Aujourd'hui, je pilote le périmètre packing 
+                  d'une structure industrielle : négociation de contrats, suivi des coûts, automatisation des process.
                 </p>
                 
                 <p>
-                  Chaque projet commence par <strong>l&apos;écoute</strong>, se poursuit par 
-                  <strong> l&apos;immersion dans votre métier</strong>, et aboutit à des solutions 
-                  qui <strong>génèrent de la valeur mesurable</strong>.
+                  J'ai vécu ce que beaucoup vivent : perte de temps sur des saisies manuelles, erreurs dues 
+                  à des fichiers Excel mal structurés, outils lourds et chers qui ne répondent pas vraiment 
+                  aux besoins du terrain. Alors j'ai appris Excel avancé, puis VBA, pour construire mes propres 
+                  solutions. Des outils simples, fiables, adaptés.
+                </p>
+                
+                <p>
+                  <strong>JETC ne propose pas de logiciel miracle.</strong> Je conçois des outils sur mesure, 
+                  pensés pour votre métier, vos contraintes réelles. Pas de promesses exagérées, 
+                  pas de formations interminables : juste ce qui fonctionne, dans la durée.
                 </p>
                 
                 <p className="text-primary-700 font-semibold italic">
-                  Transparence, traçabilité et performance : ce sont les piliers de mon approche.
+                  Clarté, fiabilité, utilité réelle : ce sont mes priorités.
                 </p>
               </div>
 
