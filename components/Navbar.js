@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import StatsWidget from './StatsWidget';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +39,6 @@ export default function Navbar() {
             <Link href="/#projects" className="text-gray-700 hover:text-primary-600 transition-colors">
               Projets
             </Link>
-            <StatsWidget />
             <Link href="/contact" className="btn-primary">
               Contact
             </Link>

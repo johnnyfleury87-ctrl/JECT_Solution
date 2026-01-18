@@ -16,10 +16,15 @@ export default function StatsWidget() {
   });
   const [showTooltip, setShowTooltip] = useState(false);
 
+  // Désactivé en production par défaut
+  const isEnabled = process.env.NEXT_PUBLIC_ENABLE_STATS === 'true';
+
   // Ping déjà géré par PingClient dans layout.js - on n'a plus besoin de ça ici
 
   // Récupérer les visiteurs actifs (toutes les 15 secondes)
   useEffect(() => {
+    if (!isEnabled) return;
+    
     const fetchActive = async () => {
       try {
         const res = await fetch('/api/active', {
@@ -42,28 +47,33 @@ export default function StatsWidget() {
     fetchActive();
     const interval = setInterval(fetchActive, 15000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isEnabled]);
 
   // Récupérer les stats complètes quand le modal s'ouvre
   useEffect(() => {
-    if (isOpen) {
-      const fetchStats = async () => {
-        try {
-          const res = await fetch('/api/stats', {
-            cache: 'no-store'
-          });
-          const data = await res.json();
-          setStats(data);
-          setTodayVisits(data.today || 0);
-        } catch (error) {
-          if (process.env.NODE_ENV === 'development') {
-            console.error('[StatsWidget] Erreur fetch stats:', error);
-          }
+    if (!isEnabled || !isOpen) return;
+    
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats', {
+          cache: 'no-store'
+        });
+        const data = await res.json();
+        setStats(data);
+        setTodayVisits(data.today || 0);
+      } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('[StatsWidget] Erreur fetch stats:', error);
         }
-      };
-      fetchStats();
-    }
-  }, [isOpen]);
+      }
+    };
+    fetchStats();
+  }, [isOpen, isEnabled]);
+
+  // Ne rien rendre si désactivé
+  if (!isEnabled) {
+    return null;
+  }
 
   return (
     <>
