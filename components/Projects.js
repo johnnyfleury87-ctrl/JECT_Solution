@@ -8,8 +8,8 @@ const projects = [
   {
     id: 'prodorga',
     name: 'ProdOrga',
-    status: 'En production',
-    statusColor: 'bg-green-100 text-green-800 border-green-200',
+    status: 'Pilote interne',
+    statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
     gradientColors: ['rgba(52, 211, 153, 0.25)', 'rgba(16, 185, 129, 0.40)'],

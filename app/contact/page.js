@@ -12,11 +12,13 @@ export default function ContactPage() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Contactez-nous
+              Discutons
             </h1>
             <p className="text-lg text-gray-600">
-              Vous avez un projet ? Une question ? N'hésitez pas à nous contacter.
-              Nous vous répondrons dans les plus brefs délais.
+              Une idée, un besoin, une question ? On en parle et on voit si ça a du sens.
+            </p>
+            <p className="text-sm text-amber-600 mt-3 font-medium">
+              💡 Le site est en préparation, certaines fonctionnalités sont en cours de finalisation.
             </p>
           </div>
           

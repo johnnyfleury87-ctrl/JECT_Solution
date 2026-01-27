@@ -165,10 +165,10 @@ export default function ContactForm() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
           >
             <option value="">Sélectionnez un type de demande</option>
-            <option value="Site web / plateforme">Site web / plateforme</option>
-            <option value="Amélioration ou optimisation existante">Amélioration ou optimisation existante</option>
-            <option value="Besoin métier concret">Besoin métier concret</option>
-            <option value="Discussion / échange">Discussion / échange</option>
+            <option value="Discussion">Discussion</option>
+            <option value="Question">Question</option>
+            <option value="Démo">Démo</option>
+            <option value="Partenariat">Partenariat</option>
             <option value="Autre">Autre</option>
           </select>
         </div>
