@@ -18,7 +18,7 @@ export default function ContactPage() {
               Une idée, un besoin, une question ? On en parle et on voit si ça a du sens.
             </p>
             <p className="text-sm text-amber-600 mt-3 font-medium">
-              💡 Le site est en préparation, certaines fonctionnalités sont en cours de finalisation.
+              💡 Structure opérationnelle, ouverture prochaine. Les prises de contact sont ouvertes dès maintenant.
             </p>
           </div>
           

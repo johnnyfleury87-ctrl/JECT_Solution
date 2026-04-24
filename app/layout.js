@@ -21,21 +21,12 @@ export default function RootLayout({ children }) {
     <html lang="fr">
       <body className={inter.className}>
         <PingClient />
-        {/* Bandeau "Site en préparation" */}
+        {/* Bandeau d'ouverture officielle */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2 px-4 text-center text-sm font-medium shadow-md">
-          🚧 Site en préparation – Ouverture prochainement
+          Entreprise prête, ouverture officielle prochainement.
         </div>
         <Navbar />
         <main className="min-h-screen relative">
-          {/* Watermark "SPÉCIMEN" */}
-          <div 
-            className="fixed inset-0 flex items-center justify-center pointer-events-none z-50"
-            style={{ opacity: 0.08 }}
-          >
-            <div className="text-9xl font-black text-gray-900 transform -rotate-45 select-none">
-              SPÉCIMEN
-            </div>
-          </div>
           {children}
         </main>
         <Footer />

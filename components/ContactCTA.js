@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function ContactCTA() {
   return (
-    <section className="section-padding bg-primary-600">
+    <section id="contact" className="section-padding bg-primary-600">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
