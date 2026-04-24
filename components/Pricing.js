@@ -12,9 +12,6 @@ const pricingExamples = [
       'Mise en place rapide',
       'Solution installée et utilisable immédiatement',
     ],
-    price: 'En général entre 400 € et 600 €',
-    subPrice: 'selon le contenu et les besoins',
-    note: 'Exemple indicatif, périmètre défini ensemble.',
   },
   {
     icon: '⚙️',
@@ -143,21 +140,25 @@ export default function Pricing() {
                 </p>
               )}
 
-              <div className="border-t border-gray-200 pt-4 space-y-2">
-                <div className="text-lg font-bold text-primary-600">
-                  💰 {example.price}
+              {(example.price || example.subPrice || example.note) && (
+                <div className="border-t border-gray-200 pt-4 space-y-2">
+                  {example.price && (
+                    <div className="text-lg font-bold text-primary-600">
+                      💰 {example.price}
+                    </div>
+                  )}
+                  {example.subPrice && (
+                    <p className="text-xs text-gray-500">
+                      {example.subPrice}
+                    </p>
+                  )}
+                  {example.note && (
+                    <p className="text-xs text-gray-500 italic mt-3 pt-3 border-t border-gray-100">
+                      {example.note}
+                    </p>
+                  )}
                 </div>
-                {example.subPrice && (
-                  <p className="text-xs text-gray-500">
-                    {example.subPrice}
-                  </p>
-                )}
-                {example.note && (
-                  <p className="text-xs text-gray-500 italic mt-3 pt-3 border-t border-gray-100">
-                    {example.note}
-                  </p>
-                )}
-              </div>
+              )}
             </motion.div>
           ))}
         </motion.div>
