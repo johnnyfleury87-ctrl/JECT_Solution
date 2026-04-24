@@ -39,7 +39,7 @@ const projects = [
       { id: 3, title: 'Dashboard temps réel', description: 'Pilotage de la production', image: '/images/prodorga/dashboard-temps-reel.png' }
     ],
     link: {
-      label: 'Découvrir le fonctionnement',
+      label: 'Voir comment l\'adapter à votre organisation',
       href: '#contact',
       type: 'contact'
     }

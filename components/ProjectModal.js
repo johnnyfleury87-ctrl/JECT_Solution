@@ -174,6 +174,23 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                         </motion.div>
                       ))}
                     </div>
+                    {project.id === 'prodorga' && (
+                      <p className="text-sm text-gray-600 mt-4 text-center">
+                        Les exemples ci-dessus illustrent des cas concrets, mais ne représentent qu'une partie des possibilités.
+                      </p>
+                    )}
+                    {project.id === 'prodorga' && (
+                      <div className="mt-4 p-4 rounded-xl border border-gray-200 bg-gray-50/70">
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                          ProdOrga n'est pas un outil figé.
+                          <br />
+                          Il s'appuie sur une base réelle déjà utilisée en production, que j'adapte et fais évoluer selon votre organisation, vos contraintes et vos objectifs terrain.
+                        </p>
+                        <p className="text-sm text-gray-700 leading-relaxed mt-3">
+                          Chaque entreprise étant différente, ces briques sont ajustées, combinées et développées pour construire une solution cohérente et utile.
+                        </p>
+                      </div>
+                    )}
                     <p className="text-xs text-gray-500 italic mt-4 text-center">
                       Captures d'écran réelles de l'interface ProdOrga en production
                     </p>
