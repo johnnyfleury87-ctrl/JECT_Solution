@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { checkSlidingWindowRateLimit } from '@/utils/security/rateLimit';
+import { checkSlidingWindowRateLimit, getClientIp } from '@/utils/security/rateLimit';
 import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from '@/utils/security/responses';
 import { logger } from '@/utils/security/logger';
+import { validateTurnstileToken } from '@/utils/security/turnstile';
+import { monitor } from '@/utils/security/monitor';
 
 export async function POST(request) {
   try {
@@ -37,11 +39,23 @@ export async function POST(request) {
       );
     }
 
-    const { name, email, company, requestType, message } = data;
+    const { name, email, company, requestType, message, turnstileToken } = data;
 
     if (!name || !email || !requestType || !message) {
       return NextResponse.json(
         { error: 'Données invalides.' },
+        { status: 400, headers: noStoreHeaders() }
+      );
+    }
+
+    // Cloudflare Turnstile server-side validation.
+    const clientIp = getClientIp(request);
+    const turnstileResult = await validateTurnstileToken(turnstileToken, clientIp);
+    if (!turnstileResult.success) {
+      monitor.increment('turnstile_rejected', { route: 'contact' });
+      logger.warn('Turnstile validation failed', { route: 'contact', errorCode: turnstileResult.error });
+      return NextResponse.json(
+        { error: 'Vérification anti-bot échouée. Veuillez réessayer.' },
         { status: 400, headers: noStoreHeaders() }
       );
     }

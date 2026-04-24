@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import Script from 'next/script';
 import { motion } from 'framer-motion';
 
 export default function ContactForm() {
@@ -18,6 +19,37 @@ export default function ContactForm() {
     message: '',
   });
 
+  // Cloudflare Turnstile
+  const turnstileRef = useRef(null);
+  const widgetIdRef = useRef(null);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  function renderTurnstile() {
+    if (!siteKey || !turnstileRef.current || !window.turnstile) return;
+    if (widgetIdRef.current != null) return; // Already rendered.
+    widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+      sitekey: siteKey,
+      callback: (token) => setTurnstileToken(token),
+      'expired-callback': () => setTurnstileToken(''),
+      'error-callback': () => setTurnstileToken(''),
+    });
+  }
+
+  useEffect(() => {
+    // Turnstile may already be loaded (e.g. navigating back).
+    if (window.turnstile) {
+      renderTurnstile();
+    }
+    return () => {
+      if (widgetIdRef.current != null && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current);
+        widgetIdRef.current = null;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -31,6 +63,15 @@ export default function ContactForm() {
     
     // Protection anti-spam : si le honeypot est rempli, c'est un bot
     if (formData.honeypot) {
+      return;
+    }
+
+    // Turnstile: if configured, require a valid token before submitting.
+    if (siteKey && !turnstileToken) {
+      setStatus({
+        type: 'error',
+        message: 'Veuillez compléter la vérification anti-bot avant d\'envoyer.',
+      });
       return;
     }
 
@@ -48,6 +89,7 @@ export default function ContactForm() {
           company: formData.company,
           requestType: formData.requestType,
           message: formData.message,
+          turnstileToken: turnstileToken || undefined,
         }),
       });
 
@@ -67,6 +109,11 @@ export default function ContactForm() {
           message: '',
           honeypot: '',
         });
+        // Reset Turnstile widget so it can be used again.
+        setTurnstileToken('');
+        if (widgetIdRef.current != null && window.turnstile) {
+          window.turnstile.reset(widgetIdRef.current);
+        }
       } else {
         setStatus({
           type: 'error',
@@ -88,6 +135,14 @@ export default function ContactForm() {
       transition={{ duration: 0.6 }}
       className="bg-white p-8 rounded-xl shadow-lg"
     >
+      {/* Cloudflare Turnstile script (only loaded when siteKey is configured) */}
+      {siteKey && (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+          strategy="lazyOnload"
+          onLoad={renderTurnstile}
+        />
+      )}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Champ honeypot caché pour anti-spam */}
         <input
@@ -188,6 +243,11 @@ export default function ContactForm() {
             placeholder="Décrivez votre projet ou votre demande..."
           />
         </div>
+
+        {/* Cloudflare Turnstile widget */}
+        {siteKey && (
+          <div ref={turnstileRef} className="flex justify-center" />
+        )}
 
         {/* Message de statut */}
         {status.message && (

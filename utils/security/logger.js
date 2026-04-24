@@ -1,3 +1,5 @@
+import { monitor } from '@/utils/security/monitor';
+
 const SENSITIVE_KEY_PATTERN = /(pass|password|token|secret|smtp|stack|config|authorization|cookie|email|user)/i;
 
 function sanitizeMeta(meta) {
@@ -35,6 +37,7 @@ function write(level, message, meta) {
 
   if (level === 'error') {
     console.error('[security]', ...payload);
+    monitor.increment('api_error', { route: safeMeta?.route });
     return;
   }
 

@@ -44,3 +44,46 @@
 ## Conformite
 - [x] Page de confidentialite publiee
 - [x] Finalites, conservation, droits et contact documentes
+
+## Anti-bot avance (Phase 4)
+- [x] Cloudflare Turnstile integre cote frontend (widget + Script lazyOnload)
+- [x] Validation Turnstile server-side obligatoire (/api/contact)
+- [x] Fail-secure en production si TURNSTILE_SECRET_KEY absent
+- [x] Timeout 5 s sur l'appel API Cloudflare
+- [x] Reset du widget apres soumission reussie
+
+## Rate limiting avance (Phase 5)
+- [x] Backoff progressif (×1 / ×2 / ×4 / ×8 / ×16)
+- [x] Compteur de strikes par IP
+- [x] Detection burst (5 hits en 5 secondes)
+- [x] Dual-key : limite par IP + par session (80 %)
+- [x] Journalisation des tentatives abusives via monitor
+
+## Durcissement CSP (Phase 6)
+- [x] img-src restreint (suppression wildcard https:)
+- [x] font-src restreint (suppression wildcard https:)
+- [x] style-src restreint (suppression wildcard https:)
+- [x] connect-src liste blanche explicite (Turnstile + Vercel + Upstash)
+- [x] frame-src ajoutee pour Turnstile iframe
+- [x] script-src liste blanche explicite (Turnstile + Vercel Analytics)
+
+## Monitoring & detection (Phase 7)
+- [x] monitor.js centralise les evenements de securite
+- [x] Compteurs par type d'evenement
+- [x] Rolling event log (200 entrees)
+- [x] Sanitisation des metadonnees sensibles
+- [x] Hook externe (Sentry / Logtail) via monitor.setSink()
+- [x] logger.error() remonte automatiquement dans monitor (api_error)
+
+## STATS_API_TOKEN hardening (Phase 8)
+- [x] Comparaison timing-safe (crypto.timingSafeEqual sur SHA-256)
+- [x] Longueur minimale 32 caracteres verifiee
+- [x] Acces refuse si token non configure (fail-secure)
+- [x] Tentatives refusees journalisees dans monitor
+
+## Tests de securite (Phase 9)
+- [x] Tests rate limit (7 cas)
+- [x] Tests guard/token (5 cas)
+- [x] Tests monitor (6 cas)
+- [x] Script npm run test:security
+- [x] Loader ESM pour alias @/ en contexte Node.js natif
