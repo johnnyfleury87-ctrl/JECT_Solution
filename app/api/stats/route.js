@@ -1,4 +1,8 @@
 import { Redis } from '@upstash/redis';
+import { requireInternalTokenInProduction } from '@/utils/security/guard';
+import { checkSlidingWindowRateLimit } from '@/utils/security/rateLimit';
+import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from '@/utils/security/responses';
+import { logger } from '@/utils/security/logger';
 
 export const dynamic = 'force-dynamic';
 
@@ -68,7 +72,25 @@ function getCurrentYearDates() {
   return dates;
 }
 
-export async function GET() {
+export async function GET(request) {
+  const protectionResponse = requireInternalTokenInProduction(request, 'STATS_API_TOKEN');
+  if (protectionResponse) {
+    return protectionResponse;
+  }
+
+  const rateCheck = checkSlidingWindowRateLimit({
+    request,
+    routeKey: 'stats',
+    limit: 10,
+    windowMs: 60_000,
+    blockDurationMs: 5 * 60_000,
+  });
+
+  if (!rateCheck.allowed) {
+    logger.warn('Stats route rate limited', { route: 'stats' });
+    return rateLimitExceededResponse(rateCheck.retryAfterSeconds);
+  }
+
   if (!redis) {
     return Response.json({
       today: 0,
@@ -77,7 +99,7 @@ export async function GET() {
       currentMonth: 0,
       year: 0
     }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+      headers: noStoreHeaders()
     });
   }
 
@@ -109,18 +131,10 @@ export async function GET() {
       currentMonth,
       year
     }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+      headers: noStoreHeaders()
     });
-  } catch (error) {
-    console.error('Stats error:', error);
-    return Response.json({
-      today: 0,
-      week: 0,
-      month: 0,
-      currentMonth: 0,
-      year: 0
-    }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
-    });
+  } catch {
+    logger.error('Stats route unexpected failure', { route: 'stats' });
+    return genericErrorResponse(500);
   }
 }

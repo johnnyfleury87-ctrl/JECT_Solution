@@ -5,28 +5,47 @@ import { useEffect, useRef } from 'react';
 // Génère un ID de session anonyme persistant
 function getOrCreateSessionId() {
   if (typeof window === 'undefined') return null;
-  
+
   const SESSION_KEY = 'jetc_session_id';
-  let sessionId = localStorage.getItem(SESSION_KEY);
-  
-  if (!sessionId) {
-    // Créer un ID unique basé sur timestamp + random
-    sessionId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem(SESSION_KEY, sessionId);
-    
-    if (process.env.NODE_ENV === 'development') {
-      console.debug('[PingClient] Nouvelle session créée:', sessionId);
+  const MAX_SESSION_AGE_MS = 24 * 60 * 60 * 1000;
+  const rawSession = localStorage.getItem(SESSION_KEY);
+
+  if (rawSession) {
+    try {
+      const parsed = JSON.parse(rawSession);
+      const age = Date.now() - Number(parsed.createdAt || 0);
+      if (parsed.id && age >= 0 && age <= MAX_SESSION_AGE_MS) {
+        return parsed.id;
+      }
+    } catch {
+      // On ignore la valeur corrompue et on régénère un identifiant.
     }
   }
-  
+
+  if (typeof crypto?.randomUUID !== 'function') {
+    return null;
+  }
+
+  const sessionId = crypto.randomUUID();
+  localStorage.setItem(
+    SESSION_KEY,
+    JSON.stringify({
+      id: sessionId,
+      createdAt: Date.now(),
+    })
+  );
+
   return sessionId;
 }
 
 export default function PingClient() {
   const sessionIdRef = useRef(null);
   const intervalRef = useRef(null);
+  const isStatsEnabled = process.env.NEXT_PUBLIC_ENABLE_STATS === 'true';
 
   useEffect(() => {
+    if (!isStatsEnabled) return;
+
     // Obtenir ou créer la session ID
     sessionIdRef.current = getOrCreateSessionId();
     
@@ -74,7 +93,7 @@ export default function PingClient() {
         clearInterval(intervalRef.current);
       }
     };
-  }, []);
+  }, [isStatsEnabled]);
 
   // Composant invisible
   return null;

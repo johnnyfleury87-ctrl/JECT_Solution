@@ -1,4 +1,8 @@
 import { Redis } from '@upstash/redis';
+import { requireInternalTokenInProduction } from '@/utils/security/guard';
+import { checkSlidingWindowRateLimit } from '@/utils/security/rateLimit';
+import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from '@/utils/security/responses';
+import { logger } from '@/utils/security/logger';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,10 +15,28 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
   });
 }
 
-export async function GET() {
+export async function GET(request) {
+  const protectionResponse = requireInternalTokenInProduction(request, 'STATS_API_TOKEN');
+  if (protectionResponse) {
+    return protectionResponse;
+  }
+
+  const rateCheck = checkSlidingWindowRateLimit({
+    request,
+    routeKey: 'active',
+    limit: 10,
+    windowMs: 60_000,
+    blockDurationMs: 5 * 60_000,
+  });
+
+  if (!rateCheck.allowed) {
+    logger.warn('Active route rate limited', { route: 'active' });
+    return rateLimitExceededResponse(rateCheck.retryAfterSeconds);
+  }
+
   if (!redis) {
     return Response.json({ active: 0 }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+      headers: noStoreHeaders()
     });
   }
 
@@ -36,10 +58,10 @@ export async function GET() {
     }
     
     return Response.json({ active: activeCount }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+      headers: noStoreHeaders()
     });
-  } catch (error) {
-    console.error('Active visitors error:', error);
-    return Response.json({ active: 0 });
+  } catch {
+    logger.error('Active route unexpected failure', { route: 'active' });
+    return genericErrorResponse(500);
   }
 }

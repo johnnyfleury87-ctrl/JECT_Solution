@@ -31,7 +31,6 @@ export default function ContactForm() {
     
     // Protection anti-spam : si le honeypot est rempli, c'est un bot
     if (formData.honeypot) {
-      console.log('Bot détecté');
       return;
     }
 
@@ -71,7 +70,7 @@ export default function ContactForm() {
       } else {
         setStatus({
           type: 'error',
-          message: data.error || 'Une erreur est survenue lors de l\'envoi. Merci de réessayer ou de nous contacter par email.',
+          message: data.message || data.error || 'Une erreur est survenue lors de l\'envoi. Merci de réessayer ou de nous contacter par email.',
         });
       }
     } catch (error) {

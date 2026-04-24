@@ -1,4 +1,7 @@
 import { Redis } from '@upstash/redis';
+import { checkSlidingWindowRateLimit } from '@/utils/security/rateLimit';
+import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from '@/utils/security/responses';
+import { logger } from '@/utils/security/logger';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,13 +16,23 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 export async function POST(request) {
+  const rateCheck = checkSlidingWindowRateLimit({
+    request,
+    routeKey: 'ping',
+    limit: 10,
+    windowMs: 60_000,
+    blockDurationMs: 5 * 60_000,
+  });
+
+  if (!rateCheck.allowed) {
+    logger.warn('Ping route rate limited', { route: 'ping' });
+    return rateLimitExceededResponse(rateCheck.retryAfterSeconds);
+  }
+
   if (!redis) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('[/api/ping] Redis non configuré: UPSTASH_REDIS_REST_URL ou UPSTASH_REDIS_REST_TOKEN manquants');
-    }
-    return Response.json({ error: 'env_missing', message: 'Analytics not configured' }, { 
+    return Response.json({ error: 'Une erreur est survenue.' }, {
       status: 503,
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+      headers: noStoreHeaders()
     });
   }
 
@@ -27,10 +40,10 @@ export async function POST(request) {
     const body = await request.json().catch(() => ({}));
     const sessionId = body.sessionId;
     
-    if (!sessionId) {
-      return Response.json({ error: 'sessionId required' }, { 
+    if (!sessionId || typeof sessionId !== 'string' || sessionId.length < 10 || sessionId.length > 80) {
+      return Response.json({ error: 'Données invalides.' }, {
         status: 400,
-        headers: { 'Cache-Control': 'no-store, must-revalidate' }
+        headers: noStoreHeaders()
       });
     }
     
@@ -44,14 +57,11 @@ export async function POST(request) {
     const today = new Date().toISOString().split('T')[0];
     await redis.incr(`visits:${today}`);
     
-    return Response.json({ ok: true, sessionId }, {
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
+    return Response.json({ ok: true }, {
+      headers: noStoreHeaders()
     });
-  } catch (error) {
-    console.error('[/api/ping] Erreur:', error);
-    return Response.json({ error: 'Failed to record visit' }, { 
-      status: 500,
-      headers: { 'Cache-Control': 'no-store, must-revalidate' }
-    });
+  } catch {
+    logger.error('Ping route unexpected failure', { route: 'ping' });
+    return genericErrorResponse(500);
   }
 }

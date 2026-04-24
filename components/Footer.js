@@ -44,6 +44,11 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link href="/confidentialite" className="text-gray-400 hover:text-white transition-colors">
+                  Confidentialite
+                </Link>
+              </li>
             </ul>
           </div>
 
