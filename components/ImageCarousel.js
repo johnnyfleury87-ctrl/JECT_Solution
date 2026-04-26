@@ -6,10 +6,10 @@ import Image from 'next/image';
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 // Pour ajouter image11.jpg, image12.jpg…, augmentez simplement TOTAL_IMAGES.
-const TOTAL_IMAGES = 10;
+const TOTAL_IMAGES = 7;
 
 const images = Array.from({ length: TOTAL_IMAGES }, (_, i) => ({
-  src: `/image/image${i + 1}.jpg`,
+  src: `/image/image${i + 1}.png`,
   alt: `Réalisation ${i + 1}`,
 }));
 
