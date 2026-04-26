@@ -6,6 +6,7 @@ import Projects from '@/components/Projects';
 import Benefits from '@/components/Benefits';
 import Pricing from '@/components/Pricing';
 import ContactCTA from '@/components/ContactCTA';
+import ImageCarousel from '@/components/ImageCarousel';
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Signature />
       <WorkProcess />
       <Projects />
+      <ImageCarousel />
       <Benefits />
       <Pricing />
       <ContactCTA />
