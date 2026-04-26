@@ -73,9 +73,9 @@ Des outils simples, fiables et adaptés.
                 </p>
                 
                 <p>
-                  <strong>JETC ne propose pas de logiciel miracle.</strong> Je conçois des outils sur mesure, 
-                  pensés pour votre métier, vos contraintes réelles. Pas de promesses exagérées, 
-                  pas de formations interminables : juste ce qui fonctionne, dans la durée.
+                  <strong>JETC ne propose pas de solutions standardisées.</strong> Je conçois des outils sur mesure,
+                  pensés pour votre métier, vos contraintes réelles. Pas de promesses irréalistes :
+                  uniquement des solutions concrètes avec un impact réel sur vos opérations, dans la durée.
                 </p>
                 
                 <p className="text-primary-700 font-semibold italic">

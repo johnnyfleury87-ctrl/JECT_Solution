@@ -33,7 +33,7 @@ const pricingExamples = [
       'Réponse à un besoin précis',
       'Adaptée à la réalité du terrain',
       'Pensée pour simplifier le quotidien',
-      'Pas de solution générique imposée',
+      'Chaque solution conçue pour votre contexte spécifique',
     ],
     description: 'Approche "vous gagnez / je gagne" : gain de temps, meilleure visibilité, moins d\'erreurs, solution qui travaille à votre place.',
     price: 'Définie en fonction de la valeur créée',
@@ -46,7 +46,7 @@ const notIncluded = [
   "Pas d'abonnement imposé",
   "Pas de dépendance forcée",
   "Pas de jargon technique",
-  "Pas de promesses irréalistes",
+  "Uniquement des engagements concrets et vérifiables",
 ];
 
 const containerVariants = {

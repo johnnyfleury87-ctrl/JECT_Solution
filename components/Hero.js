@@ -80,8 +80,8 @@ export default function Hero() {
                   variants={itemVariants}
                   className="font-medium text-gray-900 bg-primary-50 border-l-4 border-primary-600 pl-4 py-3 rounded-r"
                 >
-                  Pas de solution miracle <span className="text-sm">(désolé 😅)</span>.<br />
-                  Juste de l'écoute, du travail sur mesure, et des résultats mesurables.
+                  Pas de solution générique : chaque système est conçu pour votre contexte et pour produire des résultats mesurables.<br />
+                  Écoute, travail sur mesure, impact concret.
                 </motion.p>
               </div>
 

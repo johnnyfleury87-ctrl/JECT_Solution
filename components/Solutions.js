@@ -192,8 +192,8 @@ export default function Solutions() {
           className="mt-16 text-center"
         >
           <p className="text-lg text-gray-600 max-w-3xl mx-auto italic">
-            Cette vision guide chaque projet. Pas de solution miracle, juste du travail de qualité 
-            au service de <strong>vos résultats</strong>.
+            Cette vision guide chaque projet. Chaque solution est conçue spécifiquement pour produire des résultats mesurables,
+            au service de <strong>vos performances réelles</strong>.
           </p>
         </motion.div>
       </div>
