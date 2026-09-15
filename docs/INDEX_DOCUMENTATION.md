@@ -21,6 +21,7 @@
 
 - [Checklist sécurité](security/SECURITY_CHECKLIST.md)
 - [Suivi de l’audit des dépendances](security/DEPENDENCY_AUDIT.md)
+- [Rate limiting et migration future](security/RATE_LIMITING.md)
 - [Rotation des credentials](security/ROTATION_CREDENTIALS.md)
 
 ## Documents de travail

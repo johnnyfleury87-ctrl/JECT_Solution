@@ -5,6 +5,7 @@ import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from 
 import { logger } from '@/utils/security/logger';
 import { validateTurnstileToken } from '@/utils/security/turnstile';
 import { monitor } from '@/utils/security/monitor';
+import { parseContactRequest, validateContactPayload } from '@/utils/security/contactValidation';
 
 export async function POST(request) {
   try {
@@ -21,32 +22,24 @@ export async function POST(request) {
       return rateLimitExceededResponse(rateCheck.retryAfterSeconds);
     }
 
-    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
-
-    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
-      logger.error('Contact route SMTP environment missing', { route: 'contact' });
-      return genericErrorResponse(500);
-    }
-
-    let data;
-    try {
-      data = await request.json();
-    } catch {
-      logger.warn('Contact route invalid JSON payload', { route: 'contact' });
+    const parsedRequest = await parseContactRequest(request);
+    if (!parsedRequest.ok) {
+      logger.warn('Contact route invalid request payload', { route: 'contact', reason: parsedRequest.error });
       return NextResponse.json(
         { error: 'Données invalides.' },
         { status: 400, headers: noStoreHeaders() }
       );
     }
 
-    const { name, email, company, requestType, message, turnstileToken } = data;
-
-    if (!name || !email || !requestType || !message) {
+    const validatedPayload = validateContactPayload(parsedRequest.data);
+    if (!validatedPayload.valid) {
       return NextResponse.json(
         { error: 'Données invalides.' },
         { status: 400, headers: noStoreHeaders() }
       );
     }
+
+    const { name, email, company, requestType, message, turnstileToken } = validatedPayload.data;
 
     // Cloudflare Turnstile server-side validation.
     const clientIp = getClientIp(request);
@@ -60,26 +53,11 @@ export async function POST(request) {
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Données invalides.' },
-        { status: 400, headers: noStoreHeaders() }
-      );
-    }
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
 
-    if (name.length < 2 || name.length > 100) {
-      return NextResponse.json(
-        { error: 'Données invalides.' },
-        { status: 400, headers: noStoreHeaders() }
-      );
-    }
-
-    if (message.length < 10 || message.length > 2000) {
-      return NextResponse.json(
-        { error: 'Données invalides.' },
-        { status: 400, headers: noStoreHeaders() }
-      );
+    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
+      logger.error('Contact route SMTP environment missing', { route: 'contact' });
+      return genericErrorResponse(500);
     }
 
     const port = Number(SMTP_PORT);
