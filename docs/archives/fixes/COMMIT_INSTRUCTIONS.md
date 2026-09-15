@@ -9,8 +9,8 @@ Voici la liste complète des fichiers créés et modifiés pour ce fix:
 components/PingClient.js                    ← Composant ping automatique
 scripts/test-api.sh                         ← Script de test des API
 FIX_COMPTEUR_EN_LIGNE.md                   ← Documentation du fix
-TEST_ACTIVE_USERS.md                        ← Guide de test
-DEPLOIEMENT_STATS_PRODUCTION.md            ← Guide de déploiement
+../../deployment/STATISTICS.md                        ← Guide de test
+../../deployment/STATISTICS.md            ← Guide de déploiement
 COMMIT_INSTRUCTIONS.md                      ← Ce fichier
 ```
 
@@ -62,8 +62,8 @@ git add app/layout.js
 
 # Documentation
 git add FIX_COMPTEUR_EN_LIGNE.md
-git add TEST_ACTIVE_USERS.md
-git add DEPLOIEMENT_STATS_PRODUCTION.md
+git add ../../deployment/STATISTICS.md
+git add ../../deployment/STATISTICS.md
 git add COMMIT_INSTRUCTIONS.md
 
 # Scripts
@@ -275,8 +275,8 @@ curl -X GET https://xxxxx.upstash.io/keys/* \
 ## 📚 Documentation
 
 - [FIX_COMPTEUR_EN_LIGNE.md](FIX_COMPTEUR_EN_LIGNE.md) - Détails techniques du fix
-- [TEST_ACTIVE_USERS.md](TEST_ACTIVE_USERS.md) - Guide de test complet
-- [DEPLOIEMENT_STATS_PRODUCTION.md](DEPLOIEMENT_STATS_PRODUCTION.md) - Configuration Vercel
+- [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Guide de test complet
+- [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Configuration Vercel
 
 ## 🎯 Commandes de référence rapide
 

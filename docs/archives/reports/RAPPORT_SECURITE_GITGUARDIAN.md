@@ -37,7 +37,7 @@ GitGuardian a probablement détecté :
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_MOT_DE_PASSE_ICI  ← Placeholder, pas un secret
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -45,11 +45,11 @@ SMTP_FROM=contact@jetc-immo.ch
 
 #### ✅ Fichiers de Documentation (SAFE)
 Les fichiers suivants contiennent l'email et des exemples :
-- `QUICKSTART.md`
-- `CONFIG_FORMULAIRE_CONTACT.md`
-- `DEPLOIEMENT_FORMULAIRE.md`
-- `README_FORMULAIRE.md`
-- `IMPLEMENTATION_COMPLETE.md`
+- `../../setup/QUICKSTART.md`
+- `../../contact-form/README.md`
+- `../../contact-form/README.md`
+- `../../contact-form/README.md`
+- `../../contact-form/README.md`
 - Etc.
 
 **Verdict :** ✅ **SAFE** - Documentation avec exemples
@@ -135,7 +135,7 @@ const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_MOT_DE_PASSE_REEL_ICI
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -151,7 +151,7 @@ Ajoutez les **5 variables** suivantes pour **Production** :
 SMTP_HOST = mail.infomaniak.com
 SMTP_PORT = 587
 SMTP_USER = contact@jetc-immo.ch
-SMTP_PASS = [votre_mot_de_passe_reel]
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM = contact@jetc-immo.ch
 ```
 

@@ -38,7 +38,7 @@ Puis éditez `.env.local` et remplacez le mot de passe :
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_VRAI_MOT_DE_PASSE_ICI  ← Changez ici !
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -70,10 +70,10 @@ git push
 
 | Document | Description |
 |----------|-------------|
-| [IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md) | 📋 Résumé complet de l'implémentation |
-| [CONFIG_FORMULAIRE_CONTACT.md](CONFIG_FORMULAIRE_CONTACT.md) | 🔧 Guide technique + troubleshooting |
-| [DEPLOIEMENT_FORMULAIRE.md](DEPLOIEMENT_FORMULAIRE.md) | 🚀 Checklist de déploiement |
-| [.env.example](.env.example) | ⚙️ Template des variables |
+| [../../contact-form/README.md](../../contact-form/README.md) | 📋 Résumé complet de l'implémentation |
+| [../../contact-form/README.md](../../contact-form/README.md) | 🔧 Guide technique + troubleshooting |
+| [../../contact-form/README.md](../../contact-form/README.md) | 🚀 Checklist de déploiement |
+| [.env.example](../../../.env.example) | ⚙️ Template des variables |
 
 ---
 
@@ -128,8 +128,8 @@ app/api/contact/route.js       ← Backend avec double envoi
 
 ## 💡 Prêt à commencer ?
 
-1. **Lisez** [IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md)
-2. **Suivez** [DEPLOIEMENT_FORMULAIRE.md](DEPLOIEMENT_FORMULAIRE.md)  
+1. **Lisez** [../../contact-form/README.md](../../contact-form/README.md)
+2. **Suivez** [../../contact-form/README.md](../../contact-form/README.md)
 3. **Testez** en local
 4. **Déployez** sur Vercel
 

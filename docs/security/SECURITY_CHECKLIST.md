@@ -1,4 +1,6 @@
-# Security Checklist
+# Checklist sécurité
+
+> État documentaire au 15 septembre 2026. Les cases historiques décrivent les contrôles présents dans le dépôt ; elles ne remplacent pas le suivi de l’audit des dépendances dans [DEPENDENCY_AUDIT.md](./DEPENDENCY_AUDIT.md).
 
 ## API & abus
 - [x] Rate limit actif sur /api/contact
@@ -35,11 +37,11 @@
 - [x] Filtrage des metadonnees sensibles
 - [x] Logs client inutiles supprimes
 
-## Dependances
-- [x] npm audit fixe
-- [x] next mis a jour
-- [x] nodemailer mis a jour
-- [x] Audit final: 0 vulnerabilite
+## Dépendances
+- [ ] Audit npm sans vulnérabilité : suivi dans [DEPENDENCY_AUDIT.md](./DEPENDENCY_AUDIT.md)
+- [ ] Mise à jour corrective de Next.js validée
+- [ ] Évaluation de la migration majeure de Nodemailer
+- [ ] Revalidation des dépendances transitives
 
 ## Conformite
 - [x] Page de confidentialite publiee

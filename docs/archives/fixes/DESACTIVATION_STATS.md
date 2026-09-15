@@ -20,13 +20,13 @@ Par défaut (non défini) = **désactivé en production**
 
 ### 2. Retrait de la Navbar
 
-- ❌ Retiré l'import `StatsWidget` dans [components/Navbar.js](components/Navbar.js)
+- ❌ Retiré l'import `StatsWidget` dans [components/Navbar.js](../../../components/Navbar.js)
 - ❌ Retiré le composant `<StatsWidget />` du menu desktop
 - ✅ Menu propre sans icône de statistiques
 
 ### 3. Code conservé mais inactif
 
-Le composant [components/StatsWidget.js](components/StatsWidget.js) existe toujours mais :
+Le composant [components/StatsWidget.js](../../../components/StatsWidget.js) existe toujours mais :
 - Ne se rend pas si `NEXT_PUBLIC_ENABLE_STATS !== 'true'`
 - Les hooks React sont appelés correctement (pas d'erreur de build)
 - Les `useEffect` vérifient le flag avant d'exécuter
@@ -35,10 +35,10 @@ Le composant [components/StatsWidget.js](components/StatsWidget.js) existe toujo
 
 | Fichier | Modification |
 |---------|-------------|
-| [components/StatsWidget.js](components/StatsWidget.js) | Ajout du flag `isEnabled` + garde `return null` |
-| [components/Navbar.js](components/Navbar.js) | Retrait de l'import et du composant |
-| [.env.example](.env.example) | Documentation du flag `NEXT_PUBLIC_ENABLE_STATS` |
-| [.env.local.example](.env.local.example) | Documentation du flag avec avertissement |
+| [components/StatsWidget.js](../../../components/StatsWidget.js) | Ajout du flag `isEnabled` + garde `return null` |
+| [components/Navbar.js](../../../components/Navbar.js) | Retrait de l'import et du composant |
+| [.env.example](../../../.env.example) | Documentation du flag `NEXT_PUBLIC_ENABLE_STATS` |
+| [.env.local.example](../../../.env.local.example) | Documentation du flag avec avertissement |
 
 ## Vérifications
 

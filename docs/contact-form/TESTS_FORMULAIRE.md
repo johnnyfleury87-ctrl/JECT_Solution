@@ -200,7 +200,7 @@ Soumettez 3 formulaires en même temps :
 #### Test 18 : SMTP incorrect (à faire en dev)
 Modifiez temporairement `.env.local` avec un mauvais mot de passe :
 ```
-SMTP_PASS=mauvais_mot_de_passe
+SMTP_PASS=valeur-locale-uniquement
 ```
 
 **Attendu :**

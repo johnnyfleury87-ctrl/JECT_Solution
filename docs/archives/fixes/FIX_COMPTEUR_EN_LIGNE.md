@@ -14,9 +14,9 @@ Le compteur d'utilisateurs "En ligne" affichait toujours **0**, même avec des u
 - ✅ Headers `Cache-Control: no-store, must-revalidate` sur toutes les réponses
 
 **Fichiers modifiés:**
-- [app/api/ping/route.js](app/api/ping/route.js)
-- [app/api/active/route.js](app/api/active/route.js)
-- [app/api/stats/route.js](app/api/stats/route.js)
+- [app/api/ping/route.js](../../../app/api/ping/route.js)
+- [app/api/active/route.js](../../../app/api/active/route.js)
+- [app/api/stats/route.js](../../../app/api/stats/route.js)
 
 ### 2. ❌ SessionId non persistante
 **Problème:** Chaque ping créait une nouvelle session basée sur `hash(userAgent + timestamp/heure)`, donc la même personne créait une nouvelle session toutes les heures.
@@ -27,7 +27,7 @@ Le compteur d'utilisateurs "En ligne" affichait toujours **0**, même avec des u
 - ✅ Envoi de cette `sessionId` à chaque ping
 
 **Fichier créé:**
-- [components/PingClient.js](components/PingClient.js)
+- [components/PingClient.js](../../../components/PingClient.js)
 
 ### 3. ❌ Pas de ping global
 **Problème:** Le ping était uniquement dans `StatsWidget`, donc pas de ping si le widget n'était pas ouvert.
@@ -38,7 +38,7 @@ Le compteur d'utilisateurs "En ligne" affichait toujours **0**, même avec des u
 - ✅ Fonctionne sur TOUTES les pages du site
 
 **Fichier modifié:**
-- [app/layout.js](app/layout.js)
+- [app/layout.js](../../../app/layout.js)
 
 ### 4. ❌ Polling trop lent
 **Problème:** Le widget rafraîchissait le compteur toutes les 30 secondes, pas assez réactif.
@@ -49,7 +49,7 @@ Le compteur d'utilisateurs "En ligne" affichait toujours **0**, même avec des u
 - ✅ Logs de debug uniquement en développement
 
 **Fichier modifié:**
-- [components/StatsWidget.js](components/StatsWidget.js)
+- [components/StatsWidget.js](../../../components/StatsWidget.js)
 
 ### 5. ❌ Gestion d'erreurs insuffisante
 **Problème:** Messages d'erreur génériques, difficile de diagnostiquer.
@@ -65,8 +65,8 @@ Le compteur d'utilisateurs "En ligne" affichait toujours **0**, même avec des u
 ### Créés
 ```
 components/PingClient.js          ← Nouveau composant pour le ping automatique
-TEST_ACTIVE_USERS.md              ← Guide de test
-DEPLOIEMENT_STATS_PRODUCTION.md   ← Guide de déploiement
+../../deployment/STATISTICS.md              ← Guide de test
+../../deployment/STATISTICS.md   ← Guide de déploiement
 FIX_COMPTEUR_EN_LIGNE.md          ← Ce fichier
 ```
 
@@ -191,7 +191,7 @@ Seuls les `console.error()` sont loggés sur Vercel.
 
 ## 🚀 Déploiement
 
-Voir le guide complet: [DEPLOIEMENT_STATS_PRODUCTION.md](DEPLOIEMENT_STATS_PRODUCTION.md)
+Voir le guide complet: [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md)
 
 **Checklist rapide:**
 1. ✅ Commit + push des changements
@@ -213,8 +213,8 @@ Après le fix:
 
 ## 📚 Références
 
-- [TEST_ACTIVE_USERS.md](TEST_ACTIVE_USERS.md) - Guide de test complet
-- [DEPLOIEMENT_STATS_PRODUCTION.md](DEPLOIEMENT_STATS_PRODUCTION.md) - Guide de déploiement
+- [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Guide de test complet
+- [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Guide de déploiement
 - [Next.js Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers)
 - [Upstash Redis Docs](https://upstash.com/docs/redis)
 - [Vercel KV Docs](https://vercel.com/docs/storage/vercel-kv)

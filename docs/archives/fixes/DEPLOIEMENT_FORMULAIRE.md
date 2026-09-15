@@ -28,7 +28,7 @@ Remplacez `VOTRE_MOT_DE_PASSE_ICI` par le vrai mot de passe :
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_VRAI_MOT_DE_PASSE
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -59,7 +59,7 @@ Allez sur http://localhost:3000/contact et testez le formulaire.
 SMTP_HOST = mail.infomaniak.com
 SMTP_PORT = 587
 SMTP_USER = contact@jetc-immo.ch
-SMTP_PASS = votre_mot_de_passe
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM = contact@jetc-immo.ch
 ```
 
@@ -126,8 +126,8 @@ git push
 Ajoutez temporairement dans `app/api/contact/route.js` :
 
 ```javascript
-console.log('SMTP_USER:', process.env.SMTP_USER);
-console.log('SMTP_HOST:', process.env.SMTP_HOST);
+Ne pas afficher la variable d’environnement SMTP_USER dans les logs.
+Ne pas afficher la variable d’environnement SMTP_HOST dans les logs.
 ```
 
 Puis consultez les logs dans Vercel.
@@ -142,8 +142,8 @@ Puis consultez les logs dans Vercel.
 /components/ContactForm.js          ← Formulaire frontend
 /app/api/contact/route.js          ← API avec double envoi email
 /.env.example                       ← Template variables
-/CONFIG_FORMULAIRE_CONTACT.md      ← Documentation complète
-/DEPLOIEMENT_FORMULAIRE.md         ← Ce fichier
+/../../contact-form/README.md      ← Documentation complète
+/../../contact-form/README.md         ← Ce fichier
 ```
 
 ---
