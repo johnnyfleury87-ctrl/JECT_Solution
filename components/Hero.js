@@ -45,43 +45,37 @@ export default function Hero() {
                 variants={itemVariants}
                 className="text-primary-600 font-medium mb-3 text-sm uppercase tracking-wide"
               >
-                Automatisez vos processus & gagnez en efficacité
+                ANALYSE OPÉRATIONNELLE • AUTOMATISATION • SIMULATION
               </motion.p>
               
               <motion.h1 
                 variants={itemVariants}
                 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight"
               >
-                Vous passez trop de temps sur des tâches{' '}
+                Rendez visibles vos{' '}
                 <span className="text-orange-600 relative">
-                  répétitives
+                  coûts cachés
                   <svg className="absolute -bottom-1 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
                     <path d="M0,7 Q25,3 50,5 T100,7" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
                   </svg>
-                </span>{' '}
-                qui ne créent pas de valeur ?
+                </span>
+                . Testez vos décisions avant d’investir.
               </motion.h1>
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed mb-8">
                 <motion.p variants={itemVariants}>
-                  Je connais cette frustration. Celle de voir son temps partir dans des{' '}
-                  <span className="font-semibold text-gray-900">saisies manuelles</span>, des{' '}
-                  <span className="font-semibold text-gray-900">suivis Excel interminables</span>, 
-                  des oublis et des erreurs qui coûtent cher.
-                </motion.p>
-                
-                <motion.p variants={itemVariants}>
-                  Je transforme ces irritants quotidiens en processus{' '}
-                  <span className="text-green-600 font-semibold">fluides</span> et{' '}
-                  <span className="text-blue-600 font-semibold">automatisés</span>.
+                  J’analyse vos flux, vos temps, vos ressources et vos outils existants afin
+                  d’identifier les pertes invisibles et de simuler différents scénarios
+                  d’amélioration.
                 </motion.p>
                 
                 <motion.p 
                   variants={itemVariants}
                   className="font-medium text-gray-900 bg-primary-50 border-l-4 border-primary-600 pl-4 py-3 rounded-r"
                 >
-                  Pas de solution générique : chaque système est conçu pour votre contexte et pour produire des résultats mesurables.<br />
-                  Écoute, travail sur mesure, impact concret.
+                  Pas de solution générique ni de remplacement imposé : je m’appuie sur votre
+                  environnement existant pour construire une démarche mesurable, adaptée à la
+                  réalité du terrain.
                 </motion.p>
               </div>
 
@@ -94,7 +88,7 @@ export default function Hero() {
                   className="btn-primary text-base inline-flex items-center justify-center group relative overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center">
-                    Parlons de votre situation
+                    Étudier un processus
                     <svg 
                       className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" 
                       fill="none" 
@@ -111,7 +105,7 @@ export default function Hero() {
                   href="/#process" 
                   className="btn-secondary text-base inline-flex items-center justify-center group"
                 >
-                  Comment je travaille
+                  Découvrir la méthode
                   <svg 
                     className="w-5 h-5 ml-2 group-hover:rotate-90 transition-transform duration-300" 
                     fill="none" 

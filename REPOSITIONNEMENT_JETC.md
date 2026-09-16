@@ -12,43 +12,88 @@ certifications non validés.
 
 ## 2. Décisions validées
 
-- Aucune décision de contenu/repositionnement n'est encore validée à ce stade (étape 1 = cadrage uniquement).
-- Aucune modification du site n'a été effectuée pendant cette étape.
+- Repositionnement de JETC Solution : passage d'un discours "agence de création de sites" à un
+  discours "analyse opérationnelle, automatisation et simulation".
+- Étape 1 de repositionnement = uniquement le bandeau d'annonce, l'accroche, le titre principal,
+  le texte d'introduction, le bloc complémentaire, les CTA et les métadonnées de la page d'accueil
+  (`components/Hero.js` + `app/layout.js`). Les autres sections (`Solutions`, `Signature`,
+  `WorkProcess`, `Projects`, `ImageCarousel`, `Benefits`, `Pricing`, `ContactCTA`, `Navbar`,
+  `Footer`) ne sont pas touchées.
+- Aucune mention de Migros Online, RELEX, ProcSim ou SimWell à ce stade.
+- Design, structure graphique, comportement responsive et carte identité (partie droite du Hero)
+  conservés à l'identique.
 
 ## 3. Liste complète des étapes
 
 | # | Étape | Statut |
 |---|-------|--------|
 | 1 | Inspection du projet, de l'état Git, des composants de la page d'accueil, des routes et des commandes de validation. Création du fichier de suivi. | ✅ Fait |
-| 2 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 2 | Repositionnement de la page d'accueil : bandeau d'annonce, accroche, titre principal, texte
+  d'introduction, bloc complémentaire, CTA et métadonnées (titre/description). | ✅ Fait |
+| 3 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
 ### Étape 1
 - Création de `REPOSITIONNEMENT_JETC.md` (nouveau fichier, aucun autre fichier touché).
 
+### Étape 2 — Repositionnement page d'accueil
+- `app/layout.js` : texte du bandeau d'annonce + métadonnées globales (`title`, `description`).
+- `components/Hero.js` : accroche au-dessus du titre, titre principal (`h1`), texte
+  d'introduction, bloc complémentaire encadré, libellés des deux boutons CTA.
+
 ## 5. Textes définitifs intégrés
 
-_Aucun texte définitif validé pour l'instant._
+### Étape 2 — Page d'accueil
+
+- Bandeau d'annonce (`app/layout.js`) :
+  « JETC Solution entre en phase pilote — premières collaborations ouvertes. »
+- Accroche au-dessus du titre (`components/Hero.js`) :
+  « ANALYSE OPÉRATIONNELLE • AUTOMATISATION • SIMULATION »
+- Titre principal (`components/Hero.js`, mot-clé "coûts cachés" mis en évidence en orange,
+  identique au traitement visuel précédent) :
+  « Rendez visibles vos coûts cachés. Testez vos décisions avant d'investir. »
+- Texte d'introduction :
+  « J'analyse vos flux, vos temps, vos ressources et vos outils existants afin d'identifier les
+  pertes invisibles et de simuler différents scénarios d'amélioration. »
+- Bloc complémentaire (encadré) :
+  « Pas de solution générique ni de remplacement imposé : je m'appuie sur votre environnement
+  existant pour construire une démarche mesurable, adaptée à la réalité du terrain. »
+- CTA principal : « Étudier un processus » (lien `/contact`, inchangé).
+- CTA secondaire : « Découvrir la méthode » (lien `/#process`, inchangé).
+- Métadonnées (`app/layout.js`) :
+  - Titre : « JETC Solution | Analyse opérationnelle, automatisation et simulation »
+  - Description : « JETC Solution accompagne les entreprises dans l'analyse de leurs flux,
+    l'identification des coûts cachés, l'automatisation des processus et la simulation de
+    scénarios d'amélioration. »
 
 ## 6. Tests réalisés et leurs résultats
 
-_Aucun test exécuté à cette étape (aucune modification de code)._
+### Étape 2
+- `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
+  (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi (`✓ Compiled successfully`), 8 pages générées,
+  route `/` = 13 kB / 159 kB First Load JS. Aucune régression détectée.
 
 ## 7. Points restant à traiter
 
-- Définir avec l'utilisateur le contenu exact du repositionnement (message, cible, arguments,
-  sections impactées).
-- Étape 2 et suivantes à planifier une fois les décisions de contenu validées.
+- Repositionner les autres sections de la page d'accueil (`Solutions`, `Signature`,
+  `WorkProcess`, `Projects`, `Benefits`, `Pricing`, `ContactCTA`) si demandé dans une étape
+  suivante.
+- Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
+  alignement avec le nouveau discours (à valider avec l'utilisateur).
+- Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
 
 | Étape | Hash | Message |
 |-------|------|---------|
-| 1 | `67223ad`* | docs: init suivi repositionnement JETC |
+| 1 | `7fee2d0` | docs: init suivi repositionnement JETC |
+| 2 | `40ebbaa`* | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
 
-\* auto-référence impossible (le hash change dès qu'on l'inscrit) : voir `git log --oneline -1`
-pour le hash exact du commit courant de cette étape.
+\* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
+faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
 
 ---
 
