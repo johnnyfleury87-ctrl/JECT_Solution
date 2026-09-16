@@ -61,6 +61,11 @@ export async function POST(request) {
     }
 
     const port = Number(SMTP_PORT);
+    if (!Number.isInteger(port) || port <= 0) {
+      logger.error('Contact route invalid SMTP port', { route: 'contact' });
+      return genericErrorResponse(500);
+    }
+
     const smtpConfig = {
       host: SMTP_HOST,
       port: port,
@@ -73,6 +78,10 @@ export async function POST(request) {
       tls: {
         rejectUnauthorized: true,
       },
+      // Échec rapide et explicite plutôt qu'un blocage jusqu'au timeout de la plateforme.
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 20_000,
     };
 
     let transporter;
@@ -120,20 +129,26 @@ ${destinationEmail}
       `.trim(),
     };
 
+    // L'email interne (vers JETC) fait foi de la réussite réelle de la demande.
     try {
-      await Promise.all([
-        transporter.sendMail(jetcMailOptions),
-        transporter.sendMail(clientMailOptions),
-      ]);
-
-      return NextResponse.json(
-        { ok: true, message: 'Emails envoyés avec succès' },
-        { status: 200, headers: noStoreHeaders() }
-      );
-    } catch {
-      logger.error('Contact route SMTP send failed', { route: 'contact' });
+      await transporter.sendMail(jetcMailOptions);
+    } catch (error) {
+      logger.error('Contact route SMTP send failed', { route: 'contact', code: error?.code });
       return genericErrorResponse(502);
     }
+
+    // L'accusé de réception au visiteur est un confort : son échec ne doit pas faire
+    // croire à l'utilisateur que sa demande n'est pas arrivée, alors qu'elle l'est bien.
+    try {
+      await transporter.sendMail(clientMailOptions);
+    } catch (error) {
+      logger.warn('Contact route confirmation email failed', { route: 'contact', code: error?.code });
+    }
+
+    return NextResponse.json(
+      { ok: true, message: 'Emails envoyés avec succès' },
+      { status: 200, headers: noStoreHeaders() }
+    );
   } catch {
     logger.error('Contact route unexpected failure', { route: 'contact' });
     return genericErrorResponse(500);

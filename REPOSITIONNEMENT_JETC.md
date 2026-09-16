@@ -134,6 +134,43 @@ certifications non validés.
   accessibilité clavier de `Solutions.js` non touché par la mission) sont listés comme points
   restants nécessitant un arbitrage humain, pas corrigés d'office.
 
+- Étape 12 (Phase A) : remplacement de la voix « je » par une voix institutionnelle « nous »
+  sur l'ensemble du site public (Hero, WorkProcess, Pricing, ProjectModal, page Contact).
+  Exception volontaire : la section "parcours" de `Signature.js` présente l'expérience
+  individuelle réelle de Johnny Fleury et a été réécrite à la 3e personne ("Le parcours du
+  fondateur…", "Johnny Fleury évolue…", "Il a notamment piloté…", "Son travail consiste…",
+  "ce sont ses priorités") plutôt que transformée artificiellement en "nous". La signature a
+  été alignée sur le libellé exact demandé : « — Johnny Fleury, Fondateur de JETC Solution »
+  (ajout du mot "de", absent du texte précédent). La carte identité interactive du Hero
+  (survol/tactile) reste personnelle : « Passez la souris pour me découvrir » devient « Passez
+  la souris pour découvrir le fondateur » (formulation imposée, pas de "nous") ; « Touchez pour
+  voir la photo » et « Passez la souris pour voir la photo » restent inchangés (pas de "je").
+  Les mentions légales (`app/mentions-legales/page.js`) conservent l'identité personnelle réelle
+  de l'éditeur et du directeur de publication (Johnny Fleury), aucune modification nécessaire
+  (aucune formulation en "je" n'y était présente). Aucun chiffre, résultat, entreprise tierce ou
+  route API/Supabase/authentification modifié.
+- Étape 13 (Phase B) : diagnostic et fiabilisation de la chaîne d'envoi du formulaire de
+  contact (`app/api/contact/route.js`). Constat : le code métier (validation, anti-spam,
+  rate limiting, Turnstile, choix de l'expéditeur/destinataire/`replyTo`, absence d'exposition
+  de secrets) était déjà conforme aux règles de sécurité avant cette étape — aucune fausse
+  réussite n'était affichée, `from` = adresse professionnelle authentifiée (`SMTP_FROM`),
+  `replyTo` = adresse du visiteur, destinataire = adresse professionnelle configurée
+  (`CONTACT_RECEIVER_EMAIL`, repli sur `contact@jetc-immo.ch`). Deux fragilités réelles ont
+  été corrigées : (1) l'envoi des deux emails (interne + accusé de réception) via `Promise.all`
+  faisait échouer toute la demande si seul l'accusé de réception au visiteur échouait, alors que
+  la demande était bien reçue par JETC — désormais l'email interne fait foi de la réussite et
+  l'échec de l'accusé de réception est journalisé sans faire échouer la réponse ; (2) absence de
+  timeouts sur le transport SMTP, pouvant bloquer la fonction serverless jusqu'au timeout de la
+  plateforme au lieu d'une erreur claire et rapide — ajout de `connectionTimeout`,
+  `greetingTimeout`, `socketTimeout`. Aucune validation, protection anti-abus ou vérification de
+  sécurité désactivée ou affaiblie. Aucune migration Supabase, authentification, session, cookie,
+  rôle ou route admin présents dans ce dépôt (reconfirmé). Cause la plus probable d'un
+  éventuel échec en production : variables d'environnement manquantes ou incomplètes sur Vercel
+  (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` obligatoires ; `TURNSTILE_SECRET_KEY`
+  obligatoire en production sinon la vérification anti-bot échoue systématiquement par conception
+  — comportement "fail-secure" documenté et volontaire, non modifié) — non vérifiable depuis cet
+  environnement (aucun accès à Vercel/aux secrets réels, voir section 7).
+
 ## 3. Liste complète des étapes
 
 | # | Étape | Statut |
@@ -162,6 +199,8 @@ certifications non validés.
 | 11 | Contrôle final complet (audit 21 critères + corrections ciblées + validations). | ✅ Fait |
 | 12 | Phase A : remplacement de la voix « je » par « nous » (site institutionnel), à
   l'exception de la section parcours personnel de Johnny Fleury réécrite à la 3e personne. | ✅ Fait |
+| 13 | Phase B : diagnostic complet et fiabilisation de l'envoi du formulaire de contact
+  (gestion des échecs partiels, timeouts SMTP, tests couvrant le transport réel mocké). | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -283,6 +322,26 @@ certifications non validés.
   signature harmonisée sur « — Johnny Fleury, Fondateur de JETC Solution ».
 - Aucun autre fichier ne contenait de formulation en « je »/« j' »/« me »/« moi »/« mon »/
   « ma »/« mes » (recherche exhaustive sur `app/` et `components/`).
+
+### Étape 13 — Phase B : fiabilisation de l'envoi du formulaire de contact
+- `app/api/contact/route.js` : ajout de `connectionTimeout`/`greetingTimeout`/`socketTimeout`
+  sur la configuration SMTP ; validation du port SMTP (entier positif) avant création du
+  transport ; envoi de l'email interne (JETC) isolé de l'envoi de l'accusé de réception
+  (le premier conditionne le succès réel renvoyé au client, le second est best-effort et
+  seulement journalisé en cas d'échec) ; ajout d'un code d'erreur technique (`error.code`
+  Nodemailer, ex. `ECONNECTION`) dans les logs d'échec, sans aucune donnée personnelle ni
+  secret. Aucun changement de `from`/`replyTo`/destinataire (déjà conformes), aucune
+  validation ni protection anti-abus retirée ou affaiblie.
+- `security/tests/contactRoute.test.mjs` : suite étendue (mock du module `nodemailer` via
+  `node:test` module mocking + mock de la vérification Turnstile via `fetch`) pour couvrir
+  réellement, sans jamais toucher un vrai serveur SMTP : champs obligatoires manquants,
+  email invalide, requête valide (succès réel des deux envois), échec du transport SMTP sur
+  l'email interne (502, aucun détail technique exposé), succès malgré l'échec du seul accusé
+  de réception, limitation des envois abusifs (429), absence d'exposition de secrets dans
+  toutes les réponses API testées.
+- `package.json` : script `test:security` exécuté avec le flag Node
+  `--experimental-test-module-mocks` (nécessaire pour le mock de `nodemailer` ; aucune
+  dépendance ajoutée/modifiée).
 
 ## 5. Textes définitifs intégrés
 
@@ -642,9 +701,59 @@ Anomalies corrigées (strictement liées à la mission) :
 - Vérification manuelle : recherche exhaustive `je|j'|j’|moi|mon|ma|mes|me` sur `app/**/*.js`
   et `components/**/*.js` après correction → 0 occurrence restante.
 
+### Étape 13 (Phase B)
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → **38/38 tests passés** (7 suites, 0 échec), incluant 5 nouveaux
+  cas sur `app/api/contact/route.js` (champs manquants, email invalide, requête valide avec
+  succès SMTP mocké, échec SMTP interne avec réponse 502 sans fuite technique, succès malgré
+  l'échec du seul accusé de réception). Aucun email réel envoyé, aucun secret réel utilisé
+  (valeurs SMTP/Turnstile factices, module `nodemailer` mocké).
+- `npm run build` → build de production réussi, 9 pages générées, tailles identiques à
+  l'étape 12 (`/api/contact` reste une route dynamique de 139 B). Aucune régression détectée.
+- Aucune suite "tests applicatifs" distincte n'existe dans `package.json` : `test:security`
+  reste la seule suite automatisée du projet (confirmé aux étapes 9 et 11).
+- Formulaire côté client (`components/ContactForm.js`) vérifié par revue de code (aucun
+  navigateur disponible dans cet environnement) : bouton désactivé pendant l'envoi
+  (`disabled={status.type === 'loading'}`), réactivé automatiquement après une erreur
+  (`status.type` repasse à `'error'`), formulaire et widget Turnstile réinitialisés
+  uniquement dans la branche de succès confirmée par la réponse serveur (`response.ok`) —
+  déjà conforme, aucune modification nécessaire côté client.
+- Vérification des variables de production : **non réalisable depuis cet environnement**
+  (aucune CLI/API Vercel accessible, aucun jeton, aucun fichier `.env.local`/`.vercel` présent).
+  Voir section 7 pour la liste exacte des variables à vérifier et l'endroit où les ajouter.
+- Test contrôlé en production (`[TEST FORMULAIRE JETC] Validation de l'envoi`) : **non
+  effectué**, faute d'accès au déploiement de production et à ses variables réelles. À réaliser
+  par l'utilisateur une fois les variables confirmées (voir section 7).
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
+- ⚠️ **Variables d'environnement de production (Vercel)** — non vérifiables depuis cet
+  environnement (aucun accès Vercel). À vérifier par l'utilisateur dans **Vercel → Project →
+  Settings → Environment Variables**, pour les environnements concernés :
+  - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` — **obligatoires** pour les
+    environnements Production et Preview (sans ces 5 variables, l'API renvoie une erreur 500
+    générique, par conception, sans jamais afficher de faux succès).
+  - `CONTACT_RECEIVER_EMAIL` — optionnelle, sinon repli automatique sur `contact@jetc-immo.ch`.
+  - `TURNSTILE_SECRET_KEY` — **obligatoire en production** : si absente, la vérification
+    anti-bot échoue systématiquement (comportement « fail-secure » documenté et volontaire,
+    non modifié par cette mission) et **aucun email ne peut être envoyé** tant qu'elle n'est
+    pas configurée.
+  - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — doit être configurée de manière cohérente avec
+    `TURNSTILE_SECRET_KEY` (même paire de clés Cloudflare Turnstile), sinon le widget côté
+    client et la vérification côté serveur ne correspondront pas.
+  - Aucune valeur de secret n'a été consultée, devinée ni affichée : seuls les **noms** de
+    variables ci-dessus doivent être vérifiés par l'utilisateur.
+- ⚠️ **Test contrôlé en production** (objet `[TEST FORMULAIRE JETC] Validation de l'envoi`,
+  destinataire = adresse professionnelle JETC configurée) : à réaliser par l'utilisateur une
+  fois les variables ci-dessus confirmées, ce test n'ayant pas pu être effectué depuis cet
+  environnement (aucun accès au déploiement de production).
+- ⚠️ **Rate limiting en mémoire** (`utils/security/rateLimit.js`) : le compteur est stocké dans
+  une `Map` en mémoire du processus, réinitialisée à chaque démarrage/instance serverless sur
+  Vercel. La protection anti-abus reste active mais peut être moins stricte en production
+  multi-instance qu'en environnement mono-processus. Non modifié dans le cadre de cette
+  mission (changement d'infrastructure hors périmètre, nécessiterait un store partagé type
+  Upstash Redis déjà présent pour les stats mais pas branché sur le rate limiting).
 - ⚠️ **Adresse de l'hébergeur** : l'adresse postale de Vercel Inc. indiquée dans
   `/mentions-legales` correspond aux informations publiques habituellement communiquées, mais
   n'a pas pu être vérifiée avec certitude dans cet environnement (pas d'accès à une source
@@ -690,7 +799,8 @@ Anomalies corrigées (strictement liées à la mission) :
 | 9 | `5da2898` | feat: coherence page contact et pied de page |
 | 10 | `e16f615` | feat: ajout page mentions legales |
 | 11 | `9fa850b`* | fix: corrections issues de l'audit final |
-| 12 | `TBD`* | feat: voix institutionnelle nous (phase A repositionnement) |
+| 12 | `e6eefb2` | feat: voix institutionnelle nous (phase A repositionnement) |
+| 13 | `TBD`* | fix: fiabilisation envoi formulaire de contact (phase B) |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

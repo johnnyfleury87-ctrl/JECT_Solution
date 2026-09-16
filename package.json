@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:security": "node --import ./security/tests/register.mjs --test security/tests/*.test.mjs"
+    "test:security": "node --import ./security/tests/register.mjs --experimental-test-module-mocks --test security/tests/*.test.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.1",
