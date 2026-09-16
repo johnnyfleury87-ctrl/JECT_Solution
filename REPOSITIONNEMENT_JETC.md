@@ -22,6 +22,11 @@ certifications non validés.
 - Aucune mention de Migros Online, RELEX, ProcSim ou SimWell à ce stade.
 - Design, structure graphique, comportement responsive et carte identité (partie droite du Hero)
   conservés à l'identique.
+- Étape 3 : actualisation de la section "parcours" (`components/Signature.js`). Le nom "RELEX"
+  y est mentionné car il s'agit d'un logiciel de pilotage cité par l'utilisateur (pas un
+  employeur, ni un client, ni un partenaire officiel) ; aucun employeur/client nommé, aucune
+  donnée confidentielle, aucun montant d'économies affiché. "Six ans" remplacé par "près de huit
+  ans" ; la formulation "je pilote le périmètre packing" est supprimée.
 
 ## 3. Liste complète des étapes
 
@@ -30,7 +35,9 @@ certifications non validés.
 | 1 | Inspection du projet, de l'état Git, des composants de la page d'accueil, des routes et des commandes de validation. Création du fichier de suivi. | ✅ Fait |
 | 2 | Repositionnement de la page d'accueil : bandeau d'annonce, accroche, titre principal, texte
   d'introduction, bloc complémentaire, CTA et métadonnées (titre/description). | ✅ Fait |
-| 3 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 3 | Actualisation de la section "parcours" de Johnny Fleury (`Signature.js`) : titre conservé,
+  contenu remplacé, conclusion conservée. | ✅ Fait |
+| 4 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -41,6 +48,11 @@ certifications non validés.
 - `app/layout.js` : texte du bandeau d'annonce + métadonnées globales (`title`, `description`).
 - `components/Hero.js` : accroche au-dessus du titre, titre principal (`h1`), texte
   d'introduction, bloc complémentaire encadré, libellés des deux boutons CTA.
+
+### Étape 3 — Section parcours (Signature)
+- `components/Signature.js` : contenu des 4 paragraphes de la section "parcours" (titre `h2` et
+  conclusion en italique conservés à l'identique ; signature "— Johnny Fleury, Fondateur JETC
+  Solution" inchangée).
 
 ## 5. Textes définitifs intégrés
 
@@ -67,6 +79,30 @@ certifications non validés.
     l'identification des coûts cachés, l'automatisation des processus et la simulation de
     scénarios d'amélioration. »
 
+### Étape 3 — Section parcours (`components/Signature.js`)
+
+- Titre (`h2`, conservé à l'identique) : « Un parcours terrain, des solutions concrètes »
+- Paragraphe 1 :
+  « Mon parcours a commencé sur le terrain, de la restauration à la préparation de commandes,
+  avant d'évoluer vers l'assistance opérationnelle, les ressources humaines, la coordination de
+  projets, les achats indirects et la qualité. »
+- Paragraphe 2 :
+  « Depuis près de huit ans, j'évolue dans un environnement e-commerce alimentaire multi-sites
+  comprenant plus de 12 500 références, trois sites logistiques et un nouveau dépôt automatisé.
+  Cette expérience m'a permis de développer une vision transversale des opérations : flux,
+  ressources, qualité, coûts, approvisionnements et outils de pilotage. »
+- Paragraphe 3 :
+  « J'ai notamment piloté l'intégration dans RELEX de l'ensemble des achats indirects et du
+  packaging de plusieurs entrepôts. Mon travail consiste à rendre visibles les pertes de temps,
+  les déplacements inutiles, les erreurs et les coûts qui se cachent entre les différentes
+  étapes d'un processus. »
+- Paragraphe 4 :
+  « JETC Solution est née de cette expérience : comprendre le terrain, structurer les données et
+  construire des améliorations mesurables, sans imposer un nouvel outil lorsque l'existant peut
+  être mieux exploité. »
+- Conclusion (conservée à l'identique) : « Clarté, fiabilité, utilité réelle : ce sont mes
+  priorités. »
+
 ## 6. Tests réalisés et leurs résultats
 
 ### Étape 2
@@ -76,11 +112,20 @@ certifications non validés.
 - `npm run build` → build de production réussi (`✓ Compiled successfully`), 8 pages générées,
   route `/` = 13 kB / 159 kB First Load JS. Aucune régression détectée.
 
+### Étape 3
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 13 kB / 159 kB
+  First Load JS (taille identique à l'étape précédente). Aucune régression détectée.
+- Équilibre visuel texte/image vérifié : la grille `items-center` de `Signature.js` centre
+  verticalement la photo (aspect carré) et le logo en incrustation par rapport au bloc de texte,
+  désormais un peu plus long (4 paragraphes + conclusion) ; structure et classes Tailwind
+  inchangées, aucun ajustement de mise en page nécessaire.
+
 ## 7. Points restant à traiter
 
-- Repositionner les autres sections de la page d'accueil (`Solutions`, `Signature`,
-  `WorkProcess`, `Projects`, `Benefits`, `Pricing`, `ContactCTA`) si demandé dans une étape
-  suivante.
+- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Projects`,
+  `Benefits`, `Pricing`, `ContactCTA`) si demandé dans une étape suivante.
 - Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
   alignement avec le nouveau discours (à valider avec l'utilisateur).
 - Étapes suivantes à définir avec l'utilisateur.
@@ -90,7 +135,8 @@ certifications non validés.
 | Étape | Hash | Message |
 |-------|------|---------|
 | 1 | `7fee2d0` | docs: init suivi repositionnement JETC |
-| 2 | `40ebbaa`* | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
+| 2 | `f4523fa` | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
+| 3 | `1153ae7`* | feat: actualisation section parcours Johnny Fleury |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

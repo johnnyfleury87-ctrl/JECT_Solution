@@ -58,26 +58,32 @@ export default function Signature() {
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Mon parcours m'a mené de la restauration (CAP, BP, licence économie & management) 
-                  à la logistique (préparation de commandes, assistance opérationnelle, coordination projet), 
-                  puis aux ressources humaines et à la qualité. Aujourd'hui, je pilote le périmètre packing 
-                  d'une structure industrielle : négociation de contrats, suivi des coûts, automatisation des process.
+                  Mon parcours a commencé sur le terrain, de la restauration à la préparation de
+                  commandes, avant d’évoluer vers l’assistance opérationnelle, les ressources
+                  humaines, la coordination de projets, les achats indirects et la qualité.
                 </p>
-                
-                <p>
-                  J’ai vécu ce que beaucoup vivent : perte de temps liée aux saisies manuelles, erreurs dues à des fichiers Excel mal structurés, outils lourds et coûteux qui ne répondent pas réellement aux besoins du terrain.
 
-Alors j’ai appris Excel avancé, puis le VBA, puis Python, puis Java. Une passion découverte il y a six ans pour le développement, avec une envie claire : construire mes propres solutions.
-
-Des outils simples, fiables et adaptés.
-                </p>
-                
                 <p>
-                  <strong>JETC ne propose pas de solutions standardisées.</strong> Je conçois des outils sur mesure,
-                  pensés pour votre métier, vos contraintes réelles. Pas de promesses irréalistes :
-                  uniquement des solutions concrètes avec un impact réel sur vos opérations, dans la durée.
+                  Depuis près de huit ans, j’évolue dans un environnement e-commerce alimentaire
+                  multi-sites comprenant plus de 12 500 références, trois sites logistiques et un
+                  nouveau dépôt automatisé. Cette expérience m’a permis de développer une vision
+                  transversale des opérations : flux, ressources, qualité, coûts,
+                  approvisionnements et outils de pilotage.
                 </p>
-                
+
+                <p>
+                  J’ai notamment piloté l’intégration dans RELEX de l’ensemble des achats
+                  indirects et du packaging de plusieurs entrepôts. Mon travail consiste à rendre
+                  visibles les pertes de temps, les déplacements inutiles, les erreurs et les
+                  coûts qui se cachent entre les différentes étapes d’un processus.
+                </p>
+
+                <p>
+                  JETC Solution est née de cette expérience : comprendre le terrain, structurer
+                  les données et construire des améliorations mesurables, sans imposer un nouvel
+                  outil lorsque l’existant peut être mieux exploité.
+                </p>
+
                 <p className="text-primary-700 font-semibold italic">
                   Clarté, fiabilité, utilité réelle : ce sont mes priorités.
                 </p>
