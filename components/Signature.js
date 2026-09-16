@@ -53,7 +53,7 @@ export default function Signature() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Près de huit ans <span className="text-primary-600">au cœur des opérations</span>
+                Du terrain <span className="text-primary-600">à une vision transversale</span>
               </h2>
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
@@ -64,28 +64,29 @@ export default function Signature() {
                 </p>
 
                 <p>
-                  Cette expérience lui a permis de développer une vision transversale des
-                  opérations : flux, ressources, qualité, coûts, approvisionnements et outils de
-                  pilotage.
-                </p>
-
-                <p>
                   Son parcours a commencé sur le terrain, dans la préparation de commandes, avant
-                  d’évoluer vers l’assistance opérationnelle, les ressources humaines, la
-                  coordination de projets, les achats indirects et la qualité.
+                  d’évoluer vers l’assistance opérationnelle, le management, les ressources
+                  humaines, la coordination de projets, les achats indirects et la qualité.
                 </p>
 
                 <p>
-                  Il a notamment piloté l’intégration dans RELEX des achats indirects et des
-                  emballages de plusieurs entrepôts. Son travail consiste à rendre visibles les
-                  pertes de temps, les déplacements inutiles, les erreurs et les coûts cachés
-                  entre les différentes étapes d’un processus.
+                  Ce passage entre les fonctions opérationnelles et les différents services
+                  support lui a permis d’observer une même organisation sous plusieurs angles.
+                  Chaque fonction possède ses priorités et ses contraintes, mais leurs décisions
+                  interagissent et influencent l’ensemble des opérations.
                 </p>
 
                 <p>
-                  JETC Solution est née de cette expérience avec une conviction simple : les
-                  meilleures améliorations partent du terrain, s’appuient sur des données
-                  concrètes et valorisent l’environnement existant.
+                  Ce parcours a construit sa vision : les améliorations les plus utiles
+                  apparaissent lorsque la réalité du terrain, les données disponibles et les
+                  fonctions support sont reliées autour d’un objectif commun.
+                </p>
+
+                <p>
+                  JETC Solution est née de cette approche terrain et transversale. Son objectif
+                  est de comprendre le fonctionnement existant, de structurer les informations
+                  disponibles et de construire avec les équipes des améliorations concrètes,
+                  adaptées à leur réalité.
                 </p>
 
                 <p className="text-primary-700 font-semibold italic">

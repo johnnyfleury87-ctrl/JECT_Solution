@@ -244,6 +244,10 @@ certifications non validés.
 | 15 | Réécriture du contenu textuel de la section « Notre Vision » (`Solutions.js`) pour
   supprimer le discours critique envers les solutions standards et Excel, au profit d'un
   discours valorisant l'existant du client (outils, méthodes, expertise). | ✅ Fait |
+| 16 | Réécriture du titre et des paragraphes de la section « parcours » (`Signature.js`) :
+  suppression du titre redondant, de la mention RELEX et du paragraphe réduisant le parcours
+  à un projet précis, au profit d'un discours centré sur la vision transversale acquise entre
+  terrain et fonctions support. | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -427,6 +431,16 @@ certifications non validés.
   inchangée ; classes Tailwind existantes conservées, aucun ajustement d'espacement n'a été
   nécessaire. Les 4 cartes interactives (« Écoute Active »…) et la citation de Johnny Fleury
   (ajoutée à l'étape 14) ne sont pas concernées par cette étape.
+
+### Étape 16 — Réécriture de la section « parcours »
+- `components/Signature.js` : titre `h2` (« Près de huit ans au cœur des opérations » →
+  « Du terrain à une vision transversale ») et les 4 derniers paragraphes remplacés (le premier
+  paragraphe, factuel, est inchangé). Suppression de la phrase « Cette expérience lui a permis
+  de développer une vision transversale des opérations : flux, ressources, qualité, coûts,
+  approvisionnements et outils de pilotage », du paragraphe « Il a notamment piloté
+  l'intégration dans RELEX… » et de toute mention de RELEX. La citation de Johnny Fleury
+  ajoutée à l'étape 14 dans `components/Solutions.js` (« Avant d'automatiser, il faut
+  comprendre… ») n'est pas concernée par cette étape.
 
 ## 5. Textes définitifs intégrés
 
@@ -732,6 +746,28 @@ concret.
 Une démarche adaptée à votre réalité pour simplifier, structurer et améliorer durablement vos
 opérations. »
 
+### Étape 16 — Textes définitifs (section « parcours »)
+
+Section « parcours » (`components/Signature.js`) :
+« Du terrain à une vision transversale
+Depuis près de huit ans, Johnny Fleury évolue au sein d'un environnement de commerce en ligne
+alimentaire multisite, comptant environ 12 500 références et intégrant un nouvel entrepôt
+automatisé.
+Son parcours a commencé sur le terrain, dans la préparation de commandes, avant d'évoluer vers
+l'assistance opérationnelle, le management, les ressources humaines, la coordination de
+projets, les achats indirects et la qualité.
+Ce passage entre les fonctions opérationnelles et les différents services support lui a permis
+d'observer une même organisation sous plusieurs angles. Chaque fonction possède ses priorités
+et ses contraintes, mais leurs décisions interagissent et influencent l'ensemble des
+opérations.
+Ce parcours a construit sa vision : les améliorations les plus utiles apparaissent lorsque la
+réalité du terrain, les données disponibles et les fonctions support sont reliées autour d'un
+objectif commun.
+JETC Solution est née de cette approche terrain et transversale. Son objectif est de
+comprendre le fonctionnement existant, de structurer les informations disponibles et de
+construire avec les équipes des améliorations concrètes, adaptées à leur réalité.
+Analyser. Structurer. Optimiser. »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -896,6 +932,23 @@ opérations. »
   l'identique ; aucun ajustement d'espacement nécessaire. Vérifié par revue de code (aucun
   outil de capture d'écran/navigateur disponible dans cet environnement).
 
+### Étape 16
+- Recherche exhaustive post-implémentation : 0 occurrence restante de « Près de huit ans au
+  cœur des opérations », de « Cette expérience lui a permis de développer une vision
+  transversale des opérations : flux, ressources... », du paragraphe « Il a notamment piloté... »
+  et de la mention RELEX dans `components/`. Aucun doublon avec la section « Notre Vision »
+  (`Solutions.js`).
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 38/38 tests passés (7 suites), 0 échec (contenu textuel sans
+  rapport avec la logique testée).
+- `npm run build` → build de production réussi, 9 pages générées, tailles identiques à
+  l'étape 15. Aucune régression détectée.
+- Titre : structure `h2` à deux segments conservée ("Du terrain" en texte neutre, "à une
+  vision transversale" en bleu `text-primary-600`), classes `text-4xl md:text-5xl` inchangées ;
+  répartition des mots vérifiée par revue de code pour éviter qu'un seul mot soit isolé sur une
+  ligne aux largeurs mobile/tablette/ordinateur. Non vérifié visuellement (aucun outil de
+  capture d'écran/navigateur disponible dans cet environnement).
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -983,6 +1036,7 @@ opérations. »
 | 13 | `f26a05a`* | fix: fiabilisation envoi formulaire de contact (phase B) |
 | 14 | `003d88b`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
 | 15 | `7b35219`* | content: réécriture du contenu de la section Notre Vision |
+| 16 | `TBD`* | content: réécriture titre et paragraphes de la section parcours |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
