@@ -105,6 +105,21 @@ certifications non validés.
   identifiés dans le code (Vercel, SMTP, Cloudflare Turnstile si activé, Vercel Analytics,
   Upstash Redis) au lieu d'une formulation générique ; aucune logique de sécurité/backend
   modifiée, uniquement le texte descriptif.
+- Étape 12 (Phase A) : remplacement de la voix « je » par une voix institutionnelle « nous »
+  sur l'ensemble du site public (Hero, WorkProcess, Pricing, ProjectModal, page Contact).
+  Exception volontaire : la section "parcours" de `Signature.js` présente l'expérience
+  individuelle réelle de Johnny Fleury et a été réécrite à la 3e personne ("Le parcours du
+  fondateur…", "Johnny Fleury évolue…", "Il a notamment piloté…", "Son travail consiste…",
+  "ce sont ses priorités") plutôt que transformée artificiellement en "nous". La signature a
+  été alignée sur le libellé exact demandé : « — Johnny Fleury, Fondateur de JETC Solution »
+  (ajout du mot "de", absent du texte précédent). La carte identité interactive du Hero
+  (survol/tactile) reste personnelle : « Passez la souris pour me découvrir » devient « Passez
+  la souris pour découvrir le fondateur » (formulation imposée, pas de "nous") ; « Touchez pour
+  voir la photo » et « Passez la souris pour voir la photo » restent inchangés (pas de "je").
+  Les mentions légales (`app/mentions-legales/page.js`) conservent l'identité personnelle réelle
+  de l'éditeur et du directeur de publication (Johnny Fleury), aucune modification nécessaire
+  (aucune formulation en "je" n'y était présente). Aucun chiffre, résultat, entreprise tierce ou
+  route API/Supabase/authentification modifié.
 - Étape 11 : contrôle final complet (audit des 10 étapes précédentes selon 21 critères).
   Deux anomalies corrigées, strictement liées à la mission : (1) le KPI "Temps de
   planification : -30%" de JETC OrgaPulse (visible dans le modal) ne portait pas la même
@@ -145,6 +160,8 @@ certifications non validés.
 | 10 | Création de la page "Mentions légales" (`/mentions-legales`) et mise à jour de la
   politique de confidentialité pour refléter les prestataires techniques réels. | ✅ Fait |
 | 11 | Contrôle final complet (audit 21 critères + corrections ciblées + validations). | ✅ Fait |
+| 12 | Phase A : remplacement de la voix « je » par « nous » (site institutionnel), à
+  l'exception de la section parcours personnel de Johnny Fleury réécrite à la 3e personne. | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -250,6 +267,22 @@ certifications non validés.
   - Cartes projets (`motion.div` cliquable) : ajout `role="button"`, `tabIndex={0}`,
     `onKeyDown` (Entrée/Espace), `aria-label` et anneau de focus visible
     (`focus:ring-2 focus:ring-primary-500`). Aucun changement visuel par défaut.
+
+### Étape 12 — Phase A : voix « nous »
+- `components/Hero.js` : texte d'introduction (« Nous analysons vos flux… »), bloc
+  complémentaire (« … nous nous appuyons sur votre environnement… »), texte de la carte
+  identité au survol (« Passez la souris pour découvrir le fondateur »).
+- `components/WorkProcess.js` : titre de section (« Comment nous travaillons »), descriptions
+  des étapes « Écoute & Découverte » et « Immersion Métier ».
+- `components/Pricing.js` : titre de section (« … vous gagnez, nous gagnons »).
+- `components/ProjectModal.js` : phrase explicative JETC OrgaPulse (« … que nous adaptons et
+  faisons évoluer… »).
+- `app/contact/page.js` : phrase d'introduction (« Présentez-nous simplement votre situation »).
+- `components/Signature.js` (exception personnelle, réécriture à la 3e personne et non en
+  « nous ») : 3 paragraphes du parcours, conclusion italique (« ce sont ses priorités »),
+  signature harmonisée sur « — Johnny Fleury, Fondateur de JETC Solution ».
+- Aucun autre fichier ne contenait de formulation en « je »/« j' »/« me »/« moi »/« mon »/
+  « ma »/« mes » (recherche exhaustive sur `app/` et `components/`).
 
 ## 5. Textes définitifs intégrés
 
@@ -600,6 +633,15 @@ Anomalies corrigées (strictement liées à la mission) :
 - Vérification runtime : serveur de production démarré localement (`npm run start`), les 4
   routes `/`, `/contact`, `/confidentialite`, `/mentions-legales` répondent toutes en HTTP 200.
 
+### Étape 12 (Phase A)
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 9 pages générées, route `/` = 14,2 kB /
+  161 kB First Load JS (taille identique, changement de texte uniquement). Aucune régression
+  détectée.
+- Vérification manuelle : recherche exhaustive `je|j'|j’|moi|mon|ma|mes|me` sur `app/**/*.js`
+  et `components/**/*.js` après correction → 0 occurrence restante.
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -614,9 +656,10 @@ Anomalies corrigées (strictement liées à la mission) :
   l'utilisateur sur ses propres appareils.
 
 ### Hors périmètre de cette mission (non corrigé, à arbitrer si besoin)
-- `Solutions.js` ("Notre Vision") et `WorkProcess.js` ("Comment je travaille") n'ont pas été
-  repositionnés : langage générique pré-existant, sans mention explicite
-  analyse/automatisation/simulation. À traiter dans une étape dédiée si souhaité.
+- `Solutions.js` ("Notre Vision") n'a pas été repositionné sur le fond : langage générique
+  pré-existant, sans mention explicite analyse/automatisation/simulation (seule la voix "je"→
+  "nous" a été traitée à l'étape 12, ce composant n'en contenait déjà pas). À traiter dans une
+  étape dédiée si souhaité.
 - `Navbar.js` n'a pas été revu pour un éventuel alignement avec le nouveau discours.
 - Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
   contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
@@ -647,6 +690,7 @@ Anomalies corrigées (strictement liées à la mission) :
 | 9 | `5da2898` | feat: coherence page contact et pied de page |
 | 10 | `e16f615` | feat: ajout page mentions legales |
 | 11 | `9fa850b`* | fix: corrections issues de l'audit final |
+| 12 | `TBD`* | feat: voix institutionnelle nous (phase A repositionnement) |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

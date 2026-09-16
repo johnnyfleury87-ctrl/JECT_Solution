@@ -64,7 +64,7 @@ export default function Hero() {
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed mb-8">
                 <motion.p variants={itemVariants}>
-                  J’analyse vos flux, vos temps, vos ressources et vos outils existants afin
+                  Nous analysons vos flux, vos temps, vos ressources et vos outils existants afin
                   d’identifier les pertes invisibles et de simuler différents scénarios
                   d’amélioration.
                 </motion.p>
@@ -73,9 +73,9 @@ export default function Hero() {
                   variants={itemVariants}
                   className="font-medium text-gray-900 bg-primary-50 border-l-4 border-primary-600 pl-4 py-3 rounded-r"
                 >
-                  Pas de solution générique ni de remplacement imposé : je m’appuie sur votre
-                  environnement existant pour construire une démarche mesurable, adaptée à la
-                  réalité du terrain.
+                  Pas de solution générique ni de remplacement imposé : nous nous appuyons sur
+                  votre environnement existant pour construire une démarche mesurable, adaptée à
+                  la réalité du terrain.
                 </motion.p>
               </div>
 
@@ -158,7 +158,7 @@ export default function Hero() {
                           <span className="text-sm text-gray-500">Fondateur</span>
                         </p>
                         <p className="text-xs text-gray-400 italic px-8">
-                          Passez la souris pour me découvrir
+                          Passez la souris pour découvrir le fondateur
                         </p>
                       </div>
                     </div>

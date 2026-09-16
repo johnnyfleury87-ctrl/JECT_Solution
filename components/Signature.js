@@ -58,22 +58,23 @@ export default function Signature() {
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Mon parcours a commencé sur le terrain, de la restauration à la préparation de
-                  commandes, avant d’évoluer vers l’assistance opérationnelle, les ressources
-                  humaines, la coordination de projets, les achats indirects et la qualité.
+                  Le parcours du fondateur a commencé sur le terrain, de la restauration à la
+                  préparation de commandes, avant d’évoluer vers l’assistance opérationnelle, les
+                  ressources humaines, la coordination de projets, les achats indirects et la
+                  qualité.
                 </p>
 
                 <p>
-                  Depuis près de huit ans, j’évolue dans un environnement e-commerce alimentaire
-                  multi-sites comprenant plus de 12 500 références, trois sites logistiques et un
-                  nouveau dépôt automatisé. Cette expérience m’a permis de développer une vision
-                  transversale des opérations : flux, ressources, qualité, coûts,
-                  approvisionnements et outils de pilotage.
+                  Depuis près de huit ans, Johnny Fleury évolue dans un environnement e-commerce
+                  alimentaire multi-sites comprenant plus de 12 500 références, trois sites
+                  logistiques et un nouveau dépôt automatisé. Cette expérience lui a permis de
+                  développer une vision transversale des opérations : flux, ressources, qualité,
+                  coûts, approvisionnements et outils de pilotage.
                 </p>
 
                 <p>
-                  J’ai notamment piloté l’intégration dans RELEX de l’ensemble des achats
-                  indirects et du packaging de plusieurs entrepôts. Mon travail consiste à rendre
+                  Il a notamment piloté l’intégration dans RELEX de l’ensemble des achats
+                  indirects et du packaging de plusieurs entrepôts. Son travail consiste à rendre
                   visibles les pertes de temps, les déplacements inutiles, les erreurs et les
                   coûts qui se cachent entre les différentes étapes d’un processus.
                 </p>
@@ -85,7 +86,7 @@ export default function Signature() {
                 </p>
 
                 <p className="text-primary-700 font-semibold italic">
-                  Clarté, fiabilité, utilité réelle : ce sont mes priorités.
+                  Clarté, fiabilité, utilité réelle : ce sont ses priorités.
                 </p>
               </div>
 
@@ -97,7 +98,7 @@ export default function Signature() {
                 className="mt-8 pt-8 border-t border-gray-200"
               >
                 <p className="text-gray-600 italic">
-                  — Johnny Fleury, Fondateur JETC Solution
+                  — Johnny Fleury, Fondateur de JETC Solution
                 </p>
               </motion.div>
             </motion.div>

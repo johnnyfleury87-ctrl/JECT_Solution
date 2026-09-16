@@ -16,7 +16,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-lg text-gray-600">
               Un processus difficile à mesurer, un coût qui reste invisible ou un projet que
-              vous souhaitez tester avant d'investir ? Présentez-moi simplement votre situation.
+              vous souhaitez tester avant d'investir ? Présentez-nous simplement votre situation.
             </p>
             <p className="text-sm text-amber-600 mt-3 font-medium">
               JETC Solution entre en phase pilote. Les prises de contact et propositions de

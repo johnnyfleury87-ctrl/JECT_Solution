@@ -6,14 +6,14 @@ const steps = [
   {
     number: '01',
     title: 'Écoute & Découverte',
-    description: 'Je prends le temps de comprendre votre activité, vos défis quotidiens et vos objectifs de croissance.',
+    description: 'Nous prenons le temps de comprendre votre activité, vos défis quotidiens et vos objectifs de croissance.',
     icon: '🎧',
     color: 'from-blue-500 to-cyan-500',
   },
   {
     number: '02',
     title: 'Immersion Métier',
-    description: "Je m'imprègne de votre secteur pour identifier les vrais leviers d'efficacité et les points de friction.",
+    description: "Nous nous imprégnons de votre secteur pour identifier les vrais leviers d'efficacité et les points de friction.",
     icon: '🔍',
     color: 'from-purple-500 to-pink-500',
   },
@@ -64,7 +64,7 @@ export default function WorkProcess() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Comment je travaille
+            Comment nous travaillons
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Une méthode structurée en 4 étapes pour transformer votre vision en résultats concrets

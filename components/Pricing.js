@@ -78,7 +78,7 @@ export default function Pricing() {
         {/* En-tête */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Une logique simple : vous gagnez, je gagne
+            Une logique simple : vous gagnez, nous gagnons
           </h2>
           <div className="max-w-3xl mx-auto space-y-4 text-lg text-gray-600">
             <p>

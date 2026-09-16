@@ -184,7 +184,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                         <p className="text-sm text-gray-700 leading-relaxed">
                           JETC OrgaPulse n'est pas un outil figé.
                           <br />
-                          Il s'appuie sur une base réelle déjà utilisée en production, que j'adapte et fais évoluer selon votre organisation, vos contraintes et vos objectifs terrain.
+                          Il s'appuie sur une base réelle déjà utilisée en production, que nous adaptons et faisons évoluer selon votre organisation, vos contraintes et vos objectifs terrain.
                         </p>
                         <p className="text-sm text-gray-700 leading-relaxed mt-3">
                           Chaque entreprise étant différente, ces briques sont ajustées, combinées et développées pour construire une solution cohérente et utile.
