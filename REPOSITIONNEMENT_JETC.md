@@ -105,6 +105,19 @@ certifications non validés.
   identifiés dans le code (Vercel, SMTP, Cloudflare Turnstile si activé, Vercel Analytics,
   Upstash Redis) au lieu d'une formulation générique ; aucune logique de sécurité/backend
   modifiée, uniquement le texte descriptif.
+- Étape 11 : contrôle final complet (audit des 10 étapes précédentes selon 21 critères).
+  Deux anomalies corrigées, strictement liées à la mission : (1) le KPI "Temps de
+  planification : -30%" de JETC OrgaPulse (visible dans le modal) ne portait pas la même
+  qualification d'estimation que l'item public équivalent ("estimée jusqu'à 30 %") — reformulé
+  en "Jusqu'à -30% / estimation vs Excel manuel" ; (2) les cartes de "Travaux & Projets en
+  Cours" (`Projects.js`, composant massivement modifié aux étapes 4/5/6/9) n'étaient pas
+  accessibles au clavier (div cliquable sans `role`/`tabIndex`/gestion clavier) — ajout de
+  `role="button"`, `tabIndex={0}`, gestion Entrée/Espace et focus visible, sans changement
+  visuel. Aucune autre anomalie corrigible n'a été trouvée dans le périmètre de la mission ;
+  les points ne relevant pas de régressions causées par la mission (ex. sections `Solutions`/
+  `WorkProcess` non repositionnées, KPI "démo"/"estimation" de Traçabilité déjà qualifiés,
+  accessibilité clavier de `Solutions.js` non touché par la mission) sont listés comme points
+  restants nécessitant un arbitrage humain, pas corrigés d'office.
 
 ## 3. Liste complète des étapes
 
@@ -131,7 +144,7 @@ certifications non validés.
   harmonisés, phrase du pied de page. | ✅ Fait |
 | 10 | Création de la page "Mentions légales" (`/mentions-legales`) et mise à jour de la
   politique de confidentialité pour refléter les prestataires techniques réels. | ✅ Fait |
-| 11 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 11 | Contrôle final complet (audit 21 critères + corrections ciblées + validations). | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -229,6 +242,14 @@ certifications non validés.
   réelle des prestataires techniques (Vercel, SMTP, Cloudflare Turnstile, Vercel Analytics,
   Upstash Redis) identifiés dans le code, au lieu d'une formulation générique. Aucun changement
   de logique de sécurité/backend, uniquement le texte descriptif de la politique.
+
+### Étape 11 — Contrôle final complet
+- `components/Projects.js` :
+  - KPI JETC OrgaPulse "Temps de planification" : `-30%` / `vs Excel manuel` →
+    `Jusqu'à -30%` / `estimation vs Excel manuel` (cohérence avec l'item public équivalent).
+  - Cartes projets (`motion.div` cliquable) : ajout `role="button"`, `tabIndex={0}`,
+    `onKeyDown` (Entrée/Espace), `aria-label` et anneau de focus visible
+    (`focus:ring-2 focus:ring-primary-500`). Aucun changement visuel par défaut.
 
 ## 5. Textes définitifs intégrés
 
@@ -454,6 +475,38 @@ réels) :
 (Cloudflare Turnstile) ; Mesure d'audience anonymisée (Vercel Analytics) ; Compteur technique
 de visiteurs en ligne (Upstash Redis). »
 
+### Étape 11 — Rapport d'audit final (21 critères)
+
+| # | Critère | Résultat |
+|---|---------|----------|
+| 1 | Aucune occurrence publique de "ProdOrga" | ✅ Conforme. Seules occurrences restantes : identifiant technique `id: 'prodorga'`, chemins d'assets (`/images/prodorga-bg.svg`, `/images/prodorga/*.png`), IDs internes de gradients SVG — aucune n'est un texte affiché. Le fichier `public/images/prodorga/placeholder.svg` contient un texte "ProdOrga" mais n'est référencé par aucun composant (asset mort, non affiché). |
+| 2 | Utilisation cohérente de "JETC OrgaPulse" | ✅ Conforme (8 occurrences : `Projects.js`, `ProjectModal.js`, `ImageCarousel.js`, `ContactForm.js`). |
+| 3 | Aucun employeur/client/prestataire de simulation/partenaire externe | ✅ Conforme. Aucune trace de Migros, ProcSim, SimWell ; "RELEX" mentionné une fois (`Signature.js`) comme logiciel, pas comme employeur (décision validée étape 3). |
+| 4 | Aucun logo tiers | ✅ Conforme. Seul logo utilisé : `logo-jetc.png` (propre). |
+| 5 | Aucun partenariat présenté comme signé | ✅ Conforme. Statuts "Recherche d'un partenaire pilote" / CTA "Proposer un partenariat pilote" formulés au conditionnel/prospectif. |
+| 6 | Aucune donnée professionnelle confidentielle | ✅ Conforme (confirmé étapes 3, 7, 10). |
+| 7 | Cohérence analyse / automatisation / simulation | ⚠️ Partielle. Hero, Projects, Benefits, Pricing, Contact alignés. `Solutions.js` ("Notre Vision") et `WorkProcess.js` ("Comment je travaille") n'ont pas été repositionnés (hors périmètre explicite jusqu'ici, déjà signalé en points restants) : langage générique pré-existant, sans mention explicite analyse/simulation. Non corrigé (pas une régression de la mission, décision déjà tracée). |
+| 8 | Qualification des estimations/objectifs/résultats | ⚠️ 1 anomalie corrigée (KPI OrgaPulse, voir ci-dessus). KPI Traçabilité ("100%"/"(démo)", "-40%"/"estimation") déjà correctement qualifiés, non modifiés. |
+| 9 | Liens, ancres, boutons, carrousel | ✅ Conforme. Toutes les ancres (`#solutions`, `#process`, `#projects`, `#contact`) correspondent à des `id` réels. Carrousel : contrôles (flèches, puces, clavier) fonctionnels. Test HTTP : `/`, `/contact`, `/confidentialite`, `/mentions-legales` → 200. |
+| 10 | Formulaire de contact sans envoi réel | ✅ Conforme. Validation testée uniquement via `npm run test:security` (33 tests, aucun email réel envoyé, SMTP jamais atteint dans les tests). |
+| 11 | Métadonnées SEO | ✅ Présentes sur toutes les pages (`app/layout.js`, `app/contact/page.js`, `app/confidentialite/page.js`, `app/mentions-legales/page.js`). |
+| 12 | Hiérarchie H1/H2 | ✅ Conforme. Un seul `h1` par page (`Hero.js` pour `/`, un par page statique) ; toutes les sections utilisent `h2` (`Solutions`, `Signature`, `WorkProcess`, `Projects`, `ImageCarousel`, `Benefits`, `Pricing`, `ContactCTA`, `ProjectModal`). |
+| 13 | Textes alternatifs | ✅ Conforme. Toutes les `<Image>` et l'unique `<img>` (captures dans `ProjectModal.js`) ont un `alt` descriptif non vide. |
+| 14 | Navigation clavier | ⚠️ 1 anomalie corrigée (cartes `Projects.js`, voir ci-dessus). Carrousel déjà accessible (étape 7). `Solutions.js` (cartes cliquables sans clavier) non touché par la mission, signalé en points restants. |
+| 15 | Contrastes | ✅ Revue de code : overlay assombri à `black/70` sur le carrousel (texte blanc), textes gris foncé sur fond blanc/clair partout ailleurs — pas de nouvelle combinaison à risque introduite par la mission. Non vérifié avec un outil de mesure de contraste (indisponible). |
+| 16 | Affichage 375/768/1024/1440 px | ✅ Revue des classes Tailwind (`grid-cols-1 md:grid-cols-2 xl:grid-cols-4` etc., cf. étapes 5, 8) : pas de carte orpheline aux breakpoints. Non vérifié visuellement (aucun outil de capture d'écran disponible dans cet environnement). |
+| 17 | Absence d'erreurs propres au site en console | ✅ `npm run build` sans erreur ; aucun `console.log` de debug laissé dans le code modifié ; test HTTP 200 sur toutes les routes. Pas de vérification des avertissements React côté client en conditions réelles (pas de navigateur disponible). |
+| 18 | Absence de secrets exposés | ✅ Seuls `.env.example` et `.env.local.example` sont suivis par Git ; `.gitignore` exclut `.env`/`.env*.local` ; aucune valeur de secret réelle trouvée dans le code (seuls des jetons factices dans les tests). |
+| 19 | Pages Confidentialité et Mentions légales présentes | ✅ `/confidentialite` et `/mentions-legales` existent et se construisent (9 pages générées). |
+| 20 | Migrations `0001`–`0006` | ✅ Aucune migration Supabase présente dans ce dépôt (confirmé étape 1 et reconfirmé ici) — rien n'a donc pu être modifié. |
+| 21 | Supabase / authentification / sessions / routes admin | ✅ Aucun code de ce type présent dans le dépôt (confirmé par recherche globale) — rien n'a été touché. |
+
+Anomalies corrigées (strictement liées à la mission) :
+- KPI JETC OrgaPulse "Temps de planification" (`components/Projects.js`) : `-30%` / `vs Excel
+  manuel` → `Jusqu'à -30%` / `estimation vs Excel manuel`.
+- Cartes projets (`components/Projects.js`) : ajout de `role="button"`, `tabIndex={0}`, gestion
+  clavier Entrée/Espace, `aria-label` et anneau de focus visible.
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -537,32 +590,46 @@ de visiteurs en ligne (Upstash Redis). »
 - `npm run build` → build de production réussi, **9 pages générées** (nouvelle route
   `/mentions-legales` = 139 B / 103 kB First Load JS). Aucune régression détectée.
 
+### Étape 11
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec (seule suite de tests
+  automatisés du projet ; aucune suite "tests applicatifs" distincte n'existe dans
+  `package.json`).
+- `npm run build` → build de production réussi, 9 pages générées, route `/` = 14,2 kB /
+  161 kB First Load JS. Aucune régression détectée.
+- Vérification runtime : serveur de production démarré localement (`npm run start`), les 4
+  routes `/`, `/contact`, `/confidentialite`, `/mentions-legales` répondent toutes en HTTP 200.
+
 ## 7. Points restant à traiter
 
-- ⚠️ **À confirmer avant publication** : l'adresse postale de l'hébergeur (Vercel Inc.) indiquée
-  dans `/mentions-legales` correspond aux informations publiques habituellement communiquées,
-  mais n'a pas pu être vérifiée avec certitude dans cet environnement (pas d'accès à une source
+### À valider par l'utilisateur avant publication
+- ⚠️ **Adresse de l'hébergeur** : l'adresse postale de Vercel Inc. indiquée dans
+  `/mentions-legales` correspond aux informations publiques habituellement communiquées, mais
+  n'a pas pu être vérifiée avec certitude dans cet environnement (pas d'accès à une source
   officielle en direct). À confirmer auprès de Vercel Inc. avant mise en ligne définitive.
-- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`) si
-  demandé dans une étape suivante (`Benefits`, `Pricing`, `ContactCTA` et pied de page sont
-  traités depuis les étapes 8-9).
-- Vérifier si `Navbar` nécessite un alignement avec le nouveau discours (à valider avec
-  l'utilisateur).
+- ⚠️ **Rendu visuel réel** : aucun outil de capture d'écran/navigateur n'est disponible dans cet
+  environnement. Le rendu responsive (375/768/1024/1440 px), les contrastes, la navigation
+  clavier/lecteur d'écran et l'absence d'avertissements console côté client ont été vérifiés
+  par revue de code et tests HTTP, pas par un rendu réel dans un navigateur. À confirmer par
+  l'utilisateur sur ses propres appareils.
+
+### Hors périmètre de cette mission (non corrigé, à arbitrer si besoin)
+- `Solutions.js` ("Notre Vision") et `WorkProcess.js` ("Comment je travaille") n'ont pas été
+  repositionnés : langage générique pré-existant, sans mention explicite
+  analyse/automatisation/simulation. À traiter dans une étape dédiée si souhaité.
+- `Navbar.js` n'a pas été revu pour un éventuel alignement avec le nouveau discours.
 - Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
   contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
-  "estimation en cas de rappel") ; non modifiés à l'étape 6 car non demandé explicitement et
-  déjà correctement qualifiés comme non définitifs.
-- Vérification visuelle du rendu responsive (mobile/tablette/ordinateur) de la grille à 4 cartes
-  non effectuée dans un vrai navigateur (aucun outil de capture d'écran disponible) : seule une
-  analyse des classes Tailwind a été faite. À confirmer par l'utilisateur.
+  "estimation en cas de rappel") : jugés suffisamment qualifiés, non modifiés.
+- `Solutions.js` contient des cartes cliquables (`onClick` sans support clavier) non corrigées
+  car ce composant n'a jamais été modifié par cette mission (contrairement aux cartes de
+  `Projects.js`, corrigées à l'étape 11).
 - `public/image/image2.png` et `public/image/image5.png` (captures OrgaPulse et JETC Immo)
-  restent dans le dépôt mais ne sont plus référencées par le carrousel après la réorganisation ;
-  conservées sans suppression (aucune justification de suppression donnée), à réutiliser si
-  besoin dans une étape future.
-- Vérification manuelle du rendu clavier/lecteur d'écran dans un vrai navigateur non effectuée
-  (aucun outil de test d'accessibilité disponible dans cet environnement) : seule une revue de
-  code (attributs ARIA, gestion des touches, alternatives textuelles) a été faite. À confirmer
-  par l'utilisateur.
+  restent dans le dépôt mais ne sont plus référencées par le carrousel ; conservées sans
+  suppression, réutilisables si besoin.
+- `public/images/prodorga/placeholder.svg` contient encore un texte "ProdOrga" mais n'est
+  référencé par aucun composant (asset mort, jamais affiché) ; laissé en l'état, aucun fichier
+  supprimé sans justification.
 - Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
@@ -578,7 +645,8 @@ de visiteurs en ligne (Upstash Redis). »
 | 7 | `bcd9356` | feat: reorganisation section Nos realisations (carrousel) |
 | 8 | `5eea279` | feat: refonte pourquoi-nous-choisir et logique tarifaire |
 | 9 | `5da2898` | feat: coherence page contact et pied de page |
-| 10 | `0ee25a5`* | feat: ajout page mentions legales |
+| 10 | `e16f615` | feat: ajout page mentions legales |
+| 11 | `9fa850b`* | fix: corrections issues de l'audit final |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

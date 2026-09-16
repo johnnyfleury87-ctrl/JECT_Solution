@@ -26,7 +26,7 @@ const projects = [
     resultsNote: "JETC OrgaPulse s’appuie sur les données disponibles pour rendre l’activité compréhensible et faciliter les décisions opérationnelles.",
     kpis: [
       { label: 'Données horaires', value: 'Centralisées', note: 'issues du timbrage, fiabilisées progressivement' },
-      { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
+      { label: 'Temps de planification', value: 'Jusqu’à -30%', note: 'estimation vs Excel manuel' },
       { label: 'Visibilité', value: 'Temps réel', note: 'capacité / charge' }
     ],
     features: [
@@ -203,7 +203,16 @@ export default function Projects() {
               variants={itemVariants}
               whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3 } }}
               onClick={() => handleProjectClick(project)}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProjectClick(project);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Voir les détails de ${project.name}`}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {/* Header avec image de fond et overlay */}
               <div className="relative p-8 text-white overflow-hidden h-64">
