@@ -800,7 +800,7 @@ Anomalies corrigées (strictement liées à la mission) :
 | 10 | `e16f615` | feat: ajout page mentions legales |
 | 11 | `9fa850b`* | fix: corrections issues de l'audit final |
 | 12 | `e6eefb2` | feat: voix institutionnelle nous (phase A repositionnement) |
-| 13 | `TBD`* | fix: fiabilisation envoi formulaire de contact (phase B) |
+| 13 | `f26a05a`* | fix: fiabilisation envoi formulaire de contact (phase B) |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
