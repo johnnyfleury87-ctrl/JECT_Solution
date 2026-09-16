@@ -35,6 +35,16 @@ certifications non validés.
   logique de rendu du prototype non modifiés (seules les mentions textuelles publiques "ProdOrga"
   encore visibles à l'écran ont été harmonisées en "JETC OrgaPulse" pour éviter une incohérence
   de marque, sans toucher aux chemins de fichiers/assets ni aux identifiants internes).
+- Étape 5 : ajout d'une 4e carte "Analyse & Simulation opérationnelle" (nouveau projet, id
+  technique `analyse-simulation`) dans "Travaux & Projets en Cours". Aucun KPI ni résultat
+  chiffré inventé (champs `kpis`/`features`/`screenshots` volontairement omis, ils sont
+  conditionnels dans `ProjectModal.js`). Statut "Recherche d'un partenaire pilote" : aucune
+  entreprise ni discussion externe décrite, aucun partenaire présenté comme acquis, aucun logo
+  externe affiché. L'intitulé de la liste devient configurable par projet (`impactLabel`) pour
+  permettre "Périmètre du pilote" sur cette carte sans changer le libellé partagé des 3 autres.
+  Grille adaptée à 4 cartes (`grid-cols-1 md:grid-cols-2 xl:grid-cols-4`, `max-w-7xl`). Nouvel
+  asset visuel `public/images/analyse-simulation-bg.svg` (illustration abstraite générique,
+  aucun logo ni marque tierce).
 
 ## 3. Liste complète des étapes
 
@@ -48,7 +58,9 @@ certifications non validés.
 | 4 | Nouvelle présentation du projet "ProdOrga" renommé "JETC OrgaPulse" (`Projects.js` +
   `ProjectModal.js`) : statut, description, intitulé des résultats, liste de résultats et
   fonctionnalités, courte explication ajoutée. | ✅ Fait |
-| 5 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 5 | Ajout d'une 4e carte projet "Analyse & Simulation opérationnelle" (recherche de partenaire
+  pilote) et adaptation de la grille à 4 cartes. | ✅ Fait |
+| 6 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -73,6 +85,15 @@ certifications non validés.
 - `components/ProjectModal.js` : deux mentions textuelles publiques "ProdOrga" remplacées par
   "JETC OrgaPulse" (texte explicatif sous les captures d'écran + légende des captures).
   `id`, `kpis`, `features`, `screenshots`, `link` et logique de rendu non modifiés.
+
+### Étape 5 — 4e carte projet (Analyse & Simulation opérationnelle)
+- `components/Projects.js` : nouvel objet projet `analyse-simulation` ajouté en fin de tableau
+  (titre, statut, description, `impactLabel`, liste "Périmètre du pilote", `resultsNote`, `link`
+  de contact). Intitulé de section rendu configurable via `project.impactLabel` (fallback
+  "Résultats évalués et fonctionnalités" pour les 3 cartes existantes, inchangé). Grille adaptée
+  à 4 cartes (`grid-cols-1 md:grid-cols-2 xl:grid-cols-4`, conteneur élargi à `max-w-7xl`).
+- `public/images/analyse-simulation-bg.svg` : nouveau fichier, illustration SVG abstraite
+  (grille, barres, courbes, loupe) dans la palette violet/indigo, sans logo ni marque.
 
 ## 5. Textes définitifs intégrés
 
@@ -142,6 +163,29 @@ certifications non validés.
   « JETC OrgaPulse s'appuie sur les données disponibles pour rendre l'activité compréhensible et
   faciliter les décisions opérationnelles. »
 
+### Étape 5 — 4e carte projet (`components/Projects.js`)
+
+- Titre : « Analyse & Simulation opérationnelle »
+- Statut : « Recherche d'un partenaire pilote »
+- Description (réutilisée comme `descriptionShort`, aucun texte supplémentaire inventé) :
+  « Démarche d'analyse permettant de cartographier les flux, mesurer les temps et les capacités,
+  identifier les coûts cachés et comparer plusieurs scénarios avant une décision
+  d'investissement ou de réorganisation. »
+- Intitulé de la liste (`impactLabel`, propre à cette carte) : « Périmètre du pilote »
+- Éléments :
+  - « Cartographie des flux et des contraintes »
+  - « Identification des temps et coûts cachés »
+  - « Mesure des capacités et des ressources »
+  - « Comparaison de scénarios opérationnels »
+  - « Évaluation avant et après expérimentation »
+- Conclusion (`resultsNote`) :
+  « L'objectif est de tester cette approche sur un périmètre réel et limité afin d'en mesurer
+  concrètement la valeur. »
+- CTA : « Échanger sur cette démarche » (lien `#contact`, même modèle que le CTA "contact"
+  déjà utilisé par JETC OrgaPulse).
+- Aucun KPI, aucune fonctionnalité détaillée ni capture d'écran ajoutés (champs volontairement
+  omis pour ne créer aucun résultat chiffré ni contenu non fourni).
+
 ## 6. Tests réalisés et leurs résultats
 
 ### Étape 2
@@ -168,6 +212,18 @@ certifications non validés.
   First Load JS (légère hausse de 0,1 kB liée aux 2 éléments de texte supplémentaires dans le
   bundle statique). Aucune régression détectée.
 
+### Étape 5
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 13,5 kB / 160 kB
+  First Load JS. Aucune régression détectée.
+- Rendu responsive : vérifié par analyse des classes Tailwind (aucun outil de capture
+  d'écran/navigateur disponible dans cet environnement) : `grid-cols-1` (mobile, 1 colonne
+  empilée), `md:grid-cols-2` (tablette et petits ordinateurs portables, grille 2x2 sans carte
+  orpheline), `xl:grid-cols-4` (grands écrans, les 4 cartes sur une ligne). Container élargi
+  (`max-w-7xl`) pour laisser respirer les 4 cartes en ligne. À confirmer visuellement par
+  l'utilisateur sur son propre navigateur/appareils si possible.
+
 ## 7. Points restant à traiter
 
 - Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Benefits`,
@@ -181,6 +237,9 @@ certifications non validés.
 - Les deux autres projets ("JETC Immo", "Traçabilité & Spotting Produits") n'ont pas été revus à
   cette étape ; leur section utilise désormais aussi l'intitulé "Résultats évalués et
   fonctionnalités" (changement de libellé partagé).
+- Vérification visuelle du rendu responsive (mobile/tablette/ordinateur) de la nouvelle grille à
+  4 cartes non effectuée dans un vrai navigateur (aucun outil de capture d'écran disponible) :
+  seule une analyse des classes Tailwind a été faite. À confirmer par l'utilisateur.
 - Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
@@ -190,7 +249,8 @@ certifications non validés.
 | 1 | `7fee2d0` | docs: init suivi repositionnement JETC |
 | 2 | `f4523fa` | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
 | 3 | `391df91` | feat: actualisation section parcours Johnny Fleury |
-| 4 | `1217b7f`* | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
+| 4 | `2748968` | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
+| 5 | `6f66225`* | feat: ajout carte Analyse & Simulation opérationnelle |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

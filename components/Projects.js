@@ -115,6 +115,32 @@ const projects = [
       href: 'https://product-simulation-one.vercel.app/qhse'
     }
   },
+  {
+    id: 'analyse-simulation',
+    name: 'Analyse & Simulation opérationnelle',
+    status: 'Recherche d’un partenaire pilote',
+    statusColor: 'bg-purple-100 text-purple-800 border-purple-200',
+    emoji: '🧪',
+    gradient: 'from-purple-400 to-indigo-500',
+    gradientColors: ['rgba(167, 139, 250, 0.25)', 'rgba(99, 102, 241, 0.40)'],
+    backgroundImage: '/images/analyse-simulation-bg.svg',
+    description: "Démarche d’analyse permettant de cartographier les flux, mesurer les temps et les capacités, identifier les coûts cachés et comparer plusieurs scénarios avant une décision d’investissement ou de réorganisation.",
+    descriptionShort: "Démarche d’analyse permettant de cartographier les flux, mesurer les temps et les capacités, identifier les coûts cachés et comparer plusieurs scénarios avant une décision d’investissement ou de réorganisation.",
+    impactLabel: 'Périmètre du pilote',
+    impact: [
+      'Cartographie des flux et des contraintes',
+      'Identification des temps et coûts cachés',
+      'Mesure des capacités et des ressources',
+      'Comparaison de scénarios opérationnels',
+      'Évaluation avant et après expérimentation',
+    ],
+    resultsNote: "L’objectif est de tester cette approche sur un périmètre réel et limité afin d’en mesurer concrètement la valeur.",
+    link: {
+      label: 'Échanger sur cette démarche',
+      href: '#contact',
+      type: 'contact'
+    }
+  },
 ];
 
 const containerVariants = {
@@ -167,7 +193,7 @@ export default function Projects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 max-w-7xl mx-auto"
         >
           {projects.map((project, index) => (
             <motion.div
@@ -223,7 +249,7 @@ export default function Projects() {
 
                 <div>
                   <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                    Résultats évalués et fonctionnalités
+                    {project.impactLabel || 'Résultats évalués et fonctionnalités'}
                   </h4>
                   <ul className="space-y-2">
                     {project.impact.map((item, idx) => (
