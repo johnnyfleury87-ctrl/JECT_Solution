@@ -27,6 +27,14 @@ certifications non validés.
   employeur, ni un client, ni un partenaire officiel) ; aucun employeur/client nommé, aucune
   donnée confidentielle, aucun montant d'économies affiché. "Six ans" remplacé par "près de huit
   ans" ; la formulation "je pilote le périmètre packing" est supprimée.
+- Étape 4 : le projet "ProdOrga" (identifiant technique `id: 'prodorga'` conservé) est renommé
+  publiquement "JETC OrgaPulse", statut "Pilote opérationnel". L'intitulé partagé "Impact mesuré
+  / attendu" (utilisé par les 3 cartes projets) devient "Résultats évalués et fonctionnalités".
+  Aucun résultat présenté comme définitif (formulation "estimée jusqu'à"), aucune entreprise
+  d'accueil du projet citée, aucun partenaire externe cité. KPIs, features, screenshots, liens et
+  logique de rendu du prototype non modifiés (seules les mentions textuelles publiques "ProdOrga"
+  encore visibles à l'écran ont été harmonisées en "JETC OrgaPulse" pour éviter une incohérence
+  de marque, sans toucher aux chemins de fichiers/assets ni aux identifiants internes).
 
 ## 3. Liste complète des étapes
 
@@ -37,7 +45,10 @@ certifications non validés.
   d'introduction, bloc complémentaire, CTA et métadonnées (titre/description). | ✅ Fait |
 | 3 | Actualisation de la section "parcours" de Johnny Fleury (`Signature.js`) : titre conservé,
   contenu remplacé, conclusion conservée. | ✅ Fait |
-| 4 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 4 | Nouvelle présentation du projet "ProdOrga" renommé "JETC OrgaPulse" (`Projects.js` +
+  `ProjectModal.js`) : statut, description, intitulé des résultats, liste de résultats et
+  fonctionnalités, courte explication ajoutée. | ✅ Fait |
+| 5 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -53,6 +64,15 @@ certifications non validés.
 - `components/Signature.js` : contenu des 4 paragraphes de la section "parcours" (titre `h2` et
   conclusion en italique conservés à l'identique ; signature "— Johnny Fleury, Fondateur JETC
   Solution" inchangée).
+
+### Étape 4 — JETC OrgaPulse (ex-ProdOrga)
+- `components/Projects.js` : `name`, `status`, `description`, `descriptionShort` (harmonisation
+  du nom), `impact` (nouvelle liste de 5 éléments), nouveau champ `resultsNote` (courte
+  explication affichée sur la carte), intitulé de section renommé ("Résultats évalués et
+  fonctionnalités", partagé par les 3 cartes projets).
+- `components/ProjectModal.js` : deux mentions textuelles publiques "ProdOrga" remplacées par
+  "JETC OrgaPulse" (texte explicatif sous les captures d'écran + légende des captures).
+  `id`, `kpis`, `features`, `screenshots`, `link` et logique de rendu non modifiés.
 
 ## 5. Textes définitifs intégrés
 
@@ -103,6 +123,25 @@ certifications non validés.
 - Conclusion (conservée à l'identique) : « Clarté, fiabilité, utilité réelle : ce sont mes
   priorités. »
 
+### Étape 4 — JETC OrgaPulse (`components/Projects.js` + `components/ProjectModal.js`)
+
+- Titre : « JETC OrgaPulse »
+- Statut : « Pilote opérationnel »
+- Description : « Solution d'analyse et d'organisation des opérations permettant de
+  centraliser les données, visualiser la charge, structurer la planification et identifier les
+  points de friction dans les flux de travail. »
+- Intitulé de section (remplace « Impact mesuré / attendu », partagé par les 3 cartes projets) :
+  « Résultats évalués et fonctionnalités »
+- Liste de résultats et fonctionnalités :
+  - « Réduction estimée jusqu'à 30 % du temps de planification »
+  - « Visualisation de la charge et de l'activité »
+  - « Centralisation des données horaires »
+  - « Identification des temps morts et des contraintes »
+  - « Comparaison de différents scénarios d'organisation »
+- Courte explication (nouveau champ `resultsNote`, affichée sous la liste) :
+  « JETC OrgaPulse s'appuie sur les données disponibles pour rendre l'activité compréhensible et
+  faciliter les décisions opérationnelles. »
+
 ## 6. Tests réalisés et leurs résultats
 
 ### Étape 2
@@ -122,12 +161,26 @@ certifications non validés.
   désormais un peu plus long (4 paragraphes + conclusion) ; structure et classes Tailwind
   inchangées, aucun ajustement de mise en page nécessaire.
 
+### Étape 4
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 13,1 kB / 160 kB
+  First Load JS (légère hausse de 0,1 kB liée aux 2 éléments de texte supplémentaires dans le
+  bundle statique). Aucune régression détectée.
+
 ## 7. Points restant à traiter
 
-- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Projects`,
-  `Benefits`, `Pricing`, `ContactCTA`) si demandé dans une étape suivante.
+- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Benefits`,
+  `Pricing`, `ContactCTA`) si demandé dans une étape suivante.
 - Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
   alignement avec le nouveau discours (à valider avec l'utilisateur).
+- Les KPIs affichés dans le modal (`kpis` : "-30% vs Excel manuel", "100% fiables", etc.) restent
+  formulés comme des résultats fermes plutôt qu'estimés ; non modifiés à l'étape 4 car non
+  demandé explicitement, mais à harmoniser avec la formulation "estimée" si une étape future le
+  demande.
+- Les deux autres projets ("JETC Immo", "Traçabilité & Spotting Produits") n'ont pas été revus à
+  cette étape ; leur section utilise désormais aussi l'intitulé "Résultats évalués et
+  fonctionnalités" (changement de libellé partagé).
 - Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
@@ -136,7 +189,8 @@ certifications non validés.
 |-------|------|---------|
 | 1 | `7fee2d0` | docs: init suivi repositionnement JETC |
 | 2 | `f4523fa` | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
-| 3 | `1153ae7`* | feat: actualisation section parcours Johnny Fleury |
+| 3 | `391df91` | feat: actualisation section parcours Johnny Fleury |
+| 4 | `1217b7f`* | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

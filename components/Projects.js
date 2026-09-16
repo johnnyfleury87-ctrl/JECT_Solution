@@ -7,20 +7,23 @@ import ProjectModal from './ProjectModal';
 const projects = [
   {
     id: 'prodorga',
-    name: 'ProdOrga',
-    status: 'Pilote interne',
+    name: 'JETC OrgaPulse',
+    status: 'Pilote opérationnel',
     statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
     gradientColors: ['rgba(52, 211, 153, 0.25)', 'rgba(16, 185, 129, 0.40)'],
     backgroundImage: '/images/prodorga-bg.svg',
-    description: "Outil de gestion et d'organisation de la production pour les PME. Permet de suivre en temps réel l'avancement des tâches, d'optimiser les flux et de réduire les temps morts.",
-    descriptionShort: "Pilotez votre production en temps réel. ProdOrga calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
+    description: "Solution d’analyse et d’organisation des opérations permettant de centraliser les données, visualiser la charge, structurer la planification et identifier les points de friction dans les flux de travail.",
+    descriptionShort: "Pilotez votre production en temps réel. JETC OrgaPulse calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
     impact: [
-      "Réduction de 30% du temps de planification",
-      "Visibilité temps réel sur l'activité",
-      "Données horaires 100% fiables",
+      "Réduction estimée jusqu’à 30 % du temps de planification",
+      "Visualisation de la charge et de l’activité",
+      "Centralisation des données horaires",
+      "Identification des temps morts et des contraintes",
+      "Comparaison de différents scénarios d’organisation",
     ],
+    resultsNote: "JETC OrgaPulse s’appuie sur les données disponibles pour rendre l’activité compréhensible et faciliter les décisions opérationnelles.",
     kpis: [
       { label: 'Données horaires', value: '100% fiables', note: 'issues du timbrage' },
       { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
@@ -220,7 +223,7 @@ export default function Projects() {
 
                 <div>
                   <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                    Impact mesuré / attendu
+                    Résultats évalués et fonctionnalités
                   </h4>
                   <ul className="space-y-2">
                     {project.impact.map((item, idx) => (
@@ -240,6 +243,11 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
+                  {project.resultsNote && (
+                    <p className="text-sm text-gray-500 italic mt-4">
+                      {project.resultsNote}
+                    </p>
+                  )}
                 </div>
 
                 {/* Indicateur clic */}

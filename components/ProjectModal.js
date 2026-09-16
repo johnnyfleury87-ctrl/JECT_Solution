@@ -182,7 +182,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                     {project.id === 'prodorga' && (
                       <div className="mt-4 p-4 rounded-xl border border-gray-200 bg-gray-50/70">
                         <p className="text-sm text-gray-700 leading-relaxed">
-                          ProdOrga n'est pas un outil figé.
+                          JETC OrgaPulse n'est pas un outil figé.
                           <br />
                           Il s'appuie sur une base réelle déjà utilisée en production, que j'adapte et fais évoluer selon votre organisation, vos contraintes et vos objectifs terrain.
                         </p>
@@ -192,7 +192,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                       </div>
                     )}
                     <p className="text-xs text-gray-500 italic mt-4 text-center">
-                      Captures d'écran réelles de l'interface ProdOrga en production
+                      Captures d'écran réelles de l'interface JETC OrgaPulse en production
                     </p>
                   </div>
                 )}
