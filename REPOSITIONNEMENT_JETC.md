@@ -69,6 +69,14 @@ certifications non validés.
   Aucun fichier existant supprimé (`image2.png` et `image5.png` conservés mais non utilisés dans
   le carrousel actuel). Contrôles du carrousel conservés ; navigation clavier renforcée
   (flèches gauche/droite sur la zone `region`) ; textes alternatifs rendus descriptifs.
+- Étape 8 : refonte de "Pourquoi nous choisir ?" (`Benefits.js`, 5 nouveaux axes remplacent les
+  4 arguments génériques "agence web"/SEO) et de "Une logique simple : vous gagnez, je gagne"
+  (`Pricing.js`, 3 étapes de démarche remplacent les 3 anciens "forfaits" tarifaires). Suppression
+  de "Contribution mensuelle légère", "Solution installée et utilisable immédiatement" et de
+  toute promesse de rapidité non démontrée (ces éléments disparaissent avec le remplacement
+  complet du tableau `pricingExamples`). Nouvelle phrase de clôture sur le périmètre/la
+  rémunération définis à l'avance. Section "Ce que JETC ne fait pas" conservée sans modification
+  (non concernée par la demande, contenu déjà conforme). Aucune entreprise tierce citée.
 
 ## 3. Liste complète des étapes
 
@@ -89,7 +97,9 @@ certifications non validés.
   du prototype Traçabilité, note de qualification globale). | ✅ Fait |
 | 7 | Réorganisation de la section "Nos réalisations" (carrousel) : inventaire des images,
   nouvel ordre imposé, qualification de chaque diapositive (titre/catégorie/statut). | ✅ Fait |
-| 8 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 8 | Refonte de "Pourquoi nous choisir ?" (5 axes) et de "Une logique simple : vous gagnez, je
+  gagne" (3 étapes de démarche + nouvelle phrase de clôture). | ✅ Fait |
+| 9 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -153,6 +163,16 @@ certifications non validés.
   (aucune vraie capture disponible).
 - Aucun fichier supprimé. `public/image/image2.png` et `public/image/image5.png` conservés
   mais non référencés dans le carrousel actuel (voir inventaire ç-dessous).
+
+### Étape 8 — Refonte "Pourquoi nous choisir ?" et "Une logique simple"
+- `components/Benefits.js` : tableau `benefits` remplacé (4 → 5 éléments), sous-titre de section
+  mis à jour (retrait de la formulation "réussite digitale"), grille adaptée à 5 cartes
+  (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, `max-w-6xl`).
+- `components/Pricing.js` : tableau `pricingExamples` (3 "forfaits" avec prix) remplacé par
+  `processSteps` (3 étapes de démarche sans mention de prix par étape) ; JSX simplifié (suppression
+  du rendu conditionnel `description`/`price`/`subPrice`/`note`) ; phrase de clôture remplacée.
+  Section "Ce que JETC ne fait pas" (`notIncluded`) et paragraphes d'introduction non modifiés
+  (non concernés par la demande).
 
 ## 5. Textes définitifs intégrés
 
@@ -306,6 +326,33 @@ Nouvel ordre du carrousel (avec qualification titre / catégorie / description /
    internes développés dans la même démarche : suivi des coûts et pilotage d'activité. » —
    Statut : Prototype.
 
+### Étape 8 — "Pourquoi nous choisir ?" (`components/Benefits.js`)
+
+1. « Expérience terrain » — « Une compréhension directe des contraintes opérationnelles, des
+   équipes et des flux. »
+2. « Approche par les données » — « Des décisions appuyées par des mesures, des faits et des
+   indicateurs compréhensibles. »
+3. « Vision transversale » — « Une lecture combinant logistique, qualité, ressources humaines,
+   achats et coûts. »
+4. « Simulation avant investissement » — « Plusieurs scénarios comparés avant d'engager une
+   transformation ou une dépense importante. »
+5. « Résultats mesurables » — « Un état initial, des objectifs définis et une mesure concrète
+   de l'évolution. »
+
+### Étape 8 — "Une logique simple : vous gagnez, je gagne" (`components/Pricing.js`)
+
+1. « Diagnostic ciblé » : compréhension du besoin ; cartographie d'un processus ; définition
+   des données disponibles ; identification des premières hypothèses.
+2. « Partenariat pilote » : périmètre volontairement limité ; état initial mesurable ; analyse
+   et simulation ; test d'une ou plusieurs améliorations.
+3. « Déploiement progressif » : validation des résultats ; ajustement avec les équipes ;
+   extension uniquement si la valeur est démontrée ; accompagnement adapté au besoin réel.
+
+Conclusion (remplace l'ancienne phrase de clôture) :
+« Le périmètre et la rémunération sont définis à l'avance selon le besoin et la valeur
+recherchée. Aucun abonnement ou déploiement global n'est imposé avant la validation des
+résultats du pilote. »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -365,10 +412,17 @@ Nouvel ordre du carrousel (avec qualification titre / catégorie / description /
 - Textes alternatifs : remplacés (`Réalisation N` générique → description précise de chaque
   visuel, ex. "Tableau de bord JETC OrgaPulse affichant le planning et la charge par zone").
 
+### Étape 8
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 14,1 kB / 160 kB
+  First Load JS. Aucune régression détectée.
+
 ## 7. Points restant à traiter
 
-- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Benefits`,
-  `Pricing`, `ContactCTA`) si demandé dans une étape suivante.
+- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`,
+  `ContactCTA`) si demandé dans une étape suivante (`Benefits` et `Pricing` sont traités depuis
+  l'étape 8).
 - Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
   alignement avec le nouveau discours (à valider avec l'utilisateur).
 - Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
@@ -398,7 +452,8 @@ Nouvel ordre du carrousel (avec qualification titre / catégorie / description /
 | 4 | `2748968` | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
 | 5 | `bafa04a` | feat: ajout carte Analyse & Simulation opérationnelle |
 | 6 | `36235e9` | feat: clarification résultats, estimations et objectifs des projets |
-| 7 | `ecc41e9`* | feat: reorganisation section Nos realisations (carrousel) |
+| 7 | `bcd9356` | feat: reorganisation section Nos realisations (carrousel) |
+| 8 | `5c96b0b`* | feat: refonte pourquoi-nous-choisir et logique tarifaire |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

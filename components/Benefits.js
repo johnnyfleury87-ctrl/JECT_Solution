@@ -4,20 +4,24 @@ import { motion } from 'framer-motion';
 
 const benefits = [
   {
-    title: 'Performance',
-    description: 'Sites ultra-rapides et optimisés pour le SEO, garantissant une excellente expérience utilisateur.',
+    title: 'Expérience terrain',
+    description: 'Une compréhension directe des contraintes opérationnelles, des équipes et des flux.',
   },
   {
-    title: 'Modernité',
-    description: 'Technologies de pointe et design contemporain pour une solution toujours à jour.',
+    title: 'Approche par les données',
+    description: 'Des décisions appuyées par des mesures, des faits et des indicateurs compréhensibles.',
   },
   {
-    title: 'Accompagnement',
-    description: 'Support et conseil personnalisés tout au long de votre projet et au-delà.',
+    title: 'Vision transversale',
+    description: 'Une lecture combinant logistique, qualité, ressources humaines, achats et coûts.',
   },
   {
-    title: 'Scalabilité',
-    description: 'Solutions évolutives qui grandissent avec votre entreprise et vos ambitions.',
+    title: 'Simulation avant investissement',
+    description: "Plusieurs scénarios comparés avant d'engager une transformation ou une dépense importante.",
+  },
+  {
+    title: 'Résultats mesurables',
+    description: "Un état initial, des objectifs définis et une mesure concrète de l'évolution.",
   },
 ];
 
@@ -49,7 +53,7 @@ export default function Benefits() {
             Pourquoi nous choisir ?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Des avantages concrets pour votre réussite digitale
+            Une approche terrain, appuyée sur les données, pour des décisions opérationnelles mesurables.
           </p>
         </div>
 
@@ -58,7 +62,7 @@ export default function Benefits() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
         >
           {benefits.map((benefit, index) => (
             <motion.div
