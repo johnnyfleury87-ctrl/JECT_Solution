@@ -55,6 +55,20 @@ certifications non validés.
   Traçabilité sont reformulés comme des objectifs recherchés (verbes "viser", "contribuer à",
   "faciliter") plutôt que des résultats acquis. Aucun nouveau pourcentage créé, aucune
   entreprise tierce citée. Ajout d'une note de qualification globale sous les 4 cartes.
+- Étape 7 : inventaire des images existantes (`public/image/image1-7.png` pour le carrousel
+  "Nos réalisations", `public/images/prodorga/*.png` utilisées séparément dans le modal JETC
+  OrgaPulse). Aucune n'affiche de nom d'entreprise, de logo externe ou de donnée confidentielle ;
+  les noms de personnes visibles ("Jean Dupont", "Marie Curie", "Élodie Martin", etc.) sont des
+  données de démonstration synthétiques. Réorganisation du carrousel `ImageCarousel.js` selon le
+  nouvel ordre imposé (JETC OrgaPulse en premier, JETC Immo n'est plus la première image).
+  Chaque diapositive est désormais qualifiée (titre, catégorie, description, statut parmi
+  "Prototype"/"Pilote opérationnel"/"Solution déployée"/"Développement en cours"). Aucune fausse
+  capture inventée : les diapositives "Application QHSE" et "Traçabilité des produits", pour
+  lesquelles aucune vraie capture n'existe, utilisent des visuels graphiques neutres (nouveau
+  `public/images/qhse-visual.svg` + réutilisation de `public/images/tracabilite-bg.svg`).
+  Aucun fichier existant supprimé (`image2.png` et `image5.png` conservés mais non utilisés dans
+  le carrousel actuel). Contrôles du carrousel conservés ; navigation clavier renforcée
+  (flèches gauche/droite sur la zone `region`) ; textes alternatifs rendus descriptifs.
 
 ## 3. Liste complète des étapes
 
@@ -73,7 +87,9 @@ certifications non validés.
 | 6 | Clarification des résultats, estimations et objectifs sur les 4 cartes projets (intitulés
   spécifiques par projet, suppression des affirmations "100%"/"60%", reformulation des objectifs
   du prototype Traçabilité, note de qualification globale). | ✅ Fait |
-| 7 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 7 | Réorganisation de la section "Nos réalisations" (carrousel) : inventaire des images,
+  nouvel ordre imposé, qualification de chaque diapositive (titre/catégorie/statut). | ✅ Fait |
+| 8 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -122,6 +138,21 @@ certifications non validés.
   - Analyse & Simulation opérationnelle : `impactLabel: 'Périmètre du pilote'` conservé sans
     modification.
   - Ajout d'une note de qualification globale sous les 4 cartes (bloc `mt-12 text-center`).
+
+### Étape 7 — Réorganisation "Nos réalisations" (carrousel)
+- `components/ImageCarousel.js` : remplacement du tableau `images` (généré automatiquement,
+  sans métadonnées) par un tableau `slides` explicite de 7 éléments dans le nouvel ordre imposé,
+  chacun avec `title`, `category`, `description`, `status`. Légende affichée en surimpression
+  (titre, catégorie, statut, description) sur un dégradé renforcé pour la lisibilité. Navigation
+  clavier ajoutée (flèches gauche/droite) sur la zone `region` ; pause au focus clavier (en plus
+  du survol souris) ; libellés ARIA des boutons/puces mis à jour avec le titre de la
+  réalisation ; `unoptimized` appliqué aux sources `.svg` pour éviter une erreur de
+  l'optimiseur d'images Next.js (aucun changement de configuration de sécurité globale).
+- `public/images/qhse-visual.svg` : nouveau fichier, illustration SVG abstraite (bouclier,
+  checklist, goutte) en palette sarcelle/émeraude, pour la diapositive "Application QHSE"
+  (aucune vraie capture disponible).
+- Aucun fichier supprimé. `public/image/image2.png` et `public/image/image5.png` conservés
+  mais non référencés dans le carrousel actuel (voir inventaire ç-dessous).
 
 ## 5. Textes définitifs intégrés
 
@@ -234,7 +265,46 @@ certifications non validés.
   « Les informations sont qualifiées selon le niveau d'avancement du projet : fonctionnalité
   disponible, estimation issue d'une étude, objectif de conception ou périmètre expérimental. »
 
-## 6. Tests réalisés et leurs résultats
+### Étape 7 — Inventaire et réorganisation "Nos réalisations" (`components/ImageCarousel.js`)
+
+Inventaire des images existantes (aucune suppression) :
+- `public/image/image1.png` — tableau "Dashboard de Pilotage Logistique" (planning/charge) →
+  utilisée pour JETC OrgaPulse.
+- `public/image/image2.png` — fiche collaborateur (nom synthétique) → conservée, non utilisée
+  dans le carrousel actuel (réserve).
+- `public/image/image3.png` — module "Coût Entrepôt / Gestion des segments" → utilisée pour
+  "Autres réalisations digitales existantes".
+- `public/image/image4.png` — page d'accueil JETC Immo → utilisée pour JETC Immo.
+- `public/image/image5.png` — scénario de démo JETC Immo (ticket → mission → facture) →
+  conservée, non utilisée dans le carrousel actuel (réserve).
+- `public/image/image6.png` — simulation 3D convoyeur/palettes avec panneau de contrôle →
+  utilisée pour "Optimisation des achats indirects et du packaging".
+- `public/image/image7.png` — simulation 3D convoyeur (vue large, sans panneau) → utilisée pour
+  "Analyse et simulation opérationnelle".
+- `public/images/prodorga/*.png` (captures déjà utilisées dans `ProjectModal.js`, non touchées) :
+  confirment que tous les noms de personnes affichés ("Jean Dupont", "Marie Curie", "Paul
+  Martin", etc.) sont des données de démonstration synthétiques ; aucune entreprise, logo
+  externe ni donnée confidentielle visible sur aucune image inventée.
+
+Nouvel ordre du carrousel (avec qualification titre / catégorie / description / statut) :
+1. « JETC OrgaPulse » — Analyse & organisation des opérations — « Tableau de pilotage temps
+   réel : planning, charge par zone et suivi d'équipe. » — Statut : Pilote opérationnel.
+2. « Application QHSE » — Qualité, hygiène, sécurité, environnement — « Prototype de suivi des
+   contrôles qualité et de la conformité réglementaire. » — Statut : Prototype (visuel graphique
+   neutre `qhse-visual.svg`, aucune vraie capture disponible).
+3. « Optimisation des achats indirects et du packaging » — Achats indirects & packaging —
+   « Simulation 3D des flux de conditionnement pour comparer différentes configurations. » —
+   Statut : Prototype.
+4. « Analyse et simulation opérationnelle » — Analyse & simulation — « Modélisation visuelle
+   des flux logistiques pour tester des scénarios avant décision. » — Statut : Prototype.
+5. « Traçabilité des produits » — Traçabilité & conformité — « Illustration du principe de
+   suivi des lots tout au long de la chaîne logistique. » — Statut : Prototype (réutilise le
+   visuel graphique neutre `tracabilite-bg.svg`, aucune vraie capture disponible).
+6. « JETC Immo » — Gestion immobilière — « Plateforme de gestion locative : baux, quittances,
+   charges et suivi technique. » — Statut : Développement en cours.
+7. « Autres réalisations digitales existantes » — Autres outils numériques — « Autres modules
+   internes développés dans la même démarche : suivi des coûts et pilotage d'activité. » —
+   Statut : Prototype.
 
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
@@ -278,6 +348,23 @@ certifications non validés.
 - `npm run build` → build de production réussi, 8 pages générées, route `/` = 13,6 kB / 160 kB
   First Load JS. Aucune régression détectée.
 
+### Étape 7
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 14,4 kB / 161 kB
+  First Load JS. Aucune régression détectée.
+- Correction en cours de route : les SVG (`qhse-visual.svg`, `tracabilite-bg.svg`) utilisés via
+  `next/image` renvoyaient une erreur 400 de l'optimiseur ("dangerouslyAllowSVG is disabled").
+  Corrigé en ajoutant la prop `unoptimized` sur les sources `.svg` du carrousel (aucune
+  modification de `next.config.js` ni de la configuration de sécurité globale). Vérifié par
+  test direct de l'endpoint `/_next/image` avant/après correctif, et par récupération directe
+  du fichier SVG (200 OK).
+- Navigation clavier : flèches gauche/droite ajoutées sur la zone `region` (en plus des boutons
+  précédent/suivant déjà focalisables nativement) ; pause automatique au focus clavier ajoutée
+  (`onFocus`/`onBlur`), en complément du `onMouseEnter`/`onMouseLeave` existant.
+- Textes alternatifs : remplacés (`Réalisation N` générique → description précise de chaque
+  visuel, ex. "Tableau de bord JETC OrgaPulse affichant le planning et la charge par zone").
+
 ## 7. Points restant à traiter
 
 - Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Benefits`,
@@ -291,6 +378,14 @@ certifications non validés.
 - Vérification visuelle du rendu responsive (mobile/tablette/ordinateur) de la grille à 4 cartes
   non effectuée dans un vrai navigateur (aucun outil de capture d'écran disponible) : seule une
   analyse des classes Tailwind a été faite. À confirmer par l'utilisateur.
+- `public/image/image2.png` et `public/image/image5.png` (captures OrgaPulse et JETC Immo)
+  restent dans le dépôt mais ne sont plus référencées par le carrousel après la réorganisation ;
+  conservées sans suppression (aucune justification de suppression donnée), à réutiliser si
+  besoin dans une étape future.
+- Vérification manuelle du rendu clavier/lecteur d'écran dans un vrai navigateur non effectuée
+  (aucun outil de test d'accessibilité disponible dans cet environnement) : seule une revue de
+  code (attributs ARIA, gestion des touches, alternatives textuelles) a été faite. À confirmer
+  par l'utilisateur.
 - Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
@@ -302,7 +397,8 @@ certifications non validés.
 | 3 | `391df91` | feat: actualisation section parcours Johnny Fleury |
 | 4 | `2748968` | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
 | 5 | `bafa04a` | feat: ajout carte Analyse & Simulation opérationnelle |
-| 6 | `5d55fc1`* | feat: clarification résultats, estimations et objectifs des projets |
+| 6 | `36235e9` | feat: clarification résultats, estimations et objectifs des projets |
+| 7 | `ecc41e9`* | feat: reorganisation section Nos realisations (carrousel) |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
