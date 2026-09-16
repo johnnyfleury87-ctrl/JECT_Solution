@@ -982,7 +982,7 @@ opérations. »
 | 12 | `e6eefb2` | feat: voix institutionnelle nous (phase A repositionnement) |
 | 13 | `f26a05a`* | fix: fiabilisation envoi formulaire de contact (phase B) |
 | 14 | `003d88b`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
-| 15 | `TBD`* | content: réécriture du contenu de la section Notre Vision |
+| 15 | `7b35219`* | content: réécriture du contenu de la section Notre Vision |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
