@@ -93,6 +93,18 @@ certifications non validés.
   opérationnelle, remplace "Échanger sur cette démarche"). Pied de page (`Footer.js`) : phrase
   d'entreprise remplacée. Aucune entreprise tierce citée. Aucun envoi réel effectué (validation
   testée localement via `npm run test:security`).
+- Étape 10 : création de la route `/mentions-legales` (8 sections demandées). Hébergeur
+  identifié à partir de la configuration réelle du projet (`vercel.json`, dépendance
+  `@vercel/analytics`, README de déploiement, liens de démo sur *.vercel.app) : Vercel Inc.
+  L'adresse postale de l'hébergeur, non vérifiable avec certitude dans cet environnement, est
+  signalée explicitement dans la page comme à confirmer par l'éditeur avant publication
+  officielle (aucune information inventée présentée comme certaine). Aucun employeur, client ou
+  partenaire cité dans les pages juridiques. Lien "Mentions légales" ajouté dans le pied de
+  page à côté de "Confidentialite". Politique de confidentialité (`/confidentialite`) mise à
+  jour (section "Destinataires des données") pour refléter les prestataires techniques réels
+  identifiés dans le code (Vercel, SMTP, Cloudflare Turnstile si activé, Vercel Analytics,
+  Upstash Redis) au lieu d'une formulation générique ; aucune logique de sécurité/backend
+  modifiée, uniquement le texte descriptif.
 
 ## 3. Liste complète des étapes
 
@@ -117,7 +129,9 @@ certifications non validés.
   gagne" (3 étapes de démarche + nouvelle phrase de clôture). | ✅ Fait |
 | 9 | Cohérence page Contact et pied de page : bandeau, introduction, types de demande, CTA
   harmonisés, phrase du pied de page. | ✅ Fait |
-| 10 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 10 | Création de la page "Mentions légales" (`/mentions-legales`) et mise à jour de la
+  politique de confidentialité pour refléter les prestataires techniques réels. | ✅ Fait |
+| 11 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -205,6 +219,16 @@ certifications non validés.
 - `components/Projects.js` : lien de la carte "Analyse & Simulation opérationnelle"
   "Échanger sur cette démarche" → "Proposer un partenariat pilote".
 - `components/Footer.js` : phrase de présentation de l'entreprise remplacée.
+
+### Étape 10 — Page "Mentions légales"
+- `app/mentions-legales/page.js` : nouvelle route, 8 sections (Éditeur du site, Directeur de la
+  publication, Hébergement, Propriété intellectuelle, Responsabilité, Liens externes, Données
+  personnelles, Contact). Style visuel identique à `app/confidentialite/page.js`.
+- `components/Footer.js` : ajout du lien "Mentions légales" à côté de "Confidentialite".
+- `app/confidentialite/page.js` : section "6. Destinataires des données" précisée avec la liste
+  réelle des prestataires techniques (Vercel, SMTP, Cloudflare Turnstile, Vercel Analytics,
+  Upstash Redis) identifiés dans le code, au lieu d'une formulation générique. Aucun changement
+  de logique de sécurité/backend, uniquement le texte descriptif de la politique.
 
 ## 5. Textes définitifs intégrés
 
@@ -405,6 +429,31 @@ résultats du pilote. »
 - Pied de page (`components/Footer.js`) :
   « Analyse opérationnelle, automatisation et simulation au service de résultats mesurables. »
 
+### Étape 10 — Page "Mentions légales" (`app/mentions-legales/page.js`)
+
+1. Éditeur du site : Johnny Fleury, entrepreneur individuel, nom commercial JETC Solution,
+   SIRET 994 308 757, 415 Route de Champagnole, 39300 Sapois, France, contact@jetc-immo.ch.
+2. Directeur de la publication : Johnny Fleury.
+3. Hébergement : Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis (identifié à
+   partir de `vercel.json`, `@vercel/analytics`, README de déploiement, liens *.vercel.app).
+   Adresse signalée dans la page comme à confirmer par l'éditeur avant publication officielle.
+4. Propriété intellectuelle : contenus (textes, illustrations, logos, code) propriété de Johnny
+   Fleury / JETC Solution, reproduction interdite sans autorisation.
+5. Responsabilité : informations (statuts, résultats évalués/estimés) fournies à titre indicatif,
+   sans garantie contractuelle.
+6. Liens externes : JETC Solution non responsable du contenu des sites tiers liés (démonstrations
+   hébergées ailleurs).
+7. Données personnelles : renvoi vers la Politique de confidentialité ; aucune donnée
+   confidentielle de tiers traitée ou publiée.
+8. Contact : contact@jetc-immo.ch ou formulaire de contact.
+
+Mise à jour corollaire de `app/confidentialite/page.js` (section 6, prestataires techniques
+réels) :
+« Hébergement du site (Vercel) ; Envoi des emails transactionnels du formulaire de contact
+(fournisseur SMTP) ; Protection anti-robot du formulaire de contact, lorsqu'elle est activée
+(Cloudflare Turnstile) ; Mesure d'audience anonymisée (Vercel Analytics) ; Compteur technique
+de visiteurs en ligne (Upstash Redis). »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -481,13 +530,24 @@ résultats du pilote. »
   142 kB First Load JS (légère hausse liée aux nouvelles options du sélecteur). Aucune
   régression détectée.
 
+### Étape 10
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec (aucun test lié aux pages
+  juridiques statiques, non affectées).
+- `npm run build` → build de production réussi, **9 pages générées** (nouvelle route
+  `/mentions-legales` = 139 B / 103 kB First Load JS). Aucune régression détectée.
+
 ## 7. Points restant à traiter
 
+- ⚠️ **À confirmer avant publication** : l'adresse postale de l'hébergeur (Vercel Inc.) indiquée
+  dans `/mentions-legales` correspond aux informations publiques habituellement communiquées,
+  mais n'a pas pu être vérifiée avec certitude dans cet environnement (pas d'accès à une source
+  officielle en direct). À confirmer auprès de Vercel Inc. avant mise en ligne définitive.
 - Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`) si
   demandé dans une étape suivante (`Benefits`, `Pricing`, `ContactCTA` et pied de page sont
   traités depuis les étapes 8-9).
-- Vérifier si `Navbar` ou la page `/confidentialite` nécessitent un alignement avec le nouveau
-  discours (à valider avec l'utilisateur).
+- Vérifier si `Navbar` nécessite un alignement avec le nouveau discours (à valider avec
+  l'utilisateur).
 - Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
   contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
   "estimation en cas de rappel") ; non modifiés à l'étape 6 car non demandé explicitement et
@@ -517,7 +577,8 @@ résultats du pilote. »
 | 6 | `36235e9` | feat: clarification résultats, estimations et objectifs des projets |
 | 7 | `bcd9356` | feat: reorganisation section Nos realisations (carrousel) |
 | 8 | `5eea279` | feat: refonte pourquoi-nous-choisir et logique tarifaire |
-| 9 | `882656a`* | feat: coherence page contact et pied de page |
+| 9 | `5da2898` | feat: coherence page contact et pied de page |
+| 10 | `0ee25a5`* | feat: ajout page mentions legales |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

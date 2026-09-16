@@ -49,6 +49,11 @@ export default function Footer() {
                   Confidentialite
                 </Link>
               </li>
+              <li>
+                <Link href="/mentions-legales" className="text-gray-400 hover:text-white transition-colors">
+                  Mentions légales
+                </Link>
+              </li>
             </ul>
           </div>
 
