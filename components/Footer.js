@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">JETC Solution</h3>
             <p className="text-gray-400">
-              Votre partenaire pour la transformation digitale et les solutions innovantes.
+              Analyse opérationnelle, automatisation et simulation au service de résultats mesurables.
             </p>
           </div>
 
@@ -47,6 +47,11 @@ export default function Footer() {
               <li>
                 <Link href="/confidentialite" className="text-gray-400 hover:text-white transition-colors">
                   Confidentialite
+                </Link>
+              </li>
+              <li>
+                <Link href="/mentions-legales" className="text-gray-400 hover:text-white transition-colors">
+                  Mentions légales
                 </Link>
               </li>
             </ul>

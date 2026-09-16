@@ -15,7 +15,7 @@ export default function Signature() {
           className="max-w-5xl mx-auto"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Photo et Logo */}
+            {/* Photo principale + portrait en incrustation */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -27,20 +27,19 @@ export default function Signature() {
                 <Image src="/images/photo-profile.png" alt="Johnny Fleury" fill className="object-cover" priority />
               </div>
               
-              {/* Logo en incrustation */}
+              {/* Photo du fondateur en incrustation (reprise de l'ancienne carte d'accueil) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-xl border-4 border-primary-600"
+                className="absolute -bottom-6 -right-6 w-28 h-28 rounded-xl overflow-hidden shadow-xl border-4 border-primary-600"
               >
-                <Image 
-                  src="/images/logo-jetc.png" 
-                  alt="JETC Solution Logo" 
-                  width={60} 
-                  height={60}
-                  className="object-contain"
+                <Image
+                  src="/images/johnny-hero.jpg"
+                  alt="Portrait de Johnny Fleury, fondateur de JETC Solution"
+                  fill
+                  className="object-cover object-[center_20%]"
                 />
               </motion.div>
             </motion.div>
@@ -53,47 +52,46 @@ export default function Signature() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Un parcours terrain, <span className="text-primary-600">des solutions concrètes</span>
+                Du terrain <span className="text-primary-600">à une vision transversale</span>
               </h2>
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Mon parcours m'a mené de la restauration (CAP, BP, licence économie & management) 
-                  à la logistique (préparation de commandes, assistance opérationnelle, coordination projet), 
-                  puis aux ressources humaines et à la qualité. Aujourd'hui, je pilote le périmètre packing 
-                  d'une structure industrielle : négociation de contrats, suivi des coûts, automatisation des process.
+                  Depuis près de huit ans, Johnny Fleury évolue au sein d’un environnement de
+                  commerce en ligne alimentaire multisite, comptant environ 12 500 références et
+                  intégrant un nouvel entrepôt automatisé.
                 </p>
-                
-                <p>
-                  J’ai vécu ce que beaucoup vivent : perte de temps liée aux saisies manuelles, erreurs dues à des fichiers Excel mal structurés, outils lourds et coûteux qui ne répondent pas réellement aux besoins du terrain.
 
-Alors j’ai appris Excel avancé, puis le VBA, puis Python, puis Java. Une passion découverte il y a six ans pour le développement, avec une envie claire : construire mes propres solutions.
-
-Des outils simples, fiables et adaptés.
-                </p>
-                
                 <p>
-                  <strong>JETC ne propose pas de solutions standardisées.</strong> Je conçois des outils sur mesure,
-                  pensés pour votre métier, vos contraintes réelles. Pas de promesses irréalistes :
-                  uniquement des solutions concrètes avec un impact réel sur vos opérations, dans la durée.
+                  Son parcours a commencé sur le terrain, dans la préparation de commandes, avant
+                  d’évoluer vers l’assistance opérationnelle, le management, les ressources
+                  humaines, la coordination de projets, les achats indirects et la qualité.
                 </p>
-                
+
+                <p>
+                  Ce passage entre les fonctions opérationnelles et les différents services
+                  support lui a permis d’observer une même organisation sous plusieurs angles.
+                  Chaque fonction possède ses priorités et ses contraintes, mais leurs décisions
+                  interagissent et influencent l’ensemble des opérations.
+                </p>
+
+                <p>
+                  Ce parcours a construit sa vision : les améliorations les plus utiles
+                  apparaissent lorsque la réalité du terrain, les données disponibles et les
+                  fonctions support sont reliées autour d’un objectif commun.
+                </p>
+
+                <p>
+                  JETC Solution est née de cette approche terrain et transversale. Son objectif
+                  est de comprendre le fonctionnement existant, de structurer les informations
+                  disponibles et de construire avec les équipes des améliorations concrètes,
+                  adaptées à leur réalité.
+                </p>
+
                 <p className="text-primary-700 font-semibold italic">
-                  Clarté, fiabilité, utilité réelle : ce sont mes priorités.
+                  Analyser. Structurer. Optimiser.
                 </p>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="mt-8 pt-8 border-t border-gray-200"
-              >
-                <p className="text-gray-600 italic">
-                  — Johnny Fleury, Fondateur JETC Solution
-                </p>
-              </motion.div>
             </motion.div>
           </div>
         </motion.div>

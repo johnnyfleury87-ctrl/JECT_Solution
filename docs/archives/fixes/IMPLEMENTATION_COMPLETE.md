@@ -8,7 +8,7 @@ Le formulaire de contact est maintenant **production-ready** et connecté à **c
 
 ## 🎯 Ce qui a été fait
 
-### ✅ 1. Formulaire Frontend ([ContactForm.js](components/ContactForm.js))
+### ✅ 1. Formulaire Frontend ([ContactForm.js](../../../components/ContactForm.js))
 
 **Champs ajoutés/modifiés :**
 - ✅ Nom complet (obligatoire)
@@ -26,7 +26,7 @@ Le formulaire de contact est maintenant **production-ready** et connecté à **c
 - ✅ Message de succès : "Merci, votre message a bien été envoyé. Un email de confirmation vient de vous être transmis."
 - ✅ Message d'erreur : "Une erreur est survenue lors de l'envoi. Merci de réessayer ou de nous contacter par email."
 
-### ✅ 2. Backend API Route ([app/api/contact/route.js](app/api/contact/route.js))
+### ✅ 2. Backend API Route ([app/api/contact/route.js](../../../app/api/contact/route.js))
 
 **Configuration SMTP Infomaniak :**
 ```javascript
@@ -79,12 +79,12 @@ contact@jetc-immo.ch
 
 ### ✅ 3. Configuration
 
-**Variables d'environnement ([.env.example](.env.example)) :**
+**Variables d'environnement ([.env.example](../../../.env.example)) :**
 ```env
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=********
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -92,17 +92,17 @@ SMTP_FROM=contact@jetc-immo.ch
 
 Trois documents créés :
 
-1. **[CONFIG_FORMULAIRE_CONTACT.md](CONFIG_FORMULAIRE_CONTACT.md)**
+1. **[../../contact-form/README.md](../../contact-form/README.md)**
    - Documentation technique complète
    - Guide de configuration local et Vercel
    - Troubleshooting
 
-2. **[DEPLOIEMENT_FORMULAIRE.md](DEPLOIEMENT_FORMULAIRE.md)**
+2. **[../../contact-form/README.md](../../contact-form/README.md)**
    - Checklist de déploiement
    - Instructions étape par étape
    - Validation finale
 
-3. **[IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md)** (ce fichier)
+3. **[../../contact-form/README.md](../../contact-form/README.md)** (ce fichier)
    - Résumé global
    - Prochaines étapes
 
@@ -192,9 +192,9 @@ git push
 /components/ContactForm.js          ← Formulaire avec nouveaux champs
 /app/api/contact/route.js          ← API avec double envoi email
 /.env.example                       ← Variables SMTP Infomaniak
-/CONFIG_FORMULAIRE_CONTACT.md      ← Doc technique complète
-/DEPLOIEMENT_FORMULAIRE.md         ← Guide de déploiement
-/IMPLEMENTATION_COMPLETE.md        ← Ce fichier
+/../../contact-form/README.md      ← Doc technique complète
+/../../contact-form/README.md         ← Guide de déploiement
+/../../contact-form/README.md        ← Ce fichier
 ```
 
 **Aucun fichier supprimé, aucune dépendance ajoutée** (nodemailer déjà présent).
@@ -242,7 +242,7 @@ Une fois déployé, votre site aura :
 
 En cas de question ou problème :
 
-1. **Consultez** [CONFIG_FORMULAIRE_CONTACT.md](CONFIG_FORMULAIRE_CONTACT.md) (Troubleshooting)
+1. **Consultez** [../../contact-form/README.md](../../contact-form/README.md) (Troubleshooting)
 2. **Vérifiez** les logs dans la console navigateur (F12)
 3. **Vérifiez** les logs Vercel si déployé
 4. **Testez** d'abord en local avec `.env.local`

@@ -8,8 +8,8 @@ import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'JETC Solution - Solutions Digitales Innovantes',
-  description: 'JETC Solution accompagne votre transformation digitale avec des solutions modernes et performantes.',
+  title: 'JETC Solution | Analyse opérationnelle, automatisation et simulation',
+  description: 'JETC Solution accompagne les entreprises dans l’analyse de leurs flux, l’identification des coûts cachés, l’automatisation des processus et la simulation de scénarios d’amélioration.',
   keywords: 'solutions digitales, développement web, transformation digitale',
   icons: {
     icon: '/favicon.png',
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <PingClient />
         {/* Bandeau d'ouverture officielle */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2 px-4 text-center text-sm font-medium shadow-md">
-          Entreprise prête, ouverture officielle prochainement.
+          JETC Solution entre en phase pilote — premières collaborations ouvertes.
         </div>
         <Navbar />
         <main className="min-h-screen relative">

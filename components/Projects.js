@@ -7,23 +7,26 @@ import ProjectModal from './ProjectModal';
 const projects = [
   {
     id: 'prodorga',
-    name: 'ProdOrga',
-    status: 'Pilote interne',
+    name: 'JETC OrgaPulse',
+    status: 'Pilote opérationnel',
     statusColor: 'bg-blue-100 text-blue-800 border-blue-200',
     emoji: '🏭',
     gradient: 'from-green-400 to-emerald-500',
     gradientColors: ['rgba(52, 211, 153, 0.25)', 'rgba(16, 185, 129, 0.40)'],
     backgroundImage: '/images/prodorga-bg.svg',
-    description: "Outil de gestion et d'organisation de la production pour les PME. Permet de suivre en temps réel l'avancement des tâches, d'optimiser les flux et de réduire les temps morts.",
-    descriptionShort: "Pilotez votre production en temps réel. ProdOrga calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
+    description: "Solution d’analyse et d’organisation des opérations permettant de centraliser les données, visualiser la charge, structurer la planification et identifier les points de friction dans les flux de travail.",
+    descriptionShort: "Pilotez votre production en temps réel. JETC OrgaPulse calcule automatiquement charges et capacités, détecte les surcharges et vous montre immédiatement ce qui est faisable ou non.",
     impact: [
-      "Réduction de 30% du temps de planification",
-      "Visibilité temps réel sur l'activité",
-      "Données horaires 100% fiables",
+      "Réduction estimée jusqu’à 30 % du temps de planification",
+      "Visualisation de la charge et de l’activité",
+      "Centralisation et fiabilisation des données horaires",
+      "Identification des temps morts et des contraintes",
+      "Comparaison de différents scénarios d’organisation",
     ],
+    resultsNote: "JETC OrgaPulse s’appuie sur les données disponibles pour rendre l’activité compréhensible et faciliter les décisions opérationnelles.",
     kpis: [
-      { label: 'Données horaires', value: '100% fiables', note: 'issues du timbrage' },
-      { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
+      { label: 'Données horaires', value: 'Centralisées', note: 'issues du timbrage, fiabilisées progressivement' },
+      { label: 'Temps de planification', value: 'Jusqu’à -30%', note: 'estimation vs Excel manuel' },
       { label: 'Visibilité', value: 'Temps réel', note: 'capacité / charge' }
     ],
     features: [
@@ -55,15 +58,16 @@ const projects = [
     backgroundImage: '/images/jetc-immo-bg.svg',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
     descriptionShort: "Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d'ensemble financière.",
+    impactLabel: 'Objectifs de conception',
     impact: [
       'Centralisation des documents et contrats',
       'Automatisation des relances et rappels',
-      'Gain de temps administratif estimé : 60%',
+      'Réduction attendue des tâches administratives répétitives',
     ],
     kpis: [
       { label: 'Modules actifs', value: '6/10', note: 'en développement continu' },
       { label: 'Multi-devises', value: '✓', note: 'EUR, USD, CHF' },
-      { label: 'Gain de temps', value: '~60%', note: 'vs gestion manuelle' }
+      { label: 'Tâches administratives', value: 'Réduction attendue', note: 'vs gestion manuelle' }
     ],
     points: [
       'Génération automatique des quittances de loyer',
@@ -80,7 +84,7 @@ const projects = [
   },
   {
     id: 'tracabilite',
-    name: 'Traçabilité & Spotting Produits',
+    name: 'JETC TracePilot',
     status: 'Prototype',
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
     emoji: '📦',
@@ -89,10 +93,11 @@ const projects = [
     backgroundImage: '/images/tracabilite-bg.svg',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
     descriptionShort: "Projet en phase d'expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.",
+    impactLabel: 'Objectifs du prototype',
     impact: [
-      "Transparence totale de la chaîne d'approvisionnement",
-      "Lutte contre la contrefaçon",
-      "Conformité réglementaire facilitée",
+      "Viser une transparence accrue de la chaîne d'approvisionnement",
+      "Contribuer à la lutte contre la contrefaçon",
+      "Faciliter la conformité réglementaire",
     ],
     kpis: [
       { label: 'Traçabilité', value: '100%', note: 'lot → produit fini (démo)' },
@@ -110,6 +115,32 @@ const projects = [
     link: {
       label: 'Voir le prototype QHSE',
       href: 'https://product-simulation-one.vercel.app/qhse'
+    }
+  },
+  {
+    id: 'analyse-simulation',
+    name: 'JETC FlowPilot',
+    status: 'Recherche d’une entreprise partenaire',
+    statusColor: 'bg-purple-100 text-purple-800 border-purple-200',
+    emoji: '🧪',
+    gradient: 'from-purple-400 to-indigo-500',
+    gradientColors: ['rgba(167, 139, 250, 0.25)', 'rgba(99, 102, 241, 0.40)'],
+    backgroundImage: '/images/analyse-simulation-bg.svg',
+    description: "Démarche d’analyse permettant de cartographier les flux, mesurer les temps et les capacités, identifier les coûts cachés et comparer plusieurs scénarios avant une décision d’investissement ou de réorganisation.",
+    descriptionShort: "Démarche d’analyse permettant de cartographier les flux, mesurer les temps et les capacités, identifier les coûts cachés et comparer plusieurs scénarios avant une décision d’investissement ou de réorganisation.",
+    impactLabel: 'Périmètre du pilote',
+    impact: [
+      'Cartographie des flux et des contraintes',
+      'Identification des temps et coûts cachés',
+      'Mesure des capacités et des ressources',
+      'Comparaison de scénarios opérationnels',
+      'Évaluation avant et après expérimentation',
+    ],
+    resultsNote: "L’objectif est de tester cette approche sur un périmètre réel et limité afin d’en mesurer concrètement la valeur.",
+    link: {
+      label: 'Proposer un partenariat pilote',
+      href: '#contact',
+      type: 'contact'
     }
   },
 ];
@@ -164,7 +195,7 @@ export default function Projects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 max-w-7xl mx-auto"
         >
           {projects.map((project, index) => (
             <motion.div
@@ -172,7 +203,16 @@ export default function Projects() {
               variants={itemVariants}
               whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3 } }}
               onClick={() => handleProjectClick(project)}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProjectClick(project);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Voir les détails de ${project.name}`}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {/* Header avec image de fond et overlay */}
               <div className="relative p-8 text-white overflow-hidden h-64">
@@ -220,7 +260,7 @@ export default function Projects() {
 
                 <div>
                   <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                    Impact mesuré / attendu
+                    {project.impactLabel || 'Résultats évalués et fonctionnalités'}
                   </h4>
                   <ul className="space-y-2">
                     {project.impact.map((item, idx) => (
@@ -240,6 +280,11 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
+                  {project.resultsNote && (
+                    <p className="text-sm text-gray-500 italic mt-4">
+                      {project.resultsNote}
+                    </p>
+                  )}
                 </div>
 
                 {/* Indicateur clic */}
@@ -259,6 +304,11 @@ export default function Projects() {
             Ces projets reflètent notre engagement envers la transparence et la création de valeur mesurable.
             <br />
             Chaque solution est pensée pour résoudre un problème réel et générer un impact concret.
+          </p>
+          <p className="text-sm text-gray-500 mt-4 max-w-3xl mx-auto">
+            Les informations sont qualifiées selon le niveau d’avancement du projet : fonctionnalité
+            disponible, estimation issue d’une étude, objectif de conception ou périmètre
+            expérimental.
           </p>
         </div>
       </div>

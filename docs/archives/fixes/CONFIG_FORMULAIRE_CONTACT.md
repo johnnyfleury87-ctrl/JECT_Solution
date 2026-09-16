@@ -54,7 +54,7 @@ cp .env.example .env.local
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_MOT_DE_PASSE_ICI
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -152,7 +152,7 @@ npm run dev
 
 ### ❌ Emails non reçus
 → Vérifiez les spams/courriers indésirables
-→ Testez avec `console.log(process.env.SMTP_USER)` dans l'API route
+→ Ne journalisez jamais `process.env.SMTP_USER` ni aucune autre variable d’environnement ; vérifiez uniquement la présence des variables et les erreurs génériques.
 → Vérifiez que le port 587 n'est pas bloqué
 
 ---

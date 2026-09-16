@@ -59,6 +59,10 @@ Remplacer les placeholders par de vraies captures d'écran de ProdOrga en produc
 ## 📁 Où Placer les Fichiers
 
 ```
+
+### Méthodes de copie
+
+Les fichiers peuvent être ajoutés depuis l’explorateur VS Code, par copie depuis un terminal ou via l’interface GitHub. Dans tous les cas, conserver exactement les noms et le dossier indiqués ci-dessus.
 /workspaces/JECT_Solution/
 └── public/
     └── images/
@@ -146,6 +150,8 @@ npm run dev
 ```
 
 Ouvrir http://localhost:3000, cliquer sur ProdOrga, scroller jusqu'à "L'outil en action"
+
+Si une image ne s’affiche pas, vérifier la casse du nom, le chemin `/public/images/prodorga/`, puis redémarrer le serveur et vider le cache du navigateur. Les formats PNG, JPG et WebP sont acceptés ; viser un ratio 16:9, une résolution d’au moins 1600x900 et un poids inférieur à 500 Ko lorsque cela est possible.
 
 ---
 

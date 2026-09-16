@@ -265,7 +265,7 @@ vercel logs jetc-solution --follow
 Une fois tout fonctionnel :
 
 1. **Supprimer l'endpoint GET de test**
-   - Modifier [app/api/contact/route.js](../app/api/contact/route.js)
+   - Modifier [app/api/contact/route.js](../../../app/api/contact/route.js)
    - Supprimer la fonction `export async function GET()`
    - Ou la remplacer par :
    ```javascript

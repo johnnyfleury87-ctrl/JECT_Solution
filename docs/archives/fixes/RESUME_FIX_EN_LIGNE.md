@@ -7,19 +7,19 @@ Le bug du compteur d'utilisateurs "En ligne" affichant 0 a été **diagnostiqué
 ## 📊 Changements apportés
 
 ### Fichiers créés (5)
-- ✅ [components/PingClient.js](components/PingClient.js) - Composant de ping automatique
-- ✅ [scripts/test-api.sh](scripts/test-api.sh) - Script de test des API
+- ✅ [components/PingClient.js](../../../components/PingClient.js) - Composant de ping automatique
+- ✅ [scripts/test-api.sh](../../../scripts/test-api.sh) - Script de test des API
 - ✅ [FIX_COMPTEUR_EN_LIGNE.md](FIX_COMPTEUR_EN_LIGNE.md) - Documentation technique
-- ✅ [TEST_ACTIVE_USERS.md](TEST_ACTIVE_USERS.md) - Guide de test
-- ✅ [DEPLOIEMENT_STATS_PRODUCTION.md](DEPLOIEMENT_STATS_PRODUCTION.md) - Guide déploiement
+- ✅ [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Guide de test
+- ✅ [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) - Guide déploiement
 - ✅ [COMMIT_INSTRUCTIONS.md](COMMIT_INSTRUCTIONS.md) - Instructions Git
 
 ### Fichiers modifiés (5)
-- ✅ [app/api/ping/route.js](app/api/ping/route.js) - Cache + sessionId
-- ✅ [app/api/active/route.js](app/api/active/route.js) - Cache + logs
-- ✅ [app/api/stats/route.js](app/api/stats/route.js) - Cache
-- ✅ [app/layout.js](app/layout.js) - Intégration PingClient
-- ✅ [components/StatsWidget.js](components/StatsWidget.js) - Polling optimisé
+- ✅ [app/api/ping/route.js](../../../app/api/ping/route.js) - Cache + sessionId
+- ✅ [app/api/active/route.js](../../../app/api/active/route.js) - Cache + logs
+- ✅ [app/api/stats/route.js](../../../app/api/stats/route.js) - Cache
+- ✅ [app/layout.js](../../../app/layout.js) - Intégration PingClient
+- ✅ [components/StatsWidget.js](../../../components/StatsWidget.js) - Polling optimisé
 
 ## 🐛 Bugs corrigés
 
@@ -86,10 +86,10 @@ curl https://votre-domaine.vercel.app/api/active
 | Document | Description |
 |----------|-------------|
 | [FIX_COMPTEUR_EN_LIGNE.md](FIX_COMPTEUR_EN_LIGNE.md) | 📘 **Détails techniques** du fix |
-| [TEST_ACTIVE_USERS.md](TEST_ACTIVE_USERS.md) | 🧪 **Guide de test** complet |
-| [DEPLOIEMENT_STATS_PRODUCTION.md](DEPLOIEMENT_STATS_PRODUCTION.md) | 🚀 **Configuration Vercel** |
+| [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) | 🧪 **Guide de test** complet |
+| [../../deployment/STATISTICS.md](../../deployment/STATISTICS.md) | 🚀 **Configuration Vercel** |
 | [COMMIT_INSTRUCTIONS.md](COMMIT_INSTRUCTIONS.md) | 📝 **Instructions Git** et déploiement |
-| [scripts/test-api.sh](scripts/test-api.sh) | 🔧 **Script de test** automatique |
+| [scripts/test-api.sh](../../../scripts/test-api.sh) | 🔧 **Script de test** automatique |
 
 ## 🎓 Ce que vous devez savoir
 

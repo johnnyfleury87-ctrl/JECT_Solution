@@ -50,12 +50,12 @@ nano .env.local
 
 **Remplacez :**
 ```env
-SMTP_PASS=ANCIEN_MOT_DE_PASSE
+SMTP_PASS=valeur-locale-uniquement
 ```
 
 **Par :**
 ```env
-SMTP_PASS=NOUVEAU_MOT_DE_PASSE_INFOMANIAK
+SMTP_PASS=valeur-locale-uniquement
 ```
 
 **Vérifiez que toutes les variables sont correctes :**
@@ -63,7 +63,7 @@ SMTP_PASS=NOUVEAU_MOT_DE_PASSE_INFOMANIAK
 SMTP_HOST=mail.infomaniak.com
 SMTP_PORT=587
 SMTP_USER=contact@jetc-immo.ch
-SMTP_PASS=VOTRE_NOUVEAU_MOT_DE_PASSE
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM=contact@jetc-immo.ch
 ```
 
@@ -282,8 +282,8 @@ grep -r "SMTP_PASS.*=" --include="*.js" --exclude-dir=node_modules .
 git check-ignore .env.local
 # Attendu: .env.local (confirmé ignoré)
 
-# Vérifier le contenu de .env.local (sans afficher les secrets)
-cat .env.local | sed 's/SMTP_PASS=.*/SMTP_PASS=***MASQUÉ***/'
+# Vérifier uniquement que le fichier local est ignoré ; ne jamais afficher son contenu
+git check-ignore .env.local
 
 # Tester localement
 curl -X POST http://localhost:3000/api/contact \
@@ -310,9 +310,9 @@ Quand tout est OK :
 
 ## 📖 Documents Connexes
 
-- [RAPPORT_SECURITE_GITGUARDIAN.md](RAPPORT_SECURITE_GITGUARDIAN.md) - Analyse complète
-- [DEBUG_PRODUCTION.md](DEBUG_PRODUCTION.md) - Debug en cas de problème
-- [QUICKSTART.md](QUICKSTART.md) - Configuration initiale
+- [RAPPORT_SECURITE_GITGUARDIAN.md](../archives/reports/RAPPORT_SECURITE_GITGUARDIAN.md) - Analyse complète
+- [DEBUG_PRODUCTION.md](../archives/fixes/DEBUG_PRODUCTION.md) - Debug en cas de problème
+- [../setup/QUICKSTART.md](../setup/QUICKSTART.md) - Configuration initiale
 
 ---
 

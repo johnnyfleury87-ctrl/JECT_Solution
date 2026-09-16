@@ -21,20 +21,11 @@
 cp .env.example .env.local
 
 # L'éditer (remplacez le mot de passe)
+# L’éditer avec les valeurs de votre environnement local
 nano .env.local
 ```
 
-Dans `.env.local`, remplacez cette ligne :
-```
-SMTP_PASS=VOTRE_MOT_DE_PASSE_ICI
-```
-
-Par :
-```
-SMTP_PASS=le_vrai_mot_de_passe_infomaniak
-```
-
-Sauvegardez et fermez.
+Dans `.env.local`, renseignez les variables SMTP avec les valeurs fournies par votre service de messagerie. Ne copiez jamais ces valeurs dans Git ou dans la documentation.
 
 ### 2️⃣ Test (2 min)
 
@@ -54,19 +45,20 @@ Testez avec :
 Cliquez "Envoyer".
 
 **✅ Vous devez recevoir :**
-- Un email dans contact@jetc-immo.ch
-- Un accusé de réception sur votre email
+**✅ Vous devez recevoir :**
+- Une notification dans la boîte interne configurée
+- Un accusé de réception sur votre adresse de test
 
 ### 3️⃣ Déploiement (1 min)
 
 **Dans Vercel** (Settings > Environment Variables), ajoutez :
 
 ```
-SMTP_HOST = mail.infomaniak.com
+SMTP_HOST = smtp.example.invalid
 SMTP_PORT = 587
-SMTP_USER = contact@jetc-immo.ch
-SMTP_PASS = le_vrai_mot_de_passe
-SMTP_FROM = contact@jetc-immo.ch
+SMTP_USER = utilisateur-smtp
+SMTP_PASS=valeur-locale-uniquement
+SMTP_FROM = expediteur@example.invalid
 ```
 
 **Puis push sur Git :**
@@ -96,10 +88,10 @@ git push
 
 | Situation | Document |
 |-----------|----------|
-| Je veux comprendre tout ce qui a été fait | [IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md) |
-| J'ai un problème | [CONFIG_FORMULAIRE_CONTACT.md](CONFIG_FORMULAIRE_CONTACT.md) |
-| Je veux tester en détail | [TESTS_FORMULAIRE.md](TESTS_FORMULAIRE.md) |
-| Je veux voir les emails | [EMAILS_APERCU.md](EMAILS_APERCU.md) |
+| Je veux comprendre tout ce qui a été fait | [docs/contact-form/README.md](../contact-form/README.md) |
+| J'ai un problème | [docs/contact-form/README.md](../contact-form/README.md) |
+| Je veux tester en détail | [docs/contact-form/TESTS_FORMULAIRE.md](../contact-form/TESTS_FORMULAIRE.md) |
+| Je veux voir les emails | [EMAILS_APERCU.md](../archives/fixes/EMAILS_APERCU.md) |
 
 ---
 

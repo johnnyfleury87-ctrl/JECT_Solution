@@ -60,8 +60,17 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="text-2xl font-semibold text-gray-900">6. Destinataires des données</h2>
             <p className="text-gray-700">
-              Les données sont accessibles uniquement aux personnes autorisées chez JETC Solution et à nos sous-traitants techniques strictement nécessaires au fonctionnement du site (hébergement, messagerie transactionnelle).
+              Les données sont accessibles uniquement aux personnes autorisées chez JETC Solution
+              et aux prestataires techniques strictement nécessaires au fonctionnement du site,
+              à savoir:
             </p>
+            <ul className="list-disc pl-6 text-gray-700 space-y-2">
+              <li>Hébergement du site (Vercel)</li>
+              <li>Envoi des emails transactionnels du formulaire de contact (fournisseur SMTP)</li>
+              <li>Protection anti-robot du formulaire de contact, lorsqu'elle est activée (Cloudflare Turnstile)</li>
+              <li>Mesure d'audience anonymisée (Vercel Analytics)</li>
+              <li>Compteur technique de visiteurs en ligne (Upstash Redis)</li>
+            </ul>
           </section>
 
           <section className="space-y-3">

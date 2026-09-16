@@ -4,7 +4,7 @@ Template de site vitrine moderne pour JETC Solution, prêt pour déploiement sur
 
 ## 🚀 Stack Technique
 
-- **Next.js 14** (App Router)
+- **Next.js 15** (App Router)
 - **React 18**
 - **JavaScript** (pas de TypeScript)
 - **TailwindCSS** pour le styling
@@ -50,19 +50,19 @@ cp .env.example .env.local
 Puis éditez `.env.local` avec vos credentials SMTP :
 
 ```env
-SMTP_HOST=smtp.gmail.com
+SMTP_HOST=smtp.example.invalid
 SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=votre-email@gmail.com
-SMTP_PASSWORD=votre-mot-de-passe-application
-MAIL_TO=contact@jetc-solution.com
+SMTP_USER=utilisateur-smtp
+SMTP_PASS=valeur-locale-uniquement
+SMTP_FROM=expediteur@example.invalid
+CONTACT_RECEIVER_EMAIL=destinataire@example.invalid
 ```
 
 #### Configuration Gmail (recommandé pour tester)
 
 1. Activez l'authentification à 2 facteurs sur votre compte Google
 2. Créez un "App Password" : https://support.google.com/accounts/answer/185833
-3. Utilisez ce mot de passe dans `SMTP_PASSWORD`
+3. Utilisez le secret SMTP uniquement dans l’environnement local ou Vercel, jamais dans Git.
 
 #### Alternatives SMTP
 
@@ -103,8 +103,9 @@ vercel
 vercel env add SMTP_HOST
 vercel env add SMTP_PORT
 vercel env add SMTP_USER
-vercel env add SMTP_PASSWORD
-vercel env add MAIL_TO
+vercel env add SMTP_PASS
+vercel env add SMTP_FROM
+vercel env add CONTACT_RECEIVER_EMAIL
 
 # Redéployer avec les nouvelles variables
 vercel --prod
@@ -131,6 +132,7 @@ JECT_Solution/
 │   ├── Hero.js                  # Section hero
 │   ├── Navbar.js                # Barre de navigation
 │   └── Solutions.js             # Section solutions
+├── docs/                        # Documentation classée
 ├── .env.example                 # Exemple de variables d'environnement
 ├── .gitignore
 ├── next.config.js               # Configuration Next.js

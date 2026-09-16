@@ -1,5 +1,11 @@
 # SECURITY
 
+## Suivi actuel
+
+L’audit du 15 septembre 2026 a détecté une vulnérabilité critique dans Next.js et quatre vulnérabilités élevées dans Next.js ou ses dépendances transitives, ainsi que dans Nodemailer. Les versions et les actions recommandées sont suivies dans [docs/security/DEPENDENCY_AUDIT.md](docs/security/DEPENDENCY_AUDIT.md). Ces mises à jour sont volontairement séparées du classement documentaire.
+
+La checklist opérationnelle est disponible dans [docs/security/SECURITY_CHECKLIST.md](docs/security/SECURITY_CHECKLIST.md). Aucun secret réel ne doit apparaître dans le code, la documentation, les logs ou l’historique Git.
+
 ## Politique securite du projet
 Ce projet suit une approche defensive orientee production.
 
@@ -38,5 +44,5 @@ Variables de securisation:
 En cas de faille suspectee:
 1. Isoler le composant concerne.
 2. Appliquer un correctif minimal et testable.
-3. Documenter dans `security/security-report.md`.
+3. Documenter dans `docs/security/DEPENDENCY_AUDIT.md`.
 4. Faire valider avant de deployer.

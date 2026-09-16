@@ -2,42 +2,36 @@
 
 import { motion } from 'framer-motion';
 
-const pricingExamples = [
+const processSteps = [
   {
-    icon: '🌐',
-    title: 'Création de solution digitale',
+    icon: '🔍',
+    title: 'Diagnostic ciblé',
     items: [
-      'Présentation claire de l\'activité',
-      'Outil simple et fonctionnel',
-      'Mise en place rapide',
-      'Solution installée et utilisable immédiatement',
+      'Compréhension du besoin',
+      "Cartographie d'un processus",
+      'Définition des données disponibles',
+      'Identification des premières hypothèses',
     ],
   },
   {
-    icon: '⚙️',
-    title: 'Évolution et accompagnement dans le temps',
+    icon: '🤝',
+    title: 'Partenariat pilote',
     items: [
-      'Ajustements selon l\'usage réel',
-      'Améliorations progressives',
-      'Corrections si besoin',
-      'Suivi léger, sans obligation',
+      'Périmètre volontairement limité',
+      'État initial mesurable',
+      'Analyse et simulation',
+      "Test d'une ou plusieurs améliorations",
     ],
-    description: 'La rémunération peut prendre la forme d\'un entretien mensuel simple, uniquement si cela apporte une vraie valeur.',
-    price: 'Contribution mensuelle légère',
-    subPrice: 'adaptée au besoin réel',
   },
   {
-    icon: '⚡',
-    title: 'Solution métier sur mesure',
+    icon: '📈',
+    title: 'Déploiement progressif',
     items: [
-      'Réponse à un besoin précis',
-      'Adaptée à la réalité du terrain',
-      'Pensée pour simplifier le quotidien',
-      'Chaque solution conçue pour votre contexte spécifique',
+      'Validation des résultats',
+      'Ajustement avec les équipes',
+      'Extension uniquement si la valeur est démontrée',
+      'Accompagnement adapté au besoin réel',
     ],
-    description: 'Approche "vous gagnez / je gagne" : gain de temps, meilleure visibilité, moins d\'erreurs, solution qui travaille à votre place.',
-    price: 'Définie en fonction de la valeur créée',
-    subPrice: 'du périmètre et de l\'impact réel',
   },
 ];
 
@@ -84,7 +78,7 @@ export default function Pricing() {
         {/* En-tête */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Une logique simple : vous gagnez, je gagne
+            Une logique simple : vous gagnez, nous gagnons
           </h2>
           <div className="max-w-3xl mx-auto space-y-4 text-lg text-gray-600">
             <p>
@@ -107,7 +101,7 @@ export default function Pricing() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 max-w-6xl mx-auto"
         >
-          {pricingExamples.map((example, index) => (
+          {processSteps.map((step, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
@@ -116,15 +110,15 @@ export default function Pricing() {
             >
               <div className="mb-4">
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-2xl">{example.icon}</span>
+                  <span className="text-2xl">{step.icon}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {example.title}
+                  {step.title}
                 </h3>
               </div>
 
               <ul className="space-y-2 mb-4">
-                {example.items.map((item, i) => (
+                {step.items.map((item, i) => (
                   <li key={i} className="text-sm text-gray-600 flex items-start">
                     <svg className="w-4 h-4 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -133,32 +127,6 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-
-              {example.description && (
-                <p className="text-sm text-gray-600 mb-4 italic">
-                  {example.description}
-                </p>
-              )}
-
-              {(example.price || example.subPrice || example.note) && (
-                <div className="border-t border-gray-200 pt-4 space-y-2">
-                  {example.price && (
-                    <div className="text-lg font-bold text-primary-600">
-                      💰 {example.price}
-                    </div>
-                  )}
-                  {example.subPrice && (
-                    <p className="text-xs text-gray-500">
-                      {example.subPrice}
-                    </p>
-                  )}
-                  {example.note && (
-                    <p className="text-xs text-gray-500 italic mt-3 pt-3 border-t border-gray-100">
-                      {example.note}
-                    </p>
-                  )}
-                </div>
-              )}
             </motion.div>
           ))}
         </motion.div>
@@ -205,13 +173,10 @@ export default function Pricing() {
           className="text-center max-w-3xl mx-auto"
         >
           <div className="bg-primary-50 border-l-4 border-primary-600 rounded-lg p-8">
-            <p className="text-xl text-gray-800 leading-relaxed mb-4">
-              L'objectif n'est pas de vendre plus.
-              <br />
-              L'objectif est que la solution soit utile.
-            </p>
-            <p className="text-lg text-gray-700">
-              Si vous gagnez du temps et de la clarté, alors la collaboration a du sens pour tout le monde.
+            <p className="text-xl text-gray-800 leading-relaxed">
+              Le périmètre et la rémunération sont définis à l'avance selon le besoin et la
+              valeur recherchée. Aucun abonnement ou déploiement global n'est imposé avant la
+              validation des résultats du pilote.
             </p>
           </div>
         </motion.div>

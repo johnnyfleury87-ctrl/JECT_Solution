@@ -14,7 +14,7 @@ L'image de la section "Une démarche centrée sur vos résultats" ne s'affichait
 ## 🔍 Diagnostic
 
 ### Composant Concerné
-**Fichier :** [components/Signature.js](components/Signature.js)  
+**Fichier :** [components/Signature.js](../../../components/Signature.js)
 **Ligne :** 29
 
 ### Cause Identifiée
@@ -43,7 +43,7 @@ Mais le fichier disponible est :
 ```
 
 ### Fichier Modifié
-- [components/Signature.js](components/Signature.js) - Ligne 29
+- [components/Signature.js](../../../components/Signature.js) - Ligne 29
 
 ---
 
@@ -124,7 +124,7 @@ className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl"
 
 ## 🔗 Fichiers Liés
 
-- [components/Signature.js](components/Signature.js) - Composant corrigé
+- [components/Signature.js](../../../components/Signature.js) - Composant corrigé
 - `/public/images/photo-profile.png` - Image utilisée (208KB)
 - `/public/images/logo-jetc.png` - Logo en incrustation (fonctionne)
 

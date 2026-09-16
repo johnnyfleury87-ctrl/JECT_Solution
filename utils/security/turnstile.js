@@ -2,21 +2,31 @@ const TURNSTILE_VERIFY_URL =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 /**
- * Validates a Cloudflare Turnstile token server-side.
+ * Determines whether Cloudflare Turnstile should be enforced.
+ * - 'disabled'      : neither key configured — Turnstile is skipped entirely.
+ * - 'enabled'       : both keys configured — a valid token is required.
+ * - 'misconfigured' : only one of the two keys configured — refuse safely
+ *                     instead of silently succeeding or silently failing open.
+ * @returns {'disabled'|'enabled'|'misconfigured'}
+ */
+export function getTurnstileMode() {
+  const hasSecretKey = Boolean(process.env.TURNSTILE_SECRET_KEY);
+  const hasSiteKey = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+
+  if (hasSecretKey && hasSiteKey) return 'enabled';
+  if (!hasSecretKey && !hasSiteKey) return 'disabled';
+  return 'misconfigured';
+}
+
+/**
+ * Validates a Cloudflare Turnstile token server-side. Only call this when
+ * `getTurnstileMode()` returned 'enabled' (a secret key is then guaranteed).
  * @param {string} token  - The cf-turnstile-response token from the frontend.
  * @param {string} ip     - Client IP (optional, forwarded for additional binding).
  * @returns {{ success: boolean, error?: string }}
  */
 export async function validateTurnstileToken(token, ip = '') {
   const secretKey = process.env.TURNSTILE_SECRET_KEY;
-
-  // If no secret key is configured, skip validation in development.
-  if (!secretKey) {
-    if (process.env.NODE_ENV !== 'production') {
-      return { success: true };
-    }
-    return { success: false, error: 'turnstile_not_configured' };
-  }
 
   if (!token || typeof token !== 'string' || token.length < 10) {
     return { success: false, error: 'missing_token' };

@@ -15,10 +15,12 @@ export default function ContactPage() {
               Discutons
             </h1>
             <p className="text-lg text-gray-600">
-              Une idée, un besoin, une question ? On en parle et on voit si ça a du sens.
+              Un processus difficile à mesurer, un coût qui reste invisible ou un projet que
+              vous souhaitez tester avant d'investir ? Présentez-nous simplement votre situation.
             </p>
             <p className="text-sm text-amber-600 mt-3 font-medium">
-              💡 Structure opérationnelle, ouverture prochaine. Les prises de contact sont ouvertes dès maintenant.
+              JETC Solution entre en phase pilote. Les prises de contact et propositions de
+              collaboration sont ouvertes.
             </p>
           </div>
           

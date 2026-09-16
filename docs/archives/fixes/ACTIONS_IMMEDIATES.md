@@ -95,7 +95,7 @@ curl -X POST https://jetc-solution.vercel.app/api/contact \
 SMTP_HOST = mail.infomaniak.com
 SMTP_PORT = 587
 SMTP_USER = contact@jetc-immo.ch
-SMTP_PASS = [votre mot de passe]
+SMTP_PASS=valeur-locale-uniquement
 SMTP_FROM = contact@jetc-immo.ch
 ```
 
@@ -173,7 +173,7 @@ Si tous les tests passent :
 - ✅ Les logs permettent le debug
 
 ### Prochaine Étape (Optionnel)
-Après validation complète, vous pouvez **supprimer l'endpoint GET de test** en modifiant [app/api/contact/route.js](../app/api/contact/route.js).
+Après validation complète, vous pouvez **supprimer l'endpoint GET de test** en modifiant [app/api/contact/route.js](../../../app/api/contact/route.js).
 
 Voir [DEBUG_PRODUCTION.md](DEBUG_PRODUCTION.md) section "Validation Finale".
 

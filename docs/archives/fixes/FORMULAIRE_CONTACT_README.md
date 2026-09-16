@@ -25,11 +25,11 @@ npm run dev
 
 | Pour... | Consultez |
 |---------|-----------|
-| **Démarrer rapidement** | [QUICKSTART.md](QUICKSTART.md) |
-| **Tout comprendre** | [IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md) |
-| **Naviguer dans la doc** | [INDEX_DOCUMENTATION.md](INDEX_DOCUMENTATION.md) |
-| **Déployer** | [DEPLOIEMENT_FORMULAIRE.md](DEPLOIEMENT_FORMULAIRE.md) |
-| **Tester** | [TESTS_FORMULAIRE.md](TESTS_FORMULAIRE.md) |
+| **Démarrer rapidement** | [../../setup/QUICKSTART.md](../../setup/QUICKSTART.md) |
+| **Tout comprendre** | [../../contact-form/README.md](../../contact-form/README.md) |
+| **Naviguer dans la doc** | [INDEX_DOCUMENTATION.md](../../INDEX_DOCUMENTATION.md) |
+| **Déployer** | [../../contact-form/README.md](../../contact-form/README.md) |
+| **Tester** | [../../contact-form/TESTS_FORMULAIRE.md](../../contact-form/TESTS_FORMULAIRE.md) |
 
 ---
 
@@ -45,7 +45,7 @@ npm run dev
 
 ## 🚀 Prochaine Étape
 
-👉 **[Lire QUICKSTART.md](QUICKSTART.md)** pour configurer et tester
+👉 **[Lire ../../setup/QUICKSTART.md](../../setup/QUICKSTART.md)** pour configurer et tester
 
 ---
 
