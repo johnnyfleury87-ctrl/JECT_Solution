@@ -15,7 +15,7 @@ const validPayload = {
   name: 'Jean Dupont',
   email: 'jean@example.com',
   company: 'Example SA',
-  requestType: 'Diagnostic opérationnel',
+  requestType: 'information',
   message: 'Bonjour, je souhaite échanger au sujet de votre activité.',
   honeypot: '',
   turnstileToken: 'test-token',
@@ -67,7 +67,7 @@ describe('validateContactPayload', () => {
   it('trims whitespace and rejects blank required fields', () => {
     const result = validateContactPayload({ ...validPayload, name: '   ', message: '  message valide  ' });
     assert.equal(result.valid, false);
-    assert.equal(result.error, 'invalid_fields');
+    assert.equal(result.code, 'invalid_name');
   });
 
   it('rejects non-string field values', () => {
@@ -84,21 +84,16 @@ describe('validateContactPayload', () => {
     assert.equal(validateContactPayload({ ...validPayload, message: 'x'.repeat(2001) }).valid, false);
   });
 
-  it('allows only the request types exposed by the form', () => {
-    for (const requestType of [
-      'Diagnostic opérationnel',
-      'Partenariat pilote',
-      'Analyse et simulation',
-      'JETC OrgaPulse',
-      "Automatisation d'un processus",
-      'Solution métier sur mesure',
-      'Autre demande',
-    ]) {
+  it('allows only the two request types exposed by the form', () => {
+    for (const requestType of ['information', 'pilot']) {
       assert.equal(validateContactPayload({ ...validPayload, requestType }).valid, true);
     }
     assert.equal(validateContactPayload({ ...validPayload, requestType: '' }).valid, false);
     assert.equal(validateContactPayload({ ...validPayload, requestType: 'Admin' }).valid, false);
     assert.equal(validateContactPayload({ ...validPayload, requestType: 'Discussion' }).valid, false);
+    // Les anciens libellés (avant simplification du champ) doivent être rejetés.
+    assert.equal(validateContactPayload({ ...validPayload, requestType: 'Diagnostic opérationnel' }).valid, false);
+    assert.equal(validateContactPayload({ ...validPayload, requestType: 'Partenariat pilote' }).valid, false);
   });
 
   it('rejects CRLF characters and a filled honeypot', () => {

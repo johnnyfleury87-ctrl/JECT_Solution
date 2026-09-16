@@ -5,7 +5,18 @@ import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from 
 import { logger } from '@/utils/security/logger';
 import { validateTurnstileToken } from '@/utils/security/turnstile';
 import { monitor } from '@/utils/security/monitor';
-import { parseContactRequest, validateContactPayload } from '@/utils/security/contactValidation';
+import { parseContactRequest, validateContactPayload, REQUEST_TYPE_LABELS } from '@/utils/security/contactValidation';
+
+// Messages publics par code de validation : clairs pour l'utilisateur, sans
+// jamais révéler de détail technique (voir aussi genericErrorResponse).
+const VALIDATION_MESSAGES = {
+  invalid_name: { field: 'name', message: 'Veuillez saisir votre nom complet.' },
+  invalid_company: { field: 'company', message: "Le nom de l'entreprise est trop long." },
+  invalid_request_type: { field: 'requestType', message: 'Veuillez sélectionner le motif de votre demande.' },
+  invalid_email: { field: 'email', message: 'Veuillez saisir une adresse e-mail valide.' },
+  message_too_short: { field: 'message', message: 'Votre message est trop court.' },
+  message_too_long: { field: 'message', message: 'Votre message est trop long.' },
+};
 
 export async function POST(request) {
   try {
@@ -33,8 +44,10 @@ export async function POST(request) {
 
     const validatedPayload = validateContactPayload(parsedRequest.data);
     if (!validatedPayload.valid) {
+      logger.warn('Contact route invalid payload', { route: 'contact', code: validatedPayload.code });
+      const known = VALIDATION_MESSAGES[validatedPayload.code];
       return NextResponse.json(
-        { error: 'Données invalides.' },
+        known ? { error: known.message, field: known.field } : { error: 'Données invalides.' },
         { status: 400, headers: noStoreHeaders() }
       );
     }
@@ -94,6 +107,8 @@ export async function POST(request) {
 
     const destinationEmail = process.env.CONTACT_RECEIVER_EMAIL || 'contact@jetc-immo.ch';
 
+    const requestTypeLabel = REQUEST_TYPE_LABELS[requestType] || requestType;
+
     const jetcMailOptions = {
       from: SMTP_FROM,
       to: destinationEmail,
@@ -103,7 +118,7 @@ export async function POST(request) {
 Nom : ${name}
 Email : ${email}
 Entreprise : ${company || 'Non renseignée'}
-Type de demande : ${requestType}
+Type de demande : ${requestTypeLabel}
 
 Message :
 ${message}

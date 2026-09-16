@@ -4,19 +4,22 @@ const MAX_LENGTHS = {
   name: 100,
   email: 254,
   company: 100,
-  requestType: 30,
+  requestType: 20,
   message: 2_000,
 };
 
-const ALLOWED_REQUEST_TYPES = new Set([
-  'Diagnostic opérationnel',
-  'Partenariat pilote',
-  'Analyse et simulation',
-  'JETC OrgaPulse',
-  "Automatisation d'un processus",
-  'Solution métier sur mesure',
-  'Autre demande',
-]);
+// Valeurs techniques courtes et stables : les libellés publics ne doivent
+// jamais être utilisés comme valeur transmise par le formulaire.
+export const REQUEST_TYPES = [
+  { value: 'information', label: 'Demande de renseignements' },
+  { value: 'pilot', label: 'Je souhaite devenir pilote' },
+];
+
+export const REQUEST_TYPE_LABELS = Object.fromEntries(
+  REQUEST_TYPES.map(({ value, label }) => [value, label])
+);
+
+const ALLOWED_REQUEST_TYPES = new Set(REQUEST_TYPES.map(({ value }) => value));
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const HEADER_BREAK_PATTERN = /[\r\n]/;
@@ -64,13 +67,13 @@ export async function parseContactRequest(request) {
 
 export function validateContactPayload(payload) {
   if (!isPlainObject(payload)) {
-    return { valid: false, error: 'invalid_payload' };
+    return { valid: false, code: 'invalid_payload', field: null };
   }
 
   const fields = ['name', 'email', 'company', 'requestType', 'message', 'honeypot', 'turnstileToken'];
   for (const field of fields) {
     if (payload[field] !== undefined && typeof payload[field] !== 'string') {
-      return { valid: false, error: 'invalid_fields' };
+      return { valid: false, code: 'invalid_fields', field: null };
     }
   }
 
@@ -84,25 +87,38 @@ export function validateContactPayload(payload) {
     turnstileToken: payload.turnstileToken?.trim() || '',
   };
 
-  if (
-    data.name.length < 2 || data.name.length > MAX_LENGTHS.name
-    || data.email.length === 0 || data.email.length > MAX_LENGTHS.email
-    || data.company.length > MAX_LENGTHS.company
-    || data.requestType.length === 0 || data.requestType.length > MAX_LENGTHS.requestType
-    || data.message.length < 10 || data.message.length > MAX_LENGTHS.message
-  ) {
-    return { valid: false, error: 'invalid_fields' };
+  // Le honeypot est vérifié en premier : un bot qui le remplit ne doit
+  // recevoir aucune information exploitable sur la validation des autres champs.
+  if (data.honeypot !== '') {
+    return { valid: false, code: 'invalid_fields', field: null };
   }
 
-  if (!EMAIL_PATTERN.test(data.email) || !ALLOWED_REQUEST_TYPES.has(data.requestType)) {
-    return { valid: false, error: 'invalid_fields' };
+  if (data.name.length < 2 || data.name.length > MAX_LENGTHS.name) {
+    return { valid: false, code: 'invalid_name', field: 'name' };
   }
 
-  if (
-    data.honeypot !== ''
-    || [data.name, data.email, data.company, data.requestType, data.message].some((value) => HEADER_BREAK_PATTERN.test(value))
-  ) {
-    return { valid: false, error: 'invalid_fields' };
+  if (data.company.length > MAX_LENGTHS.company) {
+    return { valid: false, code: 'invalid_company', field: 'company' };
+  }
+
+  if (data.requestType.length === 0 || !ALLOWED_REQUEST_TYPES.has(data.requestType)) {
+    return { valid: false, code: 'invalid_request_type', field: 'requestType' };
+  }
+
+  if (data.email.length === 0 || data.email.length > MAX_LENGTHS.email || !EMAIL_PATTERN.test(data.email)) {
+    return { valid: false, code: 'invalid_email', field: 'email' };
+  }
+
+  if (data.message.length < 10) {
+    return { valid: false, code: 'message_too_short', field: 'message' };
+  }
+
+  if (data.message.length > MAX_LENGTHS.message) {
+    return { valid: false, code: 'message_too_long', field: 'message' };
+  }
+
+  if ([data.name, data.email, data.company, data.requestType, data.message].some((value) => HEADER_BREAK_PATTERN.test(value))) {
+    return { valid: false, code: 'invalid_fields', field: null };
   }
 
   return { valid: true, data };

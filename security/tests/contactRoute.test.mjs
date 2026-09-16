@@ -68,7 +68,7 @@ const payload = {
   name: 'Jean Dupont',
   email: 'jean@example.com',
   company: 'Example SA',
-  requestType: 'Diagnostic opérationnel',
+  requestType: 'information',
   message: 'Bonjour, nous souhaitons échanger au sujet de votre activité.',
 };
 
@@ -137,7 +137,7 @@ describe('POST /api/contact security boundary', () => {
     ));
     const body = await responseBody(response);
     assert.equal(response.status, 400);
-    assert.deepEqual(body, { error: 'Données invalides.' });
+    assert.deepEqual(body, { error: 'Votre message est trop court.', field: 'message' });
   });
 
   it('rejects an invalid email address', async () => {
@@ -147,8 +147,29 @@ describe('POST /api/contact security boundary', () => {
     ));
     const body = await responseBody(response);
     assert.equal(response.status, 400);
-    assert.deepEqual(body, { error: 'Données invalides.' });
+    assert.deepEqual(body, { error: 'Veuillez saisir une adresse e-mail valide.', field: 'email' });
     assert.equal(smtpState.calls.length, 0);
+  });
+
+  it('rejects an unselected or obsolete request type', async () => {
+    const missing = await POST(request(
+      JSON.stringify({ ...payload, requestType: '', turnstileToken: validTurnstileToken }),
+      '198.51.100.21'
+    ));
+    const obsolete = await POST(request(
+      JSON.stringify({ ...payload, requestType: 'Diagnostic opérationnel', turnstileToken: validTurnstileToken }),
+      '198.51.100.22'
+    ));
+    assert.equal(missing.status, 400);
+    assert.equal(obsolete.status, 400);
+    assert.deepEqual(await responseBody(missing), {
+      error: 'Veuillez sélectionner le motif de votre demande.',
+      field: 'requestType',
+    });
+    assert.deepEqual(await responseBody(obsolete), {
+      error: 'Veuillez sélectionner le motif de votre demande.',
+      field: 'requestType',
+    });
   });
 
   it('sends the internal and confirmation emails and returns a real success for a valid request', async () => {

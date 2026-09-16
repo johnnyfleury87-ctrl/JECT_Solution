@@ -4,20 +4,59 @@ import { useState, useRef, useEffect } from 'react';
 import Script from 'next/script';
 import { motion } from 'framer-motion';
 
+const REQUEST_TYPES = [
+  { value: 'information', label: 'Demande de renseignements' },
+  { value: 'pilot', label: 'Je souhaite devenir pilote' },
+];
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Validation alignée sur utils/security/contactValidation.js : le client doit
+// signaler les mêmes règles que le serveur pour éviter un rejet silencieux.
+function validateFields(data) {
+  const errors = {};
+
+  if (data.name.trim().length < 2) {
+    errors.name = 'Veuillez saisir votre nom complet.';
+  }
+
+  if (!EMAIL_PATTERN.test(data.email.trim())) {
+    errors.email = 'Veuillez saisir une adresse e-mail valide.';
+  }
+
+  if (!data.requestType) {
+    errors.requestType = 'Veuillez sélectionner le motif de votre demande.';
+  }
+
+  if (data.message.trim().length < 10) {
+    errors.message = 'Votre message est trop court.';
+  } else if (data.message.trim().length > 2000) {
+    errors.message = 'Votre message est trop long.';
+  }
+
+  return errors;
+}
+
+const INITIAL_FORM_DATA = {
+  name: '',
+  email: '',
+  company: '',
+  requestType: '',
+  message: '',
+  honeypot: '', // Champ anti-spam caché
+};
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    requestType: '',
-    message: '',
-    honeypot: '', // Champ anti-spam caché
-  });
-  
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [fieldErrors, setFieldErrors] = useState({});
+
   const [status, setStatus] = useState({
     type: '', // 'success', 'error', 'loading'
     message: '',
   });
+
+  const isSubmittingRef = useRef(false);
+  const statusRef = useRef(null);
 
   // Cloudflare Turnstile
   const turnstileRef = useRef(null);
@@ -50,19 +89,40 @@ export default function ContactForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    // Replace le focus sur la confirmation pour l'accessibilité (lecteurs d'écran).
+    if (status.type === 'success' && statusRef.current) {
+      statusRef.current.focus();
+    }
+  }, [status.type]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
+    // Efface l'erreur du champ dès que l'utilisateur le corrige.
+    setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Protection anti-spam : si le honeypot est rempli, c'est un bot
     if (formData.honeypot) {
+      return;
+    }
+
+    // Empêche les doubles soumissions (double clic avant le re-rendu du bouton désactivé).
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    const errors = validateFields(formData);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setStatus({ type: 'error', message: 'Veuillez corriger les champs signalés ci-dessous.' });
       return;
     }
 
@@ -75,6 +135,8 @@ export default function ContactForm() {
       return;
     }
 
+    setFieldErrors({});
+    isSubmittingRef.current = true;
     setStatus({ type: 'loading', message: 'Envoi en cours...' });
 
     try {
@@ -93,7 +155,7 @@ export default function ContactForm() {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (response.ok) {
         setStatus({
@@ -101,32 +163,44 @@ export default function ContactForm() {
           message: 'Merci, votre message a bien été envoyé. Un email de confirmation vient de vous être transmis.',
         });
         // Réinitialiser le formulaire
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          requestType: '',
-          message: '',
-          honeypot: '',
-        });
+        setFormData(INITIAL_FORM_DATA);
+        setFieldErrors({});
         // Reset Turnstile widget so it can be used again.
         setTurnstileToken('');
         if (widgetIdRef.current != null && window.turnstile) {
           window.turnstile.reset(widgetIdRef.current);
         }
+      } else if (response.status === 400 && data.field) {
+        // Erreur de validation ciblée par le serveur : affichée près du champ concerné.
+        setFieldErrors({ [data.field]: data.error });
+        setStatus({ type: 'error', message: 'Veuillez corriger le champ signalé ci-dessous.' });
+      } else if (response.status === 429) {
+        setStatus({
+          type: 'error',
+          message: 'Trop de tentatives. Veuillez réessayer dans quelques minutes.',
+        });
+      } else if (response.status === 400) {
+        setStatus({
+          type: 'error',
+          message: data.error || 'Données invalides. Veuillez vérifier votre saisie.',
+        });
       } else {
         setStatus({
           type: 'error',
-          message: data.message || data.error || 'Une erreur est survenue lors de l\'envoi. Merci de réessayer ou de nous contacter par email.',
+          message: 'L\'envoi du message a échoué. Veuillez réessayer dans quelques instants.',
         });
       }
     } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Erreur de connexion. Veuillez vérifier votre connexion internet.',
+        message: 'L\'envoi du message a échoué. Veuillez réessayer dans quelques instants.',
       });
+    } finally {
+      isSubmittingRef.current = false;
     }
   };
+
+  const isLoading = status.type === 'loading';
 
   return (
     <motion.div
@@ -143,7 +217,7 @@ export default function ContactForm() {
           onLoad={renderTurnstile}
         />
       )}
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} noValidate className="space-y-6">
         {/* Champ honeypot caché pour anti-spam */}
         <input
           type="text"
@@ -167,9 +241,14 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            aria-invalid={Boolean(fieldErrors.name)}
+            aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${fieldErrors.name ? 'border-red-400' : 'border-gray-300'}`}
             placeholder="Votre nom"
           />
+          {fieldErrors.name && (
+            <p id="name-error" className="mt-1 text-sm text-red-600">{fieldErrors.name}</p>
+          )}
         </div>
 
         {/* Email */}
@@ -184,9 +263,14 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            aria-invalid={Boolean(fieldErrors.email)}
+            aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${fieldErrors.email ? 'border-red-400' : 'border-gray-300'}`}
             placeholder="votre@email.com"
           />
+          {fieldErrors.email && (
+            <p id="email-error" className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
+          )}
         </div>
 
         {/* Entreprise */}
@@ -216,17 +300,18 @@ export default function ContactForm() {
             value={formData.requestType}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+            aria-invalid={Boolean(fieldErrors.requestType)}
+            aria-describedby={fieldErrors.requestType ? 'requestType-error' : undefined}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white ${fieldErrors.requestType ? 'border-red-400' : 'border-gray-300'}`}
           >
-            <option value="">Sélectionnez un type de demande</option>
-            <option value="Diagnostic opérationnel">Diagnostic opérationnel</option>
-            <option value="Partenariat pilote">Partenariat pilote</option>
-            <option value="Analyse et simulation">Analyse et simulation</option>
-            <option value="JETC OrgaPulse">JETC OrgaPulse</option>
-            <option value="Automatisation d'un processus">Automatisation d'un processus</option>
-            <option value="Solution métier sur mesure">Solution métier sur mesure</option>
-            <option value="Autre demande">Autre demande</option>
+            <option value="" disabled>Sélectionnez le motif de votre demande</option>
+            {REQUEST_TYPES.map(({ value, label }) => (
+              <option key={value} value={value}>{label}</option>
+            ))}
           </select>
+          {fieldErrors.requestType && (
+            <p id="requestType-error" className="mt-1 text-sm text-red-600">{fieldErrors.requestType}</p>
+          )}
         </div>
 
         {/* Message */}
@@ -241,9 +326,14 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             rows="6"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+            aria-invalid={Boolean(fieldErrors.message)}
+            aria-describedby={fieldErrors.message ? 'message-error' : undefined}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none ${fieldErrors.message ? 'border-red-400' : 'border-gray-300'}`}
             placeholder="Décrivez votre projet ou votre demande..."
           />
+          {fieldErrors.message && (
+            <p id="message-error" className="mt-1 text-sm text-red-600">{fieldErrors.message}</p>
+          )}
         </div>
 
         {/* Cloudflare Turnstile widget */}
@@ -254,9 +344,12 @@ export default function ContactForm() {
         {/* Message de statut */}
         {status.message && (
           <motion.div
+            ref={statusRef}
+            tabIndex={-1}
+            role="status"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`p-4 rounded-lg ${
+            className={`p-4 rounded-lg outline-none ${
               status.type === 'success'
                 ? 'bg-green-50 text-green-800 border border-green-200'
                 : status.type === 'error'
@@ -271,10 +364,10 @@ export default function ContactForm() {
         {/* Bouton Submit */}
         <button
           type="submit"
-          disabled={status.type === 'loading'}
+          disabled={isLoading}
           className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {status.type === 'loading' ? 'Envoi en cours...' : 'Envoyer le message'}
+          {isLoading ? 'Envoi en cours…' : 'Envoyer le message'}
         </button>
       </form>
     </motion.div>

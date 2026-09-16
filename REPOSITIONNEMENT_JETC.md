@@ -208,6 +208,39 @@ certifications non validés.
   existant, hors périmètre, n'a pas été retouché pour cette seule raison).
 - La marque s'écrit toujours **JETC** (jamais « JECT »).
 
+- Étape 18 (Phase C) : réparation et simplification du formulaire de contact. Cause exacte du
+  `400 Bad Request` générique (« Données invalides. ») identifiée : le client
+  (`components/ContactForm.js`) n'appliquait aucune validation de champ au-delà de l'attribut
+  HTML `required` (pas de longueur minimale, pas de format d'email, pas de vérification du
+  type de demande), alors que le serveur (`utils/security/contactValidation.js`) applique des
+  règles strictes (nom ≥ 2 caractères, email au format valide, message ≥ 10 caractères, type de
+  demande dans une liste fermée) et renvoyait volontairement un message générique unique pour
+  ne jamais exposer sa logique de validation. Un utilisateur pouvait donc soumettre un
+  formulaire « complet » selon le navigateur (ex. message de quelques caractères) et recevoir
+  un rejet serveur sans aucune indication exploitable. Correction à la source : alignement
+  strict des règles côté client sur les règles côté serveur (mêmes seuils, même format), et
+  ajout de codes d'erreur précis côté serveur (`invalid_name`, `invalid_email`,
+  `invalid_request_type`, `message_too_short`, `message_too_long`, `invalid_company`) traduits
+  en messages publics clairs et associés au champ concerné (`field`) dans la réponse JSON,
+  sans jamais exposer de détail technique, de nom de variable secrète ni de trace serveur (les
+  cas non attribuables à un champ précis — JSON invalide, honeypot rempli, caractères de saut
+  de ligne — conservent le message générique « Données invalides. », par conception, pour ne
+  pas aider un attaquant à sonder la validation). Simplification du champ « Type de demande » :
+  les 7 anciennes options sont remplacées par 2 choix (« Demande de renseignements » = valeur
+  technique `information`, « Je souhaite devenir pilote » = valeur technique `pilot`), avec un
+  texte non sélectionnable « Sélectionnez le motif de votre demande » ; la liste blanche
+  serveur, le corps de l'email interne (qui affiche désormais le libellé public plutôt que la
+  valeur technique) et les tests de sécurité ont été mis à jour en conséquence. Comportement du
+  bouton renforcé : garde anti-double-soumission par référence (en plus de l'attribut
+  `disabled` déjà présent), conservation des données saisies et réactivation du bouton en cas
+  d'échec, focus replacé sur le message de confirmation en cas de succès réel (accessibilité).
+  Aucune protection existante (rate limiting, honeypot, Turnstile, choix de `from`/`replyTo`,
+  timeouts SMTP) n'a été modifiée ou affaiblie. Aucun envoi réel n'a pu être testé depuis cet
+  environnement : aucune variable SMTP/Turnstile n'est configurée localement (pas de fichier
+  `.env`/`.env.local`) et aucun accès aux variables Vercel de production n'est disponible ; le
+  test contrôlé demandé (`[TEST FORMULAIRE JETC] Validation de l'envoi`) reste à réaliser par
+  l'utilisateur (voir section 7).
+
 ## 3. Liste complète des étapes
 
 | # | Étape | Statut |
@@ -251,6 +284,8 @@ certifications non validés.
 | 17 | Fusion des 4 cartes « Écoute Active… » (`Solutions.js`) et de la méthode en 4 étapes
   « Comment nous travaillons » (`WorkProcess.js`) en une seule nouvelle section animée
   « Analyser. Structurer. Optimiser. » (3 étapes, parcours horizontal/vertical). | ✅ Fait |
+| 18 | Phase C — Réparation du formulaire de contact (cause du 400, validation client/serveur
+  alignée, messages d'erreur par champ), simplification du type de demande à 2 choix. | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -465,6 +500,43 @@ certifications non validés.
 - Aucun autre composant, style global (`app/globals.css`) ou fichier asset n'a nécessité de
   nettoyage : les 4 cartes et les 4 étapes n'étaient définies que dans ces deux fichiers, sans
   dépendance externe.
+
+### Étape 18 — Phase C : réparation et simplification du formulaire de contact
+- `utils/security/contactValidation.js` : `ALLOWED_REQUEST_TYPES` remplacé par `REQUEST_TYPES`
+  (tableau `{ value, label }`, valeurs techniques `information`/`pilot`) et `REQUEST_TYPE_LABELS`
+  exportés pour réutilisation côté route. `MAX_LENGTHS.requestType` réduit de 30 à 20 (les deux
+  nouvelles valeurs sont courtes). `validateContactPayload` retourne désormais un `code` et un
+  `field` précis par type d'échec (`invalid_name`, `invalid_company`, `invalid_request_type`,
+  `invalid_email`, `message_too_short`, `message_too_long`, `invalid_fields` pour les cas non
+  attribuables à un champ) au lieu d'un seul `error: 'invalid_fields'` générique ; ordre des
+  vérifications conservé pour ne pas exposer d'information avant le contrôle honeypot.
+- `app/api/contact/route.js` : ajout de `VALIDATION_MESSAGES` (association code → message public
+  + champ) pour transformer les codes de validation en réponses JSON `{ error, field }` claires
+  et actionnables, sans jamais exposer de détail technique ; import de `REQUEST_TYPE_LABELS`
+  utilisé pour afficher le libellé public (« Demande de renseignements »/« Je souhaite devenir
+  pilote ») dans le corps de l'email interne au lieu de la valeur technique. `from`/`replyTo`/
+  destinataire/timeouts SMTP non modifiés (déjà conformes depuis l'étape 13).
+- `components/ContactForm.js` : réécriture complète. Options du champ « Type de demande »
+  réduites à 2 (`information`/`pilot`), première option non sélectionnable (`disabled`)
+  « Sélectionnez le motif de votre demande ». Ajout d'une fonction `validateFields` cliente
+  reproduisant exactement les règles serveur (nom ≥ 2 caractères, format email, message entre
+  10 et 2000 caractères, type de demande obligatoire) exécutée avant tout appel réseau ; erreurs
+  affichées sous chaque champ concerné (`aria-invalid`, `aria-describedby`, bordure rouge) et
+  effacées dès correction. Ajout d'une garde `isSubmittingRef` contre la double soumission (en
+  plus de l'attribut `disabled` déjà présent), gestion différenciée des réponses serveur (champ
+  précis via `data.field`, limitation de débit 429, échec générique 5xx/réseau avec le message
+  « L'envoi du message a échoué. Veuillez réessayer dans quelques instants. »), conservation des
+  données saisies en cas d'échec, réinitialisation du formulaire et focus replacé sur le message
+  de confirmation (`statusRef`) uniquement en cas de succès réel confirmé par le serveur.
+- `security/tests/contactValidation.test.mjs` : `validPayload.requestType` aligné sur
+  `'information'` ; test des types de demande mis à jour pour les 2 nouvelles valeurs et pour
+  vérifier le rejet explicite des anciens libellés (`'Diagnostic opérationnel'`,
+  `'Partenariat pilote'`) ; assertion de l'étape « champs vides » adaptée au nouveau `code`
+  (`invalid_name` au lieu d'`invalid_fields`).
+- `security/tests/contactRoute.test.mjs` : `payload.requestType` aligné sur `'information'` ;
+  assertions du message manquant et de l'email invalide mises à jour pour vérifier le message
+  public précis et le champ (`field`) désormais renvoyés ; ajout d'un test dédié au rejet d'un
+  type de demande vide ou obsolète.
 
 ## 5. Textes définitifs intégrés
 
@@ -1041,6 +1113,26 @@ Phrase de clôture :
 - Aucun débordement horizontal : disposition en colonne sur mobile (`flex-col`), largeur du
   texte de description plafonnée (`max-w-xs`), aucune largeur fixe supérieure à la largeur du
   conteneur.
+
+### Étape 18 — Phase C : formulaire de contact
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → **39/39 tests passés** (7 suites, 0 échec), incluant les nouveaux
+  cas ajoutés pour cette étape (message manquant → message public précis + `field`, email
+  invalide → message public précis + `field`, type de demande vide/obsolète rejeté). Aucun
+  email réel envoyé, aucun secret réel utilisé.
+- `npm run build` → build de production réussi, 9 pages générées, `/contact` = 4,25 kB /
+  143 kB First Load JS (légère hausse liée à la validation cliente ajoutée). Aucune régression
+  détectée.
+- Vérification responsive/fonctionnelle : effectuée par revue de code (aucun navigateur
+  disponible dans cet environnement) — la structure visuelle du formulaire (`bg-white p-8
+  rounded-xl shadow-lg`, empilement vertical des champs) n'a pas été modifiée, seuls les
+  libellés du champ « Type de demande », les messages d'erreur sous les champs et l'état du
+  bouton ont changé ; le comportement responsive existant (hérité de `app/contact/page.js`,
+  non modifié) reste donc inchangé sur ordinateur et mobile.
+- Test d'envoi réel contrôlé (`[TEST FORMULAIRE JETC] Validation de l'envoi`) : **non
+  effectué**. Aucune variable SMTP/Turnstile n'est configurée dans cet environnement (pas de
+  fichier `.env`/`.env.local`) et aucun accès aux variables Vercel de production n'est
+  disponible ; voir section 7.
 
 ## 7. Points restant à traiter
 
