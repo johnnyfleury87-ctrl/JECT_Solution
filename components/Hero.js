@@ -1,9 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,21 +23,166 @@ const itemVariants = {
   },
 };
 
+// Sources analysées (flux, temps, ressources, outils) convergeant vers une zone d'analyse
+// centrale, d'où émergent ensuite plusieurs pistes de scénarios. Illustration abstraite,
+// aucun chiffre ni résultat représenté.
+const FLOW_SOURCES = [
+  { key: 'flux', label: 'Flux', y: 46 },
+  { key: 'temps', label: 'Temps', y: 116 },
+  { key: 'ressources', label: 'Ressources', y: 186 },
+  { key: 'outils', label: 'Outils', y: 256 },
+];
+const CENTER = { x: 205, y: 151 };
+const SCENARIO_PATHS = [
+  `M ${CENTER.x + 26} ${CENTER.y - 8} C 265 ${CENTER.y - 55}, 305 ${CENTER.y - 65}, 345 ${CENTER.y - 82}`,
+  `M ${CENTER.x + 30} ${CENTER.y} C 270 ${CENTER.y}, 305 ${CENTER.y}, 345 ${CENTER.y}`,
+  `M ${CENTER.x + 26} ${CENTER.y + 8} C 265 ${CENTER.y + 55}, 305 ${CENTER.y + 65}, 345 ${CENTER.y + 82}`,
+];
+
+const lineVariants = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: (i) => ({
+    pathLength: 1,
+    opacity: 1,
+    transition: { duration: 0.7, delay: 0.15 * i, ease: 'easeInOut' },
+  }),
+};
+
+const nodeVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: (i) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.4, delay: 0.15 * i + 0.25, ease: 'easeOut' },
+  }),
+};
+
+const centerVariants = {
+  hidden: { opacity: 0, scale: 0.6 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.9, ease: 'easeOut' } },
+};
+
+const scenarioVariants = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: (i) => ({
+    pathLength: 1,
+    opacity: 0.85,
+    transition: { duration: 0.6, delay: 1.3 + i * 0.18, ease: 'easeInOut' },
+  }),
+};
+
+const underlineVariants = {
+  hidden: { pathLength: 0 },
+  visible: { pathLength: 1, transition: { duration: 0.8, delay: 0.6, ease: 'easeInOut' } },
+};
+
+/** Illustration abstraite : convergence de flux/temps/ressources/outils vers une analyse
+ *  centrale, puis divergence vers plusieurs pistes de scénarios. Aucune donnée réelle. */
+function OperationalAnalysisIllustration({ reduceMotion }) {
+  if (reduceMotion) {
+    return (
+      <svg
+        viewBox="0 0 360 302"
+        className="w-full h-auto"
+        role="img"
+        aria-label="Illustration d'une analyse opérationnelle : les flux, le temps, les ressources et les outils convergent vers une zone d'analyse centrale, d'où émergent plusieurs pistes de scénarios."
+      >
+        {FLOW_SOURCES.map((s) => (
+          <path
+            key={s.key}
+            d={`M 60 ${s.y} C 120 ${s.y}, 140 ${CENTER.y}, ${CENTER.x - 24} ${CENTER.y}`}
+            fill="none"
+            className="stroke-primary-300"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        ))}
+        {FLOW_SOURCES.map((s) => (
+          <g key={`${s.key}-node`}>
+            <circle cx="46" cy={s.y} r="10" className="fill-primary-500" />
+            <text x="46" y={s.y + 26} textAnchor="middle" className="fill-gray-600 text-[11px] font-medium">
+              {s.label}
+            </text>
+          </g>
+        ))}
+        <circle cx={CENTER.x} cy={CENTER.y} r="30" className="fill-white stroke-primary-600" strokeWidth="2.5" />
+        <text x={CENTER.x} y={CENTER.y + 5} textAnchor="middle" className="fill-primary-700 text-[11px] font-semibold">
+          Analyse
+        </text>
+        {SCENARIO_PATHS.map((d, i) => (
+          <path key={i} d={d} fill="none" className="stroke-orange-400" strokeWidth="2" strokeDasharray="5 4" strokeLinecap="round" opacity="0.85" />
+        ))}
+      </svg>
+    );
+  }
+
+  return (
+    <motion.svg
+      viewBox="0 0 360 302"
+      className="w-full h-auto"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+      role="img"
+      aria-label="Illustration d'une analyse opérationnelle : les flux, le temps, les ressources et les outils convergent vers une zone d'analyse centrale, d'où émergent plusieurs pistes de scénarios."
+    >
+      {FLOW_SOURCES.map((s, i) => (
+        <motion.path
+          key={s.key}
+          custom={i}
+          variants={lineVariants}
+          d={`M 60 ${s.y} C 120 ${s.y}, 140 ${CENTER.y}, ${CENTER.x - 24} ${CENTER.y}`}
+          fill="none"
+          className="stroke-primary-300"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      ))}
+      {FLOW_SOURCES.map((s, i) => (
+        <motion.g key={`${s.key}-node`} custom={i} variants={nodeVariants}>
+          <circle cx="46" cy={s.y} r="10" className="fill-primary-500" />
+          <text x="46" y={s.y + 26} textAnchor="middle" className="fill-gray-600 text-[11px] font-medium">
+            {s.label}
+          </text>
+        </motion.g>
+      ))}
+      <motion.g variants={centerVariants}>
+        <circle cx={CENTER.x} cy={CENTER.y} r="30" className="fill-white stroke-primary-600" strokeWidth="2.5" />
+        <text x={CENTER.x} y={CENTER.y + 5} textAnchor="middle" className="fill-primary-700 text-[11px] font-semibold">
+          Analyse
+        </text>
+      </motion.g>
+      {SCENARIO_PATHS.map((d, i) => (
+        <motion.path
+          key={i}
+          custom={i}
+          variants={scenarioVariants}
+          d={d}
+          fill="none"
+          className="stroke-orange-400"
+          strokeWidth="2"
+          strokeDasharray="5 4"
+          strokeLinecap="round"
+        />
+      ))}
+    </motion.svg>
+  );
+}
+
 export default function Hero() {
-  const [isHovered, setIsHovered] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="min-h-[85vh] flex items-center bg-gradient-to-b from-gray-50 via-white to-gray-50">
       <div className="container-custom py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* Partie gauche : Texte */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="order-2 lg:order-1"
             >
               <motion.p 
                 variants={itemVariants}
@@ -56,7 +199,20 @@ export default function Hero() {
                 <span className="text-orange-600 relative">
                   coûts cachés
                   <svg className="absolute -bottom-1 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-                    <path d="M0,7 Q25,3 50,5 T100,7" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+                    {shouldReduceMotion ? (
+                      <path d="M0,7 Q25,3 50,5 T100,7" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+                    ) : (
+                      <motion.path
+                        d="M0,7 Q25,3 50,5 T100,7"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        opacity="0.3"
+                        initial="hidden"
+                        animate="visible"
+                        variants={underlineVariants}
+                      />
+                    )}
                   </svg>
                 </span>
                 . Testez vos décisions avant d’investir.
@@ -118,78 +274,15 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Partie droite : Carte identité interactive */}
+            {/* Partie droite (dessous sur mobile/tablette) : illustration d'analyse opérationnelle */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="order-1 lg:order-2"
+              initial={shouldReduceMotion ? false : { opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="w-full max-w-sm mx-auto lg:max-w-none"
             >
-              <div 
-                className="relative group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-300 rounded-3xl"
-                role="button"
-                tabIndex={0}
-                aria-pressed={isHovered}
-                aria-label="Découvrir le fondateur : afficher sa photo"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={() => setIsHovered(!isHovered)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setIsHovered(!isHovered);
-                  }
-                }}
-              >
-                {/* Carte principale */}
-                <div className="relative bg-white p-8 rounded-3xl shadow-2xl border-2 border-gray-100 hover:border-primary-200 transition-all duration-500">
-                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100">
-                    
-                    {/* État par défaut : Logo + Texte */}
-                    <div 
-                      className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${
-                        isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
-                      }`}
-                    >
-                      <div className="text-center space-y-6">
-                        {/* Logo JETC */}
-                        <div className="flex justify-center">
-                          <Image 
-                            src="/images/logo-jetc.png" 
-                            alt="JETC Solution Logo" 
-                            width={120} 
-                            height={120}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div className="h-1 w-20 bg-primary-600 mx-auto rounded-full"></div>
-                        <p className="text-lg text-gray-700 font-medium px-8">
-                          Johnny Fleury<br />
-                          <span className="text-sm text-gray-500">Fondateur</span>
-                        </p>
-                        <p className="text-xs text-gray-400 italic px-8">
-                          Découvrez le fondateur
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* État hover : Photo */}
-                    <div 
-                      className={`absolute inset-0 transition-all duration-700 ${
-                        isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                      }`}
-                    >
-                      <Image 
-                        src="/images/johnny-hero.jpg" 
-                        alt="Johnny Fleury - Fondateur JETC Solution" 
-                        fill 
-                        className="object-cover"
-                        priority
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <OperationalAnalysisIllustration reduceMotion={shouldReduceMotion} />
             </motion.div>
 
           </div>

@@ -241,6 +241,35 @@ certifications non validés.
   test contrôlé demandé (`[TEST FORMULAIRE JETC] Validation de l'envoi`) reste à réaliser par
   l'utilisateur (voir section 7).
 
+- Étape 19 (Phase D) : allégement de l'accueil et déplacement de la photo du fondateur.
+  Suppression complète de la grande carte identité interactive du Hero (logo JETC, « Johnny
+  Fleury », « Fondateur », « Découvrez le fondateur », interaction souris/clic/tactile/clavier
+  et bascule logo↔photo au survol) : cette carte occupait toute la colonne droite de la
+  première vue et déséquilibrait l'accueil. Le contenu éditorial de gauche (accroche, titre,
+  paragraphes, encadré, CTA) est conservé à l'identique. La colonne droite (desktop) / zone
+  sous le contenu (mobile/tablette) accueille désormais une illustration SVG animée sobre
+  représentant une analyse opérationnelle : quatre sources (« Flux », « Temps », « Ressources »,
+  « Outils ») convergent par des courbes vers une zone centrale « Analyse », d'où émergent
+  ensuite trois trajectoires pointillées symbolisant la comparaison de scénarios — aucun
+  chiffre, pourcentage, résultat ni nom tiers affiché. L'animation (bibliothèque `framer-motion`
+  déjà présente dans le projet, aucune dépendance ajoutée) dessine progressivement les lignes de
+  convergence, fait apparaître les nœuds avec un léger décalage, révèle la zone d'analyse, puis
+  fait apparaître les trajectoires de scénarios avec un décalage propre ; elle respecte
+  `prefers-reduced-motion` via le hook `useReducedMotion` de `framer-motion` (état final affiché
+  immédiatement, sans dépendance JavaScript supplémentaire au-delà de ce qui existe déjà pour
+  `WorkProcess.js`). Le soulignement orange de « coûts cachés » se dessine désormais
+  progressivement (animation `pathLength`), avec le même repli en cas d'animations réduites.
+  Comme l'illustration suit le contenu éditorial dans l'ordre naturel du DOM (plus d'attributs
+  `order-*` artificiels), elle apparaît automatiquement sous le texte en pile mobile/tablette et
+  à droite en grille à deux colonnes sur ordinateur, sans classes de réordonnancement
+  spécifiques. La photo réelle de Johnny Fleury (`public/images/johnny-hero.jpg`, déjà présente
+  dans le dépôt, aucun fichier créé ni dupliqué) remplace le logo JETC dans le petit carré en
+  incrustation de la section « Du terrain à une vision transversale » (`components/
+  Signature.js`) : bordure bleue, coins arrondis et ombre conservés, cadrage `object-cover` avec
+  `object-position` centré sur le visage (`object-[center_20%]`), texte alternatif
+  « Portrait de Johnny Fleury, fondateur de JETC Solution ». `public/images/logo-jetc.png` n'est
+  pas supprimé (toujours utilisé par `Navbar.js`).
+
 ## 3. Liste complète des étapes
 
 | # | Étape | Statut |
@@ -286,6 +315,9 @@ certifications non validés.
   « Analyser. Structurer. Optimiser. » (3 étapes, parcours horizontal/vertical). | ✅ Fait |
 | 18 | Phase C — Réparation du formulaire de contact (cause du 400, validation client/serveur
   alignée, messages d'erreur par champ), simplification du type de demande à 2 choix. | ✅ Fait |
+| 19 | Phase D — Suppression de la grande carte du fondateur de l'accueil, nouvelle
+  illustration animée d'analyse opérationnelle, déplacement de la photo du fondateur dans le
+  petit carré de la section parcours. | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -537,6 +569,21 @@ certifications non validés.
   assertions du message manquant et de l'email invalide mises à jour pour vérifier le message
   public précis et le champ (`field`) désormais renvoyés ; ajout d'un test dédié au rejet d'un
   type de demande vide ou obsolète.
+
+### Étape 19 — Phase D : accueil allégé et photo du fondateur déplacée
+- `components/Hero.js` : suppression complète de la carte identité interactive (logo, texte,
+  état `isHovered`, gestionnaires souris/clic/clavier, imports `Image`/`useState` devenus
+  inutiles). Ajout d'un composant local `OperationalAnalysisIllustration` (SVG + `framer-motion`,
+  aucune dépendance ajoutée) affiché à droite du contenu (desktop) / sous le contenu
+  (mobile/tablette), avec repli statique complet lorsque `useReducedMotion()` est actif. Ajout
+  de l'animation de tracé (`pathLength`) du soulignement orange de « coûts cachés », avec le
+  même repli. Suppression des classes `order-2 lg:order-1` / `order-1 lg:order-2` devenues
+  inutiles (l'ordre naturel du DOM suffit désormais).
+- `components/Signature.js` : contenu du petit carré en incrustation remplacé (logo JETC →
+  photo `public/images/johnny-hero.jpg`, déjà présente dans le dépôt), bordure/coins
+  arrondis/ombre conservés, `object-cover` + `object-position` centré visage, texte alternatif
+  imposé. Commentaire de section mis à jour (« Photo et Logo » → « Photo principale + portrait
+  en incrustation »).
 
 ## 5. Textes définitifs intégrés
 
@@ -1133,6 +1180,36 @@ Phrase de clôture :
   effectué**. Aucune variable SMTP/Turnstile n'est configurée dans cet environnement (pas de
   fichier `.env`/`.env.local`) et aucun accès aux variables Vercel de production n'est
   disponible ; voir section 7.
+
+### Étape 19 — Phase D : accueil et photo du fondateur
+- Recherche exhaustive post-implémentation : 0 occurrence restante de « Découvrez le
+  fondateur », de « Johnny Fleury<br » (bloc nom/statut de l'ancienne carte) ou de la classe
+  `isHovered` dans `components/Hero.js`. `public/images/logo-jetc.png` toujours référencé par
+  `components/Navbar.js` (non supprimé, à juste titre).
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 39/39 tests passés (7 suites), 0 échec (modifications purement
+  visuelles/structurelles du Hero et de la section parcours, sans rapport avec la logique
+  testée).
+- `npm run build` → build de production réussi, 9 pages générées, route `/` = 14,8 kB /
+  161 kB First Load JS (légère hausse liée à l'illustration SVG animée, aucune régression).
+- Vérification runtime : serveur de production démarré localement (`npm run start`), route `/`
+  répondant en HTTP 200 ; présence confirmée de l'illustration animée (`aria-label`
+  « Illustration d'une analyse opérationnelle… ») dans le HTML rendu.
+- Affichage responsive : vérifié par revue des classes Tailwind (aucun outil de capture
+  d'écran/navigateur disponible dans cet environnement) — l'illustration suit l'ordre naturel
+  du DOM, donc `grid-cols-1` (mobile/tablette) l'affiche sous le texte et `lg:grid-cols-2`
+  (ordinateur) l'affiche à droite, sans classe `order-*` ; largeur en pourcentage (`w-full`,
+  `max-w-sm mx-auto lg:max-w-none`) et `viewBox` SVG évitant tout débordement horizontal.
+- Accessibilité/réduction des animations : `useReducedMotion()` (déjà utilisé par
+  `WorkProcess.js`) bascule l'illustration et le soulignement du titre sur un rendu statique
+  complet et immédiat, sans élément `motion.*`, conformément à `prefers-reduced-motion`. Non
+  vérifié avec un lecteur d'écran ou un appareil tactile réel (indisponibles dans cet
+  environnement).
+- Photo du petit carré (`Signature.js`) : fichier réutilisé sans duplication
+  (`public/images/johnny-hero.jpg`, déjà présent dans le dépôt et déjà utilisé par l'ancienne
+  carte du Hero) ; cadrage vérifié par revue de code (`object-cover` + `object-[center_20%]`,
+  conteneur `w-28 h-28` avec `overflow-hidden`), non vérifié visuellement dans un navigateur
+  réel.
 
 ## 7. Points restant à traiter
 

@@ -15,7 +15,7 @@ export default function Signature() {
           className="max-w-5xl mx-auto"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Photo et Logo */}
+            {/* Photo principale + portrait en incrustation */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -27,20 +27,19 @@ export default function Signature() {
                 <Image src="/images/photo-profile.png" alt="Johnny Fleury" fill className="object-cover" priority />
               </div>
               
-              {/* Logo en incrustation */}
+              {/* Photo du fondateur en incrustation (reprise de l'ancienne carte d'accueil) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-xl border-4 border-primary-600"
+                className="absolute -bottom-6 -right-6 w-28 h-28 rounded-xl overflow-hidden shadow-xl border-4 border-primary-600"
               >
-                <Image 
-                  src="/images/logo-jetc.png" 
-                  alt="JETC Solution Logo" 
-                  width={60} 
-                  height={60}
-                  className="object-contain"
+                <Image
+                  src="/images/johnny-hero.jpg"
+                  alt="Portrait de Johnny Fleury, fondateur de JETC Solution"
+                  fill
+                  className="object-cover object-[center_20%]"
                 />
               </motion.div>
             </motion.div>
