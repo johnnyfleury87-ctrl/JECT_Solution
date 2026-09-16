@@ -73,21 +73,21 @@ export default function Solutions() {
           </h2>
           <div className="max-w-4xl mx-auto space-y-4 text-lg md:text-xl text-gray-700 leading-relaxed">
             <p>
-              Les solutions <span className="font-semibold text-gray-900">"standards"</span> sont 
-              souvent lourdes, coûteuses et rigides.
+              Chaque entreprise possède ses propres outils, ses méthodes et une expertise
+              construite sur le terrain.
             </p>
             <p>
-              Excel est puissant, mais sans maîtrise, il devient{' '}
-              <span className="text-orange-600 font-semibold">fragile</span> : 
-              couleurs, formules cassées, erreurs cachées, maintenance impossible.
+              Nous nous appuyons sur cet environnement pour comprendre les flux, structurer
+              les données et identifier les améliorations réellement utiles.
             </p>
             <p className="text-xl md:text-2xl font-semibold text-primary-700 pt-4">
-              Résultat : beaucoup de ressources consommées pour peu de valeur créée.
+              Notre rôle : valoriser l’existant et concentrer les efforts là où ils
+              produisent un impact concret.
             </p>
             <div className="h-1 w-24 bg-primary-600 mx-auto rounded-full mt-8"></div>
             <p className="text-base md:text-lg text-gray-600 italic pt-6">
-              Notre vision : <strong>simplifier, structurer, automatiser</strong> avec du sur-mesure 
-              utile et mesurable.
+              Une démarche adaptée à votre réalité pour simplifier, structurer et
+              améliorer durablement vos opérations.
             </p>
           </div>
         </motion.div>

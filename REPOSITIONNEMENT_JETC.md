@@ -241,6 +241,9 @@ certifications non validés.
 | 14 | Harmonisation des noms de projets (JETC TracePilot, JETC FlowPilot), réécriture de la
   section parcours à la 3e personne, remplacement de la phrase générique par une citation,
   correction de la carte du fondateur (accessibilité multi-modale). | ✅ Fait |
+| 15 | Réécriture du contenu textuel de la section « Notre Vision » (`Solutions.js`) pour
+  supprimer le discours critique envers les solutions standards et Excel, au profit d'un
+  discours valorisant l'existant du client (outils, méthodes, expertise). | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -413,6 +416,17 @@ certifications non validés.
   désormais à la souris, au clic, au toucher et au clavier. Anneau de focus visible ajouté
   (`focus-visible:ring-4 focus-visible:ring-primary-300`). Le contenu (logo ou photo) reste
   affiché selon l'état `isHovered`, indépendamment de l'exécution des animations CSS.
+
+### Étape 15 — Réécriture du contenu de « Notre Vision »
+- `components/Solutions.js` : les deux paragraphes d'introduction, la phrase centrale mise en
+  avant (bloc bleu `text-primary-700`) et la dernière phrase en italique de la section « Notre
+  Vision » ont été intégralement remplacés. Suppression des phrases critiquant les « solutions
+  standards » et Excel (« lourdes, coûteuses et rigides », « couleurs, formules cassées »,
+  « beaucoup de ressources consommées pour peu de valeur créée »). Structure graphique
+  (titre, deux paragraphes, phrase centrale en bleu, séparateur, phrase finale en italique)
+  inchangée ; classes Tailwind existantes conservées, aucun ajustement d'espacement n'a été
+  nécessaire. Les 4 cartes interactives (« Écoute Active »…) et la citation de Johnny Fleury
+  (ajoutée à l'étape 14) ne sont pas concernées par cette étape.
 
 ## 5. Textes définitifs intégrés
 
@@ -706,6 +720,18 @@ guide chaque projet… ») :
 Carte du fondateur (`components/Hero.js`) : indication unique « Découvrez le fondateur »
 (remplace les 3 indications précédentes dépendantes du survol/tactile).
 
+### Étape 15 — Textes définitifs (section « Notre Vision »)
+
+Section « Notre Vision » (`components/Solutions.js`) :
+« Chaque entreprise possède ses propres outils, ses méthodes et une expertise construite sur
+le terrain.
+Nous nous appuyons sur cet environnement pour comprendre les flux, structurer les données et
+identifier les améliorations réellement utiles.
+Notre rôle : valoriser l'existant et concentrer les efforts là où ils produisent un impact
+concret.
+Une démarche adaptée à votre réalité pour simplifier, structurer et améliorer durablement vos
+opérations. »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -855,6 +881,21 @@ Carte du fondateur (`components/Hero.js`) : indication unique « Découvrez le f
   reste lisible et fonctionnel même animations réduites/désactivées. Non testé avec un lecteur
   d'écran ou un appareil tactile réel (indisponibles dans cet environnement).
 
+### Étape 15
+- Recherche exhaustive post-implémentation : 0 occurrence restante des 4 anciennes phrases
+  (« solutions "standards" […] lourdes, coûteuses et rigides », « Excel est puissant […]
+  couleurs, formules cassées », « beaucoup de ressources consommées pour peu de valeur créée »,
+  « Notre vision : simplifier, structurer, automatiser ») sur l'ensemble du dépôt.
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 38/38 tests passés (7 suites), 0 échec (contenu textuel sans
+  rapport avec la logique testée).
+- `npm run build` → build de production réussi, 9 pages générées, tailles identiques à
+  l'étape 14. Aucune régression détectée.
+- Affichage responsive : structure graphique (titre, deux paragraphes, phrase centrale en
+  bleu, séparateur, phrase finale en italique) et classes Tailwind existantes conservées à
+  l'identique ; aucun ajustement d'espacement nécessaire. Vérifié par revue de code (aucun
+  outil de capture d'écran/navigateur disponible dans cet environnement).
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -941,6 +982,7 @@ Carte du fondateur (`components/Hero.js`) : indication unique « Découvrez le f
 | 12 | `e6eefb2` | feat: voix institutionnelle nous (phase A repositionnement) |
 | 13 | `f26a05a`* | fix: fiabilisation envoi formulaire de contact (phase B) |
 | 14 | `003d88b`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
+| 15 | `TBD`* | content: réécriture du contenu de la section Notre Vision |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
