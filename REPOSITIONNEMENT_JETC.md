@@ -1130,7 +1130,7 @@ Phrase de clôture :
 | 14 | `003d88b`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
 | 15 | `7b35219`* | content: réécriture du contenu de la section Notre Vision |
 | 16 | `58a6eb7`* | content: réécriture titre et paragraphes de la section parcours |
-| 17 | `TBD`* | feat: fusion cartes et méthode en section Analyser Structurer Optimiser |
+| 17 | `9af7695`* | feat: fusion cartes et méthode en section Analyser Structurer Optimiser |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
