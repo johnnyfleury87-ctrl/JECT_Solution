@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 import { checkSlidingWindowRateLimit, getClientIp } from '@/utils/security/rateLimit';
 import { genericErrorResponse, noStoreHeaders, rateLimitExceededResponse } from '@/utils/security/responses';
 import { logger } from '@/utils/security/logger';
-import { validateTurnstileToken } from '@/utils/security/turnstile';
+import { validateTurnstileToken, getTurnstileMode } from '@/utils/security/turnstile';
 import { monitor } from '@/utils/security/monitor';
 import { parseContactRequest, validateContactPayload, REQUEST_TYPE_LABELS } from '@/utils/security/contactValidation';
 
@@ -54,17 +54,30 @@ export async function POST(request) {
 
     const { name, email, company, requestType, message, turnstileToken } = validatedPayload.data;
 
-    // Cloudflare Turnstile server-side validation.
-    const clientIp = getClientIp(request);
-    const turnstileResult = await validateTurnstileToken(turnstileToken, clientIp);
-    if (!turnstileResult.success) {
-      monitor.increment('turnstile_rejected', { route: 'contact' });
-      logger.warn('Turnstile validation failed', { route: 'contact', errorCode: turnstileResult.error });
-      return NextResponse.json(
-        { error: 'Vérification anti-bot échouée. Veuillez réessayer.' },
-        { status: 400, headers: noStoreHeaders() }
-      );
+    // Turnstile n'est exigé que si les deux clés (site + secret) sont configurées.
+    // Une seule clé présente est une erreur de configuration serveur, jamais une
+    // fausse réussite ni un blocage silencieux déguisé en erreur de validation.
+    const turnstileMode = getTurnstileMode();
+
+    if (turnstileMode === 'misconfigured') {
+      logger.error('Contact route Turnstile misconfigured (only one of the two keys is set)', { route: 'contact' });
+      return genericErrorResponse(503);
     }
+
+    if (turnstileMode === 'enabled') {
+      const clientIp = getClientIp(request);
+      const turnstileResult = await validateTurnstileToken(turnstileToken, clientIp);
+      if (!turnstileResult.success) {
+        monitor.increment('turnstile_rejected', { route: 'contact' });
+        logger.warn('Turnstile validation failed', { route: 'contact', errorCode: turnstileResult.error });
+        return NextResponse.json(
+          { error: 'Vérification anti-bot échouée. Veuillez réessayer.' },
+          { status: 400, headers: noStoreHeaders() }
+        );
+      }
+    }
+    // turnstileMode === 'disabled' : aucune clé configurée, Turnstile est ignoré,
+    // aucun jeton n'est exigé et aucune erreur liée à Turnstile n'est renvoyée.
 
     const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
 

@@ -12,9 +12,13 @@ import assert from 'node:assert/strict';
 
 process.env.NODE_ENV = 'production';
 
-// Turnstile: configured with a fake secret, but the verification call itself
-// is mocked below so no real request reaches Cloudflare.
+// Turnstile : les deux clés sont configurées par défaut dans cette suite (mode
+// "enabled"). Certains tests basculent temporairement ces variables pour
+// couvrir les modes "disabled" (aucune clé) et "misconfigured" (une seule clé).
+// La vérification elle-même est mockée ci-dessous, aucune requête n'atteint
+// réellement Cloudflare.
 process.env.TURNSTILE_SECRET_KEY = 'test-turnstile-secret-key-0000000000';
+process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'test-turnstile-site-key-0000000000';
 
 // SMTP: fake, non-secret placeholder values. The transporter is mocked below,
 // so these never reach a real network socket.
@@ -95,6 +99,32 @@ function assertNoSecretLeak(body) {
     JSON.stringify(body),
     /SMTP_PASS|SMTP_USER|test-smtp-pass|test-smtp-user|stack|secret|password/i
   );
+}
+
+/**
+ * Temporarily sets (or removes, when `undefined`) the two Turnstile env vars
+ * for the duration of `fn`, then restores the original values — even if `fn`
+ * throws — so later tests keep running in the default "enabled" mode.
+ */
+async function withTurnstileEnv(secretKey, siteKey, fn) {
+  const previousSecret = process.env.TURNSTILE_SECRET_KEY;
+  const previousSite = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  if (secretKey === undefined) delete process.env.TURNSTILE_SECRET_KEY;
+  else process.env.TURNSTILE_SECRET_KEY = secretKey;
+
+  if (siteKey === undefined) delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  else process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = siteKey;
+
+  try {
+    return await fn();
+  } finally {
+    if (previousSecret === undefined) delete process.env.TURNSTILE_SECRET_KEY;
+    else process.env.TURNSTILE_SECRET_KEY = previousSecret;
+
+    if (previousSite === undefined) delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+    else process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = previousSite;
+  }
 }
 
 describe('POST /api/contact security boundary', () => {
@@ -225,6 +255,44 @@ describe('POST /api/contact security boundary', () => {
     smtpState.failOn = null;
   });
 
+  it('allows the request without any Turnstile token when both keys are absent (disabled mode)', async () => {
+    await withTurnstileEnv(undefined, undefined, async () => {
+      smtpState.failOn = null;
+      smtpState.calls.length = 0;
+
+      const response = await POST(request(JSON.stringify(payload), '198.51.100.30'));
+      const body = await responseBody(response);
+
+      assert.equal(response.status, 200);
+      assert.deepEqual(body, { ok: true, message: 'Emails envoyés avec succès' });
+      assert.equal(smtpState.calls.length, 2);
+    });
+  });
+
+  it('refuses the request with a generic service error when only one Turnstile key is set (misconfigured)', async () => {
+    await withTurnstileEnv('only-secret-key-set-000000000000', undefined, async () => {
+      const response = await POST(request(
+        JSON.stringify({ ...payload, turnstileToken: validTurnstileToken }),
+        '198.51.100.31'
+      ));
+      const body = await responseBody(response);
+      assert.equal(response.status, 503);
+      assert.deepEqual(body, { error: 'Une erreur est survenue.' });
+      assertNoSecretLeak(body);
+    });
+
+    await withTurnstileEnv(undefined, 'only-site-key-set-0000000000000000', async () => {
+      const response = await POST(request(
+        JSON.stringify({ ...payload, turnstileToken: validTurnstileToken }),
+        '198.51.100.32'
+      ));
+      const body = await responseBody(response);
+      assert.equal(response.status, 503);
+      assert.deepEqual(body, { error: 'Une erreur est survenue.' });
+      assertNoSecretLeak(body);
+    });
+  });
+
   it('returns 429 after the contact rate limit is exceeded', async () => {
     const ip = '198.51.100.15';
     let response;
@@ -237,5 +305,24 @@ describe('POST /api/contact security boundary', () => {
     const body = await responseBody(response);
     assert.equal(typeof body.error, 'string');
     assert.doesNotMatch(JSON.stringify(body), /stack|SMTP_PASS|SMTP_USER|secret|token/i);
+  });
+
+  it('handles two concurrent submissions independently without a false success', async () => {
+    smtpState.failOn = null;
+    smtpState.calls.length = 0;
+
+    const ip = '198.51.100.33';
+    const [first, second] = await Promise.all([
+      POST(request(JSON.stringify({ ...payload, turnstileToken: validTurnstileToken }), ip)),
+      POST(request(JSON.stringify({ ...payload, turnstileToken: validTurnstileToken }), ip)),
+    ]);
+
+    // Les deux requêtes sont traitées (aucun crash, aucune confusion d'état) ;
+    // la protection contre le double clic est assurée côté client (bouton
+    // désactivé, garde `isSubmittingRef`), le serveur reste lui-même cohérent.
+    assert.ok([200, 429].includes(first.status));
+    assert.ok([200, 429].includes(second.status));
+    assertNoSecretLeak(await responseBody(first));
+    assertNoSecretLeak(await responseBody(second));
   });
 });

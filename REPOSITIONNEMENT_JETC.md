@@ -270,6 +270,30 @@ certifications non validés.
   « Portrait de Johnny Fleury, fondateur de JETC Solution ». `public/images/logo-jetc.png` n'est
   pas supprimé (toujours utilisé par `Navbar.js`).
 
+- Étape 20 (Phase E) : Turnstile rendu optionnel. Cause exacte de l'ancien `400` en
+  production (au-delà de la simplification de l'étape 18) : `TURNSTILE_SECRET_KEY` n'est pas
+  configurée sur Vercel (confirmé par une capture des variables d'environnement montrant les
+  5 variables SMTP présentes mais aucune variable Turnstile) ; l'ancienne logique de
+  `utils/security/turnstile.js` était volontairement « fail-secure » : en l'absence de
+  `TURNSTILE_SECRET_KEY` et avec `NODE_ENV=production` (valeur systématique des déploiements
+  Vercel), toute soumission était rejetée avec « Vérification anti-bot échouée. », quel que
+  soit le contenu du formulaire — ce comportement était documenté et volontaire, mais rendait le
+  formulaire inutilisable tant que Turnstile n'était pas configuré. Turnstile est désormais géré
+  selon trois états déterminés uniquement par la présence des deux variables d'environnement,
+  sans aucune valeur factice ni clé de démonstration : **désactivé** (aucune des deux clés :
+  Turnstile totalement ignoré, aucun jeton exigé, aucune erreur liée à Turnstile) ; **activé**
+  (les deux clés : widget affiché, jeton obligatoire, vérification serveur inchangée) ;
+  **mal configuré** (une seule clé : refus explicite avec une erreur de service générique
+  `503`, sans fausse réussite ni détail technique exposé, journalisé côté serveur). Toutes les
+  autres protections existantes sont conservées à l'identique : validation stricte des champs,
+  liste fermée des types de demande, limites de longueur, honeypot, limitation du nombre de
+  requêtes, contrôle du type de contenu et de la taille du payload, refus implicite des méthodes
+  autres que `POST` (Next.js ne route que `POST` sur cette route), interdiction des caractères
+  de saut de ligne (protection contre l'injection d'en-têtes email), journalisation sans donnée
+  personnelle ni secret. Aucune protection désactivée ou affaiblie ; l'API reste fermée à toute
+  valeur ou type de demande hors de la liste blanche `information`/`pilot`. Le champ de type de
+  demande (2 choix, déjà simplifié à l'étape 18) n'a pas été retouché, il était déjà conforme.
+
 ## 3. Liste complète des étapes
 
 | # | Étape | Statut |
@@ -318,6 +342,9 @@ certifications non validés.
 | 19 | Phase D — Suppression de la grande carte du fondateur de l'accueil, nouvelle
   illustration animée d'analyse opérationnelle, déplacement de la photo du fondateur dans le
   petit carré de la section parcours. | ✅ Fait |
+| 20 | Phase E — Cloudflare Turnstile rendu optionnel (3 états : désactivé/activé/mal
+  configuré) pour permettre au formulaire de fonctionner sans les variables Vercel
+  `NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`. | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -584,6 +611,31 @@ certifications non validés.
   arrondis/ombre conservés, `object-cover` + `object-position` centré visage, texte alternatif
   imposé. Commentaire de section mis à jour (« Photo et Logo » → « Photo principale + portrait
   en incrustation »).
+
+### Étape 20 — Phase E : Turnstile optionnel
+- `utils/security/turnstile.js` : nouvelle fonction exportée `getTurnstileMode()` déterminant
+  l'état (`disabled`/`enabled`/`misconfigured`) à partir de la seule présence de
+  `TURNSTILE_SECRET_KEY` et `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. `validateTurnstileToken()`
+  simplifiée : elle n'est plus appelée que lorsque le mode est `enabled` (secret garanti
+  présent) ; suppression de l'ancien contournement basé sur `NODE_ENV` (comportement
+  fail-secure en production), remplacé par la logique explicite à 3 états.
+- `app/api/contact/route.js` : la vérification Turnstile n'est exécutée que si
+  `getTurnstileMode() === 'enabled'` ; en mode `misconfigured`, réponse `503` générique
+  (`genericErrorResponse(503)`) avec journalisation serveur (aucune valeur de variable
+  exposée) ; en mode `disabled`, aucune vérification, aucun jeton exigé, aucune erreur liée à
+  Turnstile renvoyée. `from`/`replyTo`/destinataire/SMTP inchangés.
+- `components/ContactForm.js` : **aucune modification nécessaire** — le composant conditionnait
+  déjà le chargement du script, l'affichage du widget et l'exigence du jeton à la seule
+  présence de `NEXT_PUBLIC_TURNSTILE_SITE_KEY` côté client, et traite déjà une réponse serveur
+  non 200/400/429 (dont un futur `503`) via son message générique d'échec existant.
+- `security/tests/contactRoute.test.mjs` : les deux clés Turnstile sont désormais définies par
+  défaut pour toute la suite (mode `enabled`, comportement inchangé pour les tests existants) ;
+  nouvel utilitaire `withTurnstileEnv()` pour basculer temporairement les deux variables
+  d'environnement le temps d'un test, avec restauration garantie (`finally`) ; ajout d'un test
+  du mode `disabled` (requête acceptée et emails envoyés sans aucun jeton) et d'un test du mode
+  `misconfigured` (les deux combinaisons à une seule clé, `503` générique, aucun secret exposé) ;
+  ajout d'un test de soumissions concurrentes (deux requêtes simultanées traitées
+  indépendamment, sans fausse réussite ni fuite de secret).
 
 ## 5. Textes définitifs intégrés
 
@@ -1211,6 +1263,25 @@ Phrase de clôture :
   conteneur `w-28 h-28` avec `overflow-hidden`), non vérifié visuellement dans un navigateur
   réel.
 
+### Étape 20 — Phase E : Turnstile optionnel
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → **42/42 tests passés** (7 suites, 0 échec), incluant les 3 nouveaux
+  scénarios ajoutés pour cette étape : mode désactivé (requête acceptée et emails envoyés sans
+  aucun jeton Turnstile), mode mal configuré (les deux combinaisons à une seule clé renvoient un
+  `503` générique sans fuite de secret), soumissions concurrentes (deux requêtes simultanées
+  traitées indépendamment sans fausse réussite).
+- `npm run build` → build de production réussi, 9 pages générées, tailles identiques à
+  l'étape 19, **sans aucune variable d'environnement Turnstile définie dans cet environnement**
+  (confirmé : `env | grep -i turnstile` ne retourne rien avant le build), ce qui démontre que le
+  mode « désactivé » ne requiert aucune configuration supplémentaire.
+- Test d'envoi réel contrôlé (`[TEST FORMULAIRE JETC] Validation sans Turnstile`) : **non
+  effectué depuis cet environnement**. Aucune variable SMTP réelle n'est disponible ici (seuls
+  `.env.example`/`.env.local.example` sont présents, sans valeurs réelles) ; envoyer un test
+  réel nécessiterait soit un accès aux secrets Vercel de production, soit que l'utilisateur
+  redéploie cette correction puis déclenche lui-même un envoi contrôlé via le formulaire en
+  ligne. Le comportement a en revanche été validé fonctionnellement par les tests automatisés
+  ci-dessus (SMTP mocké, jamais un vrai serveur).
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -1221,19 +1292,19 @@ Phrase de clôture :
     environnements Production et Preview (sans ces 5 variables, l'API renvoie une erreur 500
     générique, par conception, sans jamais afficher de faux succès).
   - `CONTACT_RECEIVER_EMAIL` — optionnelle, sinon repli automatique sur `contact@jetc-immo.ch`.
-  - `TURNSTILE_SECRET_KEY` — **obligatoire en production** : si absente, la vérification
-    anti-bot échoue systématiquement (comportement « fail-secure » documenté et volontaire,
-    non modifié par cette mission) et **aucun email ne peut être envoyé** tant qu'elle n'est
-    pas configurée.
-  - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — doit être configurée de manière cohérente avec
-    `TURNSTILE_SECRET_KEY` (même paire de clés Cloudflare Turnstile), sinon le widget côté
-    client et la vérification côté serveur ne correspondront pas.
+  - `TURNSTILE_SECRET_KEY` / `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — **désormais optionnelles**
+    (étape 20) : si aucune des deux n'est définie, le formulaire fonctionne normalement sans
+    Turnstile (mode « désactivé »). Si les deux sont définies, la protection anti-bot complète
+    est active (mode « activé »). Si une seule des deux est définie, le formulaire refuse
+    toutes les demandes avec une erreur de service générique `503` (mode « mal configuré », par
+    conception, pour ne jamais fonctionner à moitié ni faire une fausse réussite) : dans ce cas,
+    compléter la variable manquante ou supprimer celle qui est présente.
   - Aucune valeur de secret n'a été consultée, devinée ni affichée : seuls les **noms** de
     variables ci-dessus doivent être vérifiés par l'utilisateur.
-- ⚠️ **Test contrôlé en production** (objet `[TEST FORMULAIRE JETC] Validation de l'envoi`,
-  destinataire = adresse professionnelle JETC configurée) : à réaliser par l'utilisateur une
-  fois les variables ci-dessus confirmées, ce test n'ayant pas pu être effectué depuis cet
-  environnement (aucun accès au déploiement de production).
+- ⚠️ **Test contrôlé en production** (objet `[TEST FORMULAIRE JETC] Validation sans Turnstile`,
+  destinataire = adresse professionnelle JETC configurée) : à réaliser par l'utilisateur après
+  déploiement de cette correction, ce test n'ayant pas pu être effectué depuis cet environnement
+  (aucun accès aux variables SMTP réelles ni au déploiement de production).
 - ⚠️ **Rate limiting en mémoire** (`utils/security/rateLimit.js`) : le compteur est stocké dans
   une `Map` en mémoire du processus, réinitialisée à chaque démarrage/instance serverless sur
   Vercel. La protection anti-abus reste active mais peut être moins stricte en production
