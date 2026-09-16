@@ -248,6 +248,9 @@ certifications non validés.
   suppression du titre redondant, de la mention RELEX et du paragraphe réduisant le parcours
   à un projet précis, au profit d'un discours centré sur la vision transversale acquise entre
   terrain et fonctions support. | ✅ Fait |
+| 17 | Fusion des 4 cartes « Écoute Active… » (`Solutions.js`) et de la méthode en 4 étapes
+  « Comment nous travaillons » (`WorkProcess.js`) en une seule nouvelle section animée
+  « Analyser. Structurer. Optimiser. » (3 étapes, parcours horizontal/vertical). | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -441,6 +444,27 @@ certifications non validés.
   l'intégration dans RELEX… » et de toute mention de RELEX. La citation de Johnny Fleury
   ajoutée à l'étape 14 dans `components/Solutions.js` (« Avant d'automatiser, il faut
   comprendre… ») n'est pas concernée par cette étape.
+
+### Étape 17 — Fusion des cartes et de la méthode en une section animée
+- `components/Solutions.js` : suppression complète du bloc « Cartes interactives » (tableau
+  `visionItems` des 4 cartes « Écoute Active », « Accompagnement Personnalisé », « Immersion
+  Métier », « Impact Business », leurs icônes/emoji, indicateurs « Survolez pour en savoir
+  plus »/« Touchez pour développer », et toute la logique associée : états `hoveredIndex`/
+  `expandedMobile`, imports `useState`/`AnimatePresence` devenus inutiles). La section
+  « Notre Vision » (titre, 2 paragraphes, phrase centrale bleue, citation de clôture) est
+  strictement inchangée.
+- `components/WorkProcess.js` : contenu entièrement remplacé (méthode en 4 étapes « Écoute &
+  Découverte », « Immersion Métier », « Co-construction », « Déploiement & Suivi » et la
+  phrase de clôture « Cette démarche garantit… » supprimées) par une nouvelle section unique
+  « Analyser. Structurer. Optimiser. » à 3 étapes, avec parcours animé horizontal (ordinateur)
+  devenant vertical (mobile/tablette), trois icônes SVG originales illustrant chaque étape
+  (balayage de flux, alignement de points, convergence de trajectoires), interaction clavier/
+  souris/tactile et respect de `prefers-reduced-motion` (voir section 6 pour le détail
+  technique). L'identifiant `id="process"` est conservé à l'identique (ancre utilisée par
+  `Navbar.js`, `Footer.js` et `Hero.js`, non modifiés).
+- Aucun autre composant, style global (`app/globals.css`) ou fichier asset n'a nécessité de
+  nettoyage : les 4 cartes et les 4 étapes n'étaient définies que dans ces deux fichiers, sans
+  dépendance externe.
 
 ## 5. Textes définitifs intégrés
 
@@ -768,6 +792,28 @@ comprendre le fonctionnement existant, de structurer les informations disponible
 construire avec les équipes des améliorations concrètes, adaptées à leur réalité.
 Analyser. Structurer. Optimiser. »
 
+### Étape 17 — Textes définitifs (section « Analyser. Structurer. Optimiser. »)
+
+Titre et introduction (`components/WorkProcess.js`) :
+« Analyser. Structurer. Optimiser.
+Une démarche progressive pour comprendre votre fonctionnement, rendre les informations
+exploitables et concentrer les efforts sur les améliorations les plus utiles. »
+
+Étape 01 — Analyser :
+« Observer les flux, écouter les équipes et étudier les temps, les capacités ainsi que les
+points de friction rencontrés dans le fonctionnement quotidien. »
+
+Étape 02 — Structurer :
+« Relier les données, les contraintes et les priorités afin de rendre visibles les
+interactions, les coûts cachés et les leviers d'amélioration. »
+
+Étape 03 — Optimiser :
+« Comparer les scénarios, construire les améliorations avec les équipes et accompagner leur
+mise en œuvre de manière progressive. »
+
+Phrase de clôture :
+« Chaque étape s'appuie sur votre environnement, vos outils et l'expertise de vos équipes. »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -949,6 +995,53 @@ Analyser. Structurer. Optimiser. »
   ligne aux largeurs mobile/tablette/ordinateur. Non vérifié visuellement (aucun outil de
   capture d'écran/navigateur disponible dans cet environnement).
 
+### Étape 17
+- Recherche exhaustive post-implémentation : 0 occurrence restante de « Écoute Active »,
+  « Accompagnement Personnalisé », « Immersion Métier » (carte), « Impact Business »,
+  « Écoute & Découverte », « Co-construction », « Déploiement & Suivi », « Comment nous
+  travaillons », « Survolez pour en savoir plus » et de la phrase « Cette démarche garantit
+  que chaque solution est parfaitement alignée… » dans `components/` et `app/`.
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 38/38 tests passés (7 suites), 0 échec (contenu et animation
+  d'affichage sans rapport avec la logique testée).
+- `npm run build` → build de production réussi, 9 pages générées, route `/` = 14,3 kB /
+  161 kB First Load JS (légère hausse de 0,2 kB liée aux nouvelles icônes SVG et à la logique
+  d'animation ; aucune régression). Vérification runtime : serveur de production démarré
+  localement (`npm run start`), route `/` répondant en HTTP 200, présence confirmée du texte
+  « Analyser. Structurer. Optimiser. » et absence totale des anciens textes dans le HTML rendu.
+- Animation (revue de code, aucun navigateur disponible dans cet environnement pour un rendu
+  visuel réel) :
+  - Entrée : titre en fondu + léger déplacement vertical, ligne de progression qui se dessine
+    (`scaleX`/`scaleY` de 0 à 1 selon l'orientation), 3 étapes qui apparaissent en cascade
+    (`staggerChildren`), le tout déclenché une seule fois par chargement de page
+    (`viewport={{ once: true }}` sur tous les blocs animés).
+  - Bascule horizontal (ordinateur, `md:flex-row` + ligne `scaleX` `origin-left`) / vertical
+    (mobile et tablette, `flex-col` + ligne `scaleY` `origin-top`) : gérée uniquement par les
+    classes Tailwind responsives, sans dupliquer la logique JavaScript.
+  - Chaque icône (balayage de flux pour Analyser, alignement de points pour Structurer,
+    convergence de trajectoires pour Optimiser) rejoue une version courte de son animation au
+    survol, au focus clavier ou au toucher (remontage ciblé via une clé React incrémentée à
+    l'activation), sans jamais masquer le texte descriptif, déjà visible en permanence.
+  - Aucune boucle infinie ni mouvement permanent : toutes les transitions sont `transform`/
+    `opacity`, à durée finie, déclenchées uniquement par l'entrée dans le viewport ou une
+    interaction ponctuelle.
+- Clavier : chaque étape est focalisable (`tabIndex={0}`, `role="group"`, `aria-label`
+  explicite « Étape 0X : Titre »), avec anneau de focus visible
+  (`focus-visible:ring-4 focus-visible:ring-primary-200`) et mise en valeur identique au survol
+  souris (`onFocus`/`onBlur` en plus de `onMouseEnter`/`onMouseLeave`/`onClick` pour le tactile).
+- `prefers-reduced-motion` : hook `useReducedMotion` de `framer-motion` (déjà présente comme
+  dépendance du projet, aucune nouvelle dépendance ajoutée). Lorsqu'il est actif, tous les
+  blocs animés reçoivent `initial={false}` (état final affiché immédiatement, sans jouer
+  l'animation d'entrée) et les 3 icônes basculent sur un rendu SVG statique déjà dans sa
+  position finale (aucun élément `motion.*` utilisé dans ce mode).
+- Absence de déblocage brutal de la mise en page (CLS) : dimensions des icônes (`h-9 w-9`),
+  des badges numérotés et des cartes fixées par des classes Tailwind indépendantes de l'état
+  d'animation ; seules les propriétés `transform`/`opacity`/couleur de fond changent, aucune
+  propriété affectant la mise en page (`width`/`height`/`margin`) n'est animée.
+- Aucun débordement horizontal : disposition en colonne sur mobile (`flex-col`), largeur du
+  texte de description plafonnée (`max-w-xs`), aucune largeur fixe supérieure à la largeur du
+  conteneur.
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -1037,6 +1130,7 @@ Analyser. Structurer. Optimiser. »
 | 14 | `003d88b`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
 | 15 | `7b35219`* | content: réécriture du contenu de la section Notre Vision |
 | 16 | `58a6eb7`* | content: réécriture titre et paragraphes de la section parcours |
+| 17 | `TBD`* | feat: fusion cartes et méthode en section Analyser Structurer Optimiser |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
