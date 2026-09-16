@@ -14,7 +14,7 @@ const payload = {
   name: 'Jean Dupont',
   email: 'jean@example.com',
   company: 'Example SA',
-  requestType: 'Discussion',
+  requestType: 'Diagnostic opérationnel',
   message: 'Bonjour, je souhaite échanger au sujet de votre activité.',
 };
 

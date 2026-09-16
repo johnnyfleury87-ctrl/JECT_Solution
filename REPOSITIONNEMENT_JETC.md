@@ -77,6 +77,22 @@ certifications non validés.
   complet du tableau `pricingExamples`). Nouvelle phrase de clôture sur le périmètre/la
   rémunération définis à l'avance. Section "Ce que JETC ne fait pas" conservée sans modification
   (non concernée par la demande, contenu déjà conforme). Aucune entreprise tierce citée.
+- Étape 9 : cohérence page Contact + pied de page. Bandeau/introduction de `app/contact/page.js`
+  alignés sur le discours "phase pilote". Types de demande du formulaire (`ContactForm.js`)
+  remplacés (7 nouvelles options). Puisque la liste blanche `ALLOWED_REQUEST_TYPES` de
+  `utils/security/contactValidation.js` doit correspondre exactement aux options du
+  formulaire (sinon toute soumission serait rejetée), elle a été mise à jour avec les 7 mêmes
+  libellés ; il s'agit d'une mise à jour de contenu (liste de valeurs autorisées), pas d'une
+  modification de la logique d'envoi/anti-abus (rate limiting, honeypot, Turnstile, Nodemailer
+  inchangés). Les fixtures des tests de sécurité (`security/tests/contactRoute.test.mjs`,
+  `security/tests/contactValidation.test.mjs`) ont été alignées sur les nouveaux types pour
+  éviter une régression des tests ; une assertion supplémentaire vérifie qu'un ancien type
+  ("Discussion") est désormais rejeté. CTA harmonisés : "Étudier un processus" et "Découvrir la
+  méthode" (Hero, déjà conformes, inchangés), "Présenter votre situation" (ContactCTA, remplace
+  "Nous contacter"), "Proposer un partenariat pilote" (carte Analyse & Simulation
+  opérationnelle, remplace "Échanger sur cette démarche"). Pied de page (`Footer.js`) : phrase
+  d'entreprise remplacée. Aucune entreprise tierce citée. Aucun envoi réel effectué (validation
+  testée localement via `npm run test:security`).
 
 ## 3. Liste complète des étapes
 
@@ -99,7 +115,9 @@ certifications non validés.
   nouvel ordre imposé, qualification de chaque diapositive (titre/catégorie/statut). | ✅ Fait |
 | 8 | Refonte de "Pourquoi nous choisir ?" (5 axes) et de "Une logique simple : vous gagnez, je
   gagne" (3 étapes de démarche + nouvelle phrase de clôture). | ✅ Fait |
-| 9 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 9 | Cohérence page Contact et pied de page : bandeau, introduction, types de demande, CTA
+  harmonisés, phrase du pied de page. | ✅ Fait |
+| 10 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -173,6 +191,20 @@ certifications non validés.
   du rendu conditionnel `description`/`price`/`subPrice`/`note`) ; phrase de clôture remplacée.
   Section "Ce que JETC ne fait pas" (`notIncluded`) et paragraphes d'introduction non modifiés
   (non concernés par la demande).
+
+### Étape 9 — Cohérence page Contact et pied de page
+- `app/contact/page.js` : introduction et bandeau d'annonce remplacés (titre `h1` "Discutons"
+  conservé à l'identique).
+- `components/ContactForm.js` : 7 options du champ "Type de demande" remplacées.
+- `utils/security/contactValidation.js` : `ALLOWED_REQUEST_TYPES` mis à jour avec les 7 mêmes
+  libellés (contenu de validation, aucune logique d'envoi/anti-abus modifiée).
+- `security/tests/contactRoute.test.mjs`, `security/tests/contactValidation.test.mjs` :
+  fixtures `requestType` alignées sur les nouveaux libellés pour éviter une régression des
+  tests de sécurité.
+- `components/ContactCTA.js` : bouton "Nous contacter" → "Présenter votre situation".
+- `components/Projects.js` : lien de la carte "Analyse & Simulation opérationnelle"
+  "Échanger sur cette démarche" → "Proposer un partenariat pilote".
+- `components/Footer.js` : phrase de présentation de l'entreprise remplacée.
 
 ## 5. Textes définitifs intégrés
 
@@ -261,7 +293,8 @@ certifications non validés.
   « L'objectif est de tester cette approche sur un périmètre réel et limité afin d'en mesurer
   concrètement la valeur. »
 - CTA : « Échanger sur cette démarche » (lien `#contact`, même modèle que le CTA "contact"
-  déjà utilisé par JETC OrgaPulse).
+  déjà utilisé par JETC OrgaPulse). **Mis à jour à l'étape 9** → « Proposer un partenariat
+  pilote » (harmonisation des CTA, voir étape 9).
 - Aucun KPI, aucune fonctionnalité détaillée ni capture d'écran ajoutés (champs volontairement
   omis pour ne créer aucun résultat chiffré ni contenu non fourni).
 
@@ -353,6 +386,25 @@ Conclusion (remplace l'ancienne phrase de clôture) :
 recherchée. Aucun abonnement ou déploiement global n'est imposé avant la validation des
 résultats du pilote. »
 
+### Étape 9 — Page Contact et pied de page
+
+- Bandeau (`app/contact/page.js`) :
+  « JETC Solution entre en phase pilote. Les prises de contact et propositions de
+  collaboration sont ouvertes. »
+- Titre (`h1`, conservé à l'identique) : « Discutons »
+- Introduction :
+  « Un processus difficile à mesurer, un coût qui reste invisible ou un projet que vous
+  souhaitez tester avant d'investir ? Présentez-moi simplement votre situation. »
+- Types de demande (`components/ContactForm.js` + liste blanche
+  `utils/security/contactValidation.js`) : « Diagnostic opérationnel », « Partenariat pilote »,
+  « Analyse et simulation », « JETC OrgaPulse », « Automatisation d'un processus », « Solution
+  métier sur mesure », « Autre demande ».
+- CTA harmonisés : « Étudier un processus » et « Découvrir la méthode » (Hero, inchangés),
+  « Présenter votre situation » (ContactCTA), « Proposer un partenariat pilote » (carte
+  Analyse & Simulation opérationnelle).
+- Pied de page (`components/Footer.js`) :
+  « Analyse opérationnelle, automatisation et simulation au service de résultats mesurables. »
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -418,13 +470,24 @@ résultats du pilote. »
 - `npm run build` → build de production réussi, 8 pages générées, route `/` = 14,1 kB / 160 kB
   First Load JS. Aucune régression détectée.
 
+### Étape 9
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec, y compris la suite
+  `contactValidation.test.mjs` mise à jour (nouveaux types de demande acceptés, ancien type
+  "Discussion" désormais rejeté, honeypot/CRLF/longueurs toujours bloqués) et
+  `contactRoute.test.mjs` (rate limiting, Turnstile, honeypot inchangés). Validation testée
+  uniquement en local (`node --test`), aucun email réel envoyé.
+- `npm run build` → build de production réussi, 8 pages générées, route `/contact` = 3,71 kB /
+  142 kB First Load JS (légère hausse liée aux nouvelles options du sélecteur). Aucune
+  régression détectée.
+
 ## 7. Points restant à traiter
 
-- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`,
-  `ContactCTA`) si demandé dans une étape suivante (`Benefits` et `Pricing` sont traités depuis
-  l'étape 8).
-- Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
-  alignement avec le nouveau discours (à valider avec l'utilisateur).
+- Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`) si
+  demandé dans une étape suivante (`Benefits`, `Pricing`, `ContactCTA` et pied de page sont
+  traités depuis les étapes 8-9).
+- Vérifier si `Navbar` ou la page `/confidentialite` nécessitent un alignement avec le nouveau
+  discours (à valider avec l'utilisateur).
 - Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
   contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
   "estimation en cas de rappel") ; non modifiés à l'étape 6 car non demandé explicitement et
@@ -453,7 +516,8 @@ résultats du pilote. »
 | 5 | `bafa04a` | feat: ajout carte Analyse & Simulation opérationnelle |
 | 6 | `36235e9` | feat: clarification résultats, estimations et objectifs des projets |
 | 7 | `bcd9356` | feat: reorganisation section Nos realisations (carrousel) |
-| 8 | `5c96b0b`* | feat: refonte pourquoi-nous-choisir et logique tarifaire |
+| 8 | `5eea279` | feat: refonte pourquoi-nous-choisir et logique tarifaire |
+| 9 | `882656a`* | feat: coherence page contact et pied de page |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.

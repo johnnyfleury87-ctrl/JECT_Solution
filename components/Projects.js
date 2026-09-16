@@ -138,7 +138,7 @@ const projects = [
     ],
     resultsNote: "L’objectif est de tester cette approche sur un périmètre réel et limité afin d’en mesurer concrètement la valeur.",
     link: {
-      label: 'Échanger sur cette démarche',
+      label: 'Proposer un partenariat pilote',
       href: '#contact',
       type: 'contact'
     }

@@ -219,11 +219,13 @@ export default function ContactForm() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
           >
             <option value="">Sélectionnez un type de demande</option>
-            <option value="Discussion">Discussion</option>
-            <option value="Question">Question</option>
-            <option value="Démo">Démo</option>
-            <option value="Partenariat">Partenariat</option>
-            <option value="Autre">Autre</option>
+            <option value="Diagnostic opérationnel">Diagnostic opérationnel</option>
+            <option value="Partenariat pilote">Partenariat pilote</option>
+            <option value="Analyse et simulation">Analyse et simulation</option>
+            <option value="JETC OrgaPulse">JETC OrgaPulse</option>
+            <option value="Automatisation d'un processus">Automatisation d'un processus</option>
+            <option value="Solution métier sur mesure">Solution métier sur mesure</option>
+            <option value="Autre demande">Autre demande</option>
           </select>
         </div>
 

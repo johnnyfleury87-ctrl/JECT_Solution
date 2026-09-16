@@ -9,11 +9,13 @@ const MAX_LENGTHS = {
 };
 
 const ALLOWED_REQUEST_TYPES = new Set([
-  'Discussion',
-  'Question',
-  'Démo',
-  'Partenariat',
-  'Autre',
+  'Diagnostic opérationnel',
+  'Partenariat pilote',
+  'Analyse et simulation',
+  'JETC OrgaPulse',
+  "Automatisation d'un processus",
+  'Solution métier sur mesure',
+  'Autre demande',
 ]);
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

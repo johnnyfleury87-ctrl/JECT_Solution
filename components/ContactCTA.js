@@ -25,7 +25,7 @@ export default function ContactCTA() {
             href="/contact"
             className="inline-block px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 text-lg"
           >
-            Nous contacter
+            Présenter votre situation
           </Link>
         </motion.div>
       </div>

@@ -15,7 +15,7 @@ const validPayload = {
   name: 'Jean Dupont',
   email: 'jean@example.com',
   company: 'Example SA',
-  requestType: 'Discussion',
+  requestType: 'Diagnostic opérationnel',
   message: 'Bonjour, je souhaite échanger au sujet de votre activité.',
   honeypot: '',
   turnstileToken: 'test-token',
@@ -85,11 +85,20 @@ describe('validateContactPayload', () => {
   });
 
   it('allows only the request types exposed by the form', () => {
-    for (const requestType of ['Discussion', 'Question', 'Démo', 'Partenariat', 'Autre']) {
+    for (const requestType of [
+      'Diagnostic opérationnel',
+      'Partenariat pilote',
+      'Analyse et simulation',
+      'JETC OrgaPulse',
+      "Automatisation d'un processus",
+      'Solution métier sur mesure',
+      'Autre demande',
+    ]) {
       assert.equal(validateContactPayload({ ...validPayload, requestType }).valid, true);
     }
     assert.equal(validateContactPayload({ ...validPayload, requestType: '' }).valid, false);
     assert.equal(validateContactPayload({ ...validPayload, requestType: 'Admin' }).valid, false);
+    assert.equal(validateContactPayload({ ...validPayload, requestType: 'Discussion' }).valid, false);
   });
 
   it('rejects CRLF characters and a filled honeypot', () => {
