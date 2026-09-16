@@ -126,10 +126,20 @@ export default function Hero() {
               className="order-1 lg:order-2"
             >
               <div 
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-300 rounded-3xl"
+                role="button"
+                tabIndex={0}
+                aria-pressed={isHovered}
+                aria-label="Découvrir le fondateur : afficher sa photo"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsHovered(!isHovered)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIsHovered(!isHovered);
+                  }
+                }}
               >
                 {/* Carte principale */}
                 <div className="relative bg-white p-8 rounded-3xl shadow-2xl border-2 border-gray-100 hover:border-primary-200 transition-all duration-500">
@@ -158,7 +168,7 @@ export default function Hero() {
                           <span className="text-sm text-gray-500">Fondateur</span>
                         </p>
                         <p className="text-xs text-gray-400 italic px-8">
-                          Passez la souris pour découvrir le fondateur
+                          Découvrez le fondateur
                         </p>
                       </div>
                     </div>
@@ -178,16 +188,6 @@ export default function Hero() {
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Indicateur subtil d'interaction */}
-                <div className="mt-4 text-center">
-                  <p className="text-xs text-gray-400 italic lg:hidden">
-                    Touchez pour voir la photo
-                  </p>
-                  <p className="text-xs text-gray-400 italic hidden lg:block">
-                    Passez la souris pour voir la photo
-                  </p>
                 </div>
               </div>
             </motion.div>

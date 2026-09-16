@@ -191,10 +191,14 @@ export default function Solutions() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-16 text-center"
         >
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto italic">
-            Cette vision guide chaque projet. Chaque solution est conçue spécifiquement pour produire des résultats mesurables,
-            au service de <strong>vos performances réelles</strong>.
-          </p>
+          <blockquote className="max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-800 font-medium italic">
+              « Avant d’automatiser, il faut comprendre. Avant d’investir, il faut mesurer. »
+            </p>
+            <footer className="mt-3 text-sm text-gray-500 not-italic">
+              — Johnny Fleury, fondateur de JETC Solution
+            </footer>
+          </blockquote>
         </motion.div>
       </div>
     </section>

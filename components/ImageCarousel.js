@@ -37,7 +37,7 @@ const slides = [
   {
     src: '/image/image7.png',
     alt: "Vue 3D d'un scénario de simulation logistique avec convoyeur et zones de contrôle",
-    title: 'Analyse et simulation opérationnelle',
+    title: 'JETC FlowPilot',
     category: 'Analyse & simulation',
     description: 'Modélisation visuelle des flux logistiques pour tester des scénarios avant décision.',
     status: 'Prototype',
@@ -45,7 +45,7 @@ const slides = [
   {
     src: '/images/tracabilite-bg.svg',
     alt: 'Illustration graphique représentant la traçabilité des produits le long de la chaîne logistique',
-    title: 'Traçabilité des produits',
+    title: 'JETC TracePilot',
     category: 'Traçabilité & conformité',
     description: 'Illustration du principe de suivi des lots tout au long de la chaîne logistique.',
     status: 'Prototype',

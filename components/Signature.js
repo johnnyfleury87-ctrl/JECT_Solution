@@ -53,54 +53,45 @@ export default function Signature() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Un parcours terrain, <span className="text-primary-600">des solutions concrètes</span>
+                Près de huit ans <span className="text-primary-600">au cœur des opérations</span>
               </h2>
               
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Le parcours du fondateur a commencé sur le terrain, de la restauration à la
-                  préparation de commandes, avant d’évoluer vers l’assistance opérationnelle, les
-                  ressources humaines, la coordination de projets, les achats indirects et la
-                  qualité.
+                  Depuis près de huit ans, Johnny Fleury évolue au sein d’un environnement de
+                  commerce en ligne alimentaire multisite, comptant environ 12 500 références et
+                  intégrant un nouvel entrepôt automatisé.
                 </p>
 
                 <p>
-                  Depuis près de huit ans, Johnny Fleury évolue dans un environnement e-commerce
-                  alimentaire multi-sites comprenant plus de 12 500 références, trois sites
-                  logistiques et un nouveau dépôt automatisé. Cette expérience lui a permis de
-                  développer une vision transversale des opérations : flux, ressources, qualité,
-                  coûts, approvisionnements et outils de pilotage.
+                  Cette expérience lui a permis de développer une vision transversale des
+                  opérations : flux, ressources, qualité, coûts, approvisionnements et outils de
+                  pilotage.
                 </p>
 
                 <p>
-                  Il a notamment piloté l’intégration dans RELEX de l’ensemble des achats
-                  indirects et du packaging de plusieurs entrepôts. Son travail consiste à rendre
-                  visibles les pertes de temps, les déplacements inutiles, les erreurs et les
-                  coûts qui se cachent entre les différentes étapes d’un processus.
+                  Son parcours a commencé sur le terrain, dans la préparation de commandes, avant
+                  d’évoluer vers l’assistance opérationnelle, les ressources humaines, la
+                  coordination de projets, les achats indirects et la qualité.
                 </p>
 
                 <p>
-                  JETC Solution est née de cette expérience : comprendre le terrain, structurer
-                  les données et construire des améliorations mesurables, sans imposer un nouvel
-                  outil lorsque l’existant peut être mieux exploité.
+                  Il a notamment piloté l’intégration dans RELEX des achats indirects et des
+                  emballages de plusieurs entrepôts. Son travail consiste à rendre visibles les
+                  pertes de temps, les déplacements inutiles, les erreurs et les coûts cachés
+                  entre les différentes étapes d’un processus.
+                </p>
+
+                <p>
+                  JETC Solution est née de cette expérience avec une conviction simple : les
+                  meilleures améliorations partent du terrain, s’appuient sur des données
+                  concrètes et valorisent l’environnement existant.
                 </p>
 
                 <p className="text-primary-700 font-semibold italic">
-                  Clarté, fiabilité, utilité réelle : ce sont ses priorités.
+                  Analyser. Structurer. Optimiser.
                 </p>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="mt-8 pt-8 border-t border-gray-200"
-              >
-                <p className="text-gray-600 italic">
-                  — Johnny Fleury, Fondateur de JETC Solution
-                </p>
-              </motion.div>
             </motion.div>
           </div>
         </motion.div>

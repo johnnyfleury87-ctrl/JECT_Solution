@@ -84,7 +84,7 @@ const projects = [
   },
   {
     id: 'tracabilite',
-    name: 'Traçabilité & Spotting Produits',
+    name: 'JETC TracePilot',
     status: 'Prototype',
     statusColor: 'bg-amber-100 text-amber-800 border-amber-200',
     emoji: '📦',
@@ -119,8 +119,8 @@ const projects = [
   },
   {
     id: 'analyse-simulation',
-    name: 'Analyse & Simulation opérationnelle',
-    status: 'Recherche d’un partenaire pilote',
+    name: 'JETC FlowPilot',
+    status: 'Recherche d’une entreprise partenaire',
     statusColor: 'bg-purple-100 text-purple-800 border-purple-200',
     emoji: '🧪',
     gradient: 'from-purple-400 to-indigo-500',

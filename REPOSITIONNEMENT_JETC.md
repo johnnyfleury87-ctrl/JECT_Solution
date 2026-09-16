@@ -170,6 +170,43 @@ certifications non validés.
   obligatoire en production sinon la vérification anti-bot échoue systématiquement par conception
   — comportement "fail-secure" documenté et volontaire, non modifié) — non vérifiable depuis cet
   environnement (aucun accès à Vercel/aux secrets réels, voir section 7).
+- Étape 14 : harmonisation des noms de projets, réécriture de la section "parcours" et
+  correction de la carte du fondateur. Renommage public : « Traçabilité & Spotting Produits »
+  → **JETC TracePilot** (badge « Prototype », inchangé) ; « Analyse & Simulation
+  opérationnelle » → **JETC FlowPilot** (badge « Recherche d'une entreprise partenaire »,
+  reformulé pour ne plus répéter le mot "pilote" déjà présent dans le nom). « JETC OrgaPulse »
+  et « JETC Immo » conservés à l'identique. Identifiants techniques internes `id: 'tracabilite'`
+  et `id: 'analyse-simulation'` volontairement conservés (jamais affichés publiquement, utilisés
+  uniquement comme clés React/logique conditionnelle ; les renommer aurait un risque
+  fonctionnel sans bénéfice public). Le terme "Spotting Produits" ne subsiste nulle part.
+  Section "parcours" (`Signature.js`) entièrement réécrite à la 3e personne (nouveau titre,
+  nouveau texte) selon le texte exact fourni. Ancienne phrase de clôture générique de la
+  section "Notre Vision" (`Solutions.js`) remplacée par une citation attribuée à Johnny
+  Fleury ; en conséquence, l'ancienne phrase de clôture et la signature isolée de
+  `Signature.js` ont été supprimées (redondantes, Johnny Fleury étant déjà nommé dans le
+  corps du texte et dans la nouvelle citation). Carte interactive du fondateur (`Hero.js`) :
+  une seule indication (« Découvrez le fondateur »), interaction fonctionnelle à la souris, au
+  clic, au toucher et au clavier (`role="button"`, `tabIndex={0}`, `onKeyDown` Entrée/Espace,
+  anneau de focus visible). Aucune entreprise tierce citée, aucun chiffre ni résultat inventé,
+  RELEX mentionné uniquement comme outil utilisé par Johnny Fleury (aucun partenariat
+  commercial sous-entendu).
+
+### Règles de rédaction validées à l'étape 14 (à respecter dans les prochaines étapes)
+- Voix du site : le **« nous »** est réservé aux textes où JETC Solution s'exprime en tant
+  qu'entreprise ou décrit sa coopération avec le client (Hero, WorkProcess, Pricing,
+  ProjectModal, Contact, Solutions...). La **3e personne** (« Johnny Fleury », « il », « son
+  parcours », « son expérience », « son travail ») est réservée au récit du parcours
+  professionnel individuel de Johnny Fleury (`Signature.js`). Ne jamais mélanger les deux dans
+  un même passage, ne jamais utiliser artificiellement "nous" pour raconter un vécu personnel.
+- Ne jamais écrire « moi et mon équipe », ni laisser entendre l'existence d'une équipe
+  permanente non établie (point de vigilance signalé en section 7 pour un contenu existant hors
+  périmètre de cette étape : signature d'email "L'équipe JETC" dans `app/api/contact/route.js`).
+- Une citation attribuée à Johnny Fleury (avec sa signature « — Johnny Fleury, fondateur de
+  JETC Solution ») ne doit apparaître qu'une seule fois sur le site.
+- Apostrophe typographique « ’ » et guillemets français « » à utiliser dans tout nouveau texte
+  rédigé pour le site (règle appliquée aux textes modifiés par cette étape ; le reste du code
+  existant, hors périmètre, n'a pas été retouché pour cette seule raison).
+- La marque s'écrit toujours **JETC** (jamais « JECT »).
 
 ## 3. Liste complète des étapes
 
@@ -201,6 +238,9 @@ certifications non validés.
   l'exception de la section parcours personnel de Johnny Fleury réécrite à la 3e personne. | ✅ Fait |
 | 13 | Phase B : diagnostic complet et fiabilisation de l'envoi du formulaire de contact
   (gestion des échecs partiels, timeouts SMTP, tests couvrant le transport réel mocké). | ✅ Fait |
+| 14 | Harmonisation des noms de projets (JETC TracePilot, JETC FlowPilot), réécriture de la
+  section parcours à la 3e personne, remplacement de la phrase générique par une citation,
+  correction de la carte du fondateur (accessibilité multi-modale). | ✅ Fait |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -342,6 +382,37 @@ certifications non validés.
 - `package.json` : script `test:security` exécuté avec le flag Node
   `--experimental-test-module-mocks` (nécessaire pour le mock de `nodemailer` ; aucune
   dépendance ajoutée/modifiée).
+
+### Étape 14 — Harmonisation des noms, parcours, citation, carte du fondateur
+- `components/Projects.js` : `name` du projet `id: 'tracabilite'` (« Traçabilité & Spotting
+  Produits » → « JETC TracePilot », `status` « Prototype » inchangé) ; `name` et `status` du
+  projet `id: 'analyse-simulation'` (« Analyse & Simulation opérationnelle » →
+  « JETC FlowPilot », « Recherche d'un partenaire pilote » → « Recherche d'une entreprise
+  partenaire »). Descriptions, KPI, `impactLabel`, liens et identifiants techniques (`id`,
+  `backgroundImage`) non modifiés.
+- `components/ImageCarousel.js` : `title` de deux diapositives harmonisé avec les nouveaux
+  noms (« Traçabilité des produits » → « JETC TracePilot », « Analyse et simulation
+  opérationnelle » → « JETC FlowPilot »). `category`, `description`, `status`, `alt` et `src`
+  non modifiés.
+- `components/Signature.js` : titre `h2` (« Un parcours terrain, des solutions concrètes » →
+  « Près de huit ans au cœur des opérations ») et corps du texte entièrement remplacés par le
+  texte fourni (5 paragraphes + phrase finale « Analyser. Structurer. Optimiser. », 3e
+  personne). Suppression de l'ancienne phrase de clôture (« Clarté, fiabilité, utilité
+  réelle… ») et du bloc de signature isolé (« — Johnny Fleury, Fondateur de JETC Solution »),
+  désormais redondants avec la nouvelle citation ajoutée dans `Solutions.js`.
+- `components/Solutions.js` : phrase de clôture de la section « Notre Vision » (« Cette vision
+  guide chaque projet… ») remplacée par la citation « Avant d'automatiser, il faut
+  comprendre. Avant d'investir, il faut mesurer. » avec sa signature « — Johnny Fleury,
+  fondateur de JETC Solution » (mise en page sobre : `blockquote`/`footer`).
+- `components/Hero.js` : carte identité interactive du fondateur. Suppression du texte
+  dupliqué (« Passez la souris pour découvrir le fondateur », « Touchez pour voir la photo »,
+  « Passez la souris pour voir la photo ») au profit d'une indication unique « Découvrez le
+  fondateur ». Ajout de `role="button"`, `tabIndex={0}`, `aria-pressed`, `aria-label` et d'un
+  gestionnaire `onKeyDown` (Entrée/Espace) sur le conteneur de la carte, en plus des
+  gestionnaires existants (`onMouseEnter`/`onMouseLeave`/`onClick`) : l'interaction fonctionne
+  désormais à la souris, au clic, au toucher et au clavier. Anneau de focus visible ajouté
+  (`focus-visible:ring-4 focus-visible:ring-primary-300`). Le contenu (logo ou photo) reste
+  affiché selon l'état `isHovered`, indépendamment de l'exécution des animations CSS.
 
 ## 5. Textes définitifs intégrés
 
@@ -599,6 +670,42 @@ Anomalies corrigées (strictement liées à la mission) :
 - Cartes projets (`components/Projects.js`) : ajout de `role="button"`, `tabIndex={0}`, gestion
   clavier Entrée/Espace, `aria-label` et anneau de focus visible.
 
+### Étape 14 — Textes définitifs (noms, parcours, citation)
+
+Noms et badges de projets (`components/Projects.js`, `components/ImageCarousel.js`) :
+- « JETC TracePilot » (ex-« Traçabilité & Spotting Produits ») — badge : « Prototype ».
+- « JETC FlowPilot » (ex-« Analyse & Simulation opérationnelle ») — badge : « Recherche d'une
+  entreprise partenaire ».
+- « JETC OrgaPulse » et « JETC Immo » : inchangés.
+
+Section « parcours » (`components/Signature.js`) :
+- Titre : « Près de huit ans au cœur des opérations »
+- Texte (5 paragraphes, 3e personne) :
+  « Depuis près de huit ans, Johnny Fleury évolue au sein d'un environnement de commerce en
+  ligne alimentaire multisite, comptant environ 12 500 références et intégrant un nouvel
+  entrepôt automatisé.
+  Cette expérience lui a permis de développer une vision transversale des opérations : flux,
+  ressources, qualité, coûts, approvisionnements et outils de pilotage.
+  Son parcours a commencé sur le terrain, dans la préparation de commandes, avant d'évoluer
+  vers l'assistance opérationnelle, les ressources humaines, la coordination de projets, les
+  achats indirects et la qualité.
+  Il a notamment piloté l'intégration dans RELEX des achats indirects et des emballages de
+  plusieurs entrepôts. Son travail consiste à rendre visibles les pertes de temps, les
+  déplacements inutiles, les erreurs et les coûts cachés entre les différentes étapes d'un
+  processus.
+  JETC Solution est née de cette expérience avec une conviction simple : les meilleures
+  améliorations partent du terrain, s'appuient sur des données concrètes et valorisent
+  l'environnement existant.
+  Analyser. Structurer. Optimiser. »
+
+Citation (`components/Solutions.js`, remplace l'ancienne phrase de clôture « Cette vision
+guide chaque projet… ») :
+« Avant d'automatiser, il faut comprendre. Avant d'investir, il faut mesurer. »
+— Johnny Fleury, fondateur de JETC Solution
+
+Carte du fondateur (`components/Hero.js`) : indication unique « Découvrez le fondateur »
+(remplace les 3 indications précédentes dépendantes du survol/tactile).
+
 ### Étape 2
 - `npm run lint` → OK. Seul avertissement préexistant, non lié à cette étape
   (`components/ProjectModal.js:156` — usage de `<img>` au lieu de `next/image`).
@@ -725,6 +832,29 @@ Anomalies corrigées (strictement liées à la mission) :
   effectué**, faute d'accès au déploiement de production et à ses variables réelles. À réaliser
   par l'utilisateur une fois les variables confirmées (voir section 7).
 
+### Étape 14
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 38/38 tests passés (7 suites), 0 échec (renommage de projets et
+  contenu textuel sans impact sur la logique testée).
+- `npm run build` → build de production réussi, 9 pages générées, tailles identiques à
+  l'étape 13. Aucune régression détectée.
+- Recherche exhaustive post-implémentation : 0 occurrence restante de « Traçabilité & Spotting
+  Produits », « Analyse & Simulation opérationnelle », « Spotting Produits », des 3 anciennes
+  formulations de la carte du fondateur, de l'ancienne phrase de clôture « Cette vision guide
+  chaque projet… » et de l'ancienne signature isolée dans `Signature.js`. 0 occurrence publique
+  de « JECT » (recherche `\bJECT\b` sur `app/**/*.js` et `components/**/*.js`).
+- Affichage responsive : vérifié par revue des classes Tailwind (grilles, `aspect-[4/5]` de la
+  carte du fondateur, `blockquote` centré) — aucun outil de capture d'écran/navigateur
+  disponible dans cet environnement pour une vérification visuelle réelle sur ordinateur,
+  tablette et mobile.
+- Carte du fondateur : comportement vérifié par revue de code — `onMouseEnter`/`onMouseLeave`
+  (souris), `onClick` (clic et toucher tactile, un `<div>` avec `onClick` réagissant nativement
+  aux évènements `pointerup`/`tap` des navigateurs mobiles), `onKeyDown` sur Entrée/Espace
+  (clavier) avec `role="button"`/`tabIndex={0}`/anneau de focus visible ; le contenu affiché
+  dépend uniquement de l'état React `isHovered`, pas de l'achèvement d'une animation, donc
+  reste lisible et fonctionnel même animations réduites/désactivées. Non testé avec un lecteur
+  d'écran ou un appareil tactile réel (indisponibles dans cet environnement).
+
 ## 7. Points restant à traiter
 
 ### À valider par l'utilisateur avant publication
@@ -765,17 +895,26 @@ Anomalies corrigées (strictement liées à la mission) :
   l'utilisateur sur ses propres appareils.
 
 ### Hors périmètre de cette mission (non corrigé, à arbitrer si besoin)
-- `Solutions.js` ("Notre Vision") n'a pas été repositionné sur le fond : langage générique
-  pré-existant, sans mention explicite analyse/automatisation/simulation (seule la voix "je"→
-  "nous" a été traitée à l'étape 12, ce composant n'en contenait déjà pas). À traiter dans une
+- `Solutions.js` (« Notre Vision ») : seules la voix « je »→« nous » (étape 12) et la phrase de
+  clôture (étape 14, remplacée par la citation de Johnny Fleury) ont été traitées. Les 4 cartes
+  de la section (« Écoute Active », « Accompagnement Personnalisé »…) et leur discours restent
+  génériques, sans mention explicite analyse/automatisation/simulation. À traiter dans une
   étape dédiée si souhaité.
 - `Navbar.js` n'a pas été revu pour un éventuel alignement avec le nouveau discours.
-- Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
-  contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
-  "estimation en cas de rappel") : jugés suffisamment qualifiés, non modifiés.
+- Les KPI « Traçabilité : 100% » et « Délais réduits : -40% » (carte JETC TracePilot, ex-
+  « Traçabilité & Spotting Produits ») contiennent encore des pourcentages, mais portent déjà
+  des notes qualificatives (« (démo) », « estimation en cas de rappel ») : jugés suffisamment
+  qualifiés, non modifiés.
 - `Solutions.js` contient des cartes cliquables (`onClick` sans support clavier) non corrigées
   car ce composant n'a jamais été modifié par cette mission (contrairement aux cartes de
   `Projects.js`, corrigées à l'étape 11).
+- ⚠️ **Signature d'email « L'équipe JETC »** (`app/api/contact/route.js`, email de confirmation
+  envoyé au visiteur) : laisse entendre l'existence d'une équipe, non établie par ailleurs sur
+  le site (JETC Solution est présentée comme le travail de Johnny Fleury, entrepreneur
+  individuel). Non modifiée dans le cadre de cette étape (hors périmètre : renommage de
+  projets, parcours, citation, carte du fondateur) ; à corriger dans une étape dédiée si
+  souhaité, en cohérence avec la règle validée en section 2 (ne pas laisser entendre qu'une
+  équipe permanente existe).
 - `public/image/image2.png` et `public/image/image5.png` (captures OrgaPulse et JETC Immo)
   restent dans le dépôt mais ne sont plus référencées par le carrousel ; conservées sans
   suppression, réutilisables si besoin.
@@ -801,6 +940,7 @@ Anomalies corrigées (strictement liées à la mission) :
 | 11 | `9fa850b`* | fix: corrections issues de l'audit final |
 | 12 | `e6eefb2` | feat: voix institutionnelle nous (phase A repositionnement) |
 | 13 | `f26a05a`* | fix: fiabilisation envoi formulaire de contact (phase B) |
+| 14 | `TBD`* | feat: harmonisation noms projets, parcours 3e personne, citation fondateur |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
