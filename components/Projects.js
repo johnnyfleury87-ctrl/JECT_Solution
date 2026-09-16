@@ -19,13 +19,13 @@ const projects = [
     impact: [
       "Réduction estimée jusqu’à 30 % du temps de planification",
       "Visualisation de la charge et de l’activité",
-      "Centralisation des données horaires",
+      "Centralisation et fiabilisation des données horaires",
       "Identification des temps morts et des contraintes",
       "Comparaison de différents scénarios d’organisation",
     ],
     resultsNote: "JETC OrgaPulse s’appuie sur les données disponibles pour rendre l’activité compréhensible et faciliter les décisions opérationnelles.",
     kpis: [
-      { label: 'Données horaires', value: '100% fiables', note: 'issues du timbrage' },
+      { label: 'Données horaires', value: 'Centralisées', note: 'issues du timbrage, fiabilisées progressivement' },
       { label: 'Temps de planification', value: '-30%', note: 'vs Excel manuel' },
       { label: 'Visibilité', value: 'Temps réel', note: 'capacité / charge' }
     ],
@@ -58,15 +58,16 @@ const projects = [
     backgroundImage: '/images/jetc-immo-bg.svg',
     description: 'Plateforme de gestion immobilière simplifiée. Centralise la gestion locative, le suivi des biens, les documents et la communication avec les locataires.',
     descriptionShort: "Pour les propriétaires bailleurs qui en ont marre de jongler entre 10 fichiers Excel. Tout au même endroit : baux, quittances, charges, travaux, et vue d'ensemble financière.",
+    impactLabel: 'Objectifs de conception',
     impact: [
       'Centralisation des documents et contrats',
       'Automatisation des relances et rappels',
-      'Gain de temps administratif estimé : 60%',
+      'Réduction attendue des tâches administratives répétitives',
     ],
     kpis: [
       { label: 'Modules actifs', value: '6/10', note: 'en développement continu' },
       { label: 'Multi-devises', value: '✓', note: 'EUR, USD, CHF' },
-      { label: 'Gain de temps', value: '~60%', note: 'vs gestion manuelle' }
+      { label: 'Tâches administratives', value: 'Réduction attendue', note: 'vs gestion manuelle' }
     ],
     points: [
       'Génération automatique des quittances de loyer',
@@ -92,10 +93,11 @@ const projects = [
     backgroundImage: '/images/tracabilite-bg.svg',
     description: 'Système de traçabilité pour suivre les produits tout au long de la chaîne logistique. QR codes, géolocalisation et historique complet pour garantir authenticité et conformité.',
     descriptionShort: "Projet en phase d'expérimentation pour démontrer la valeur de la traçabilité produit. Ce prototype illustre comment un système peut enregistrer automatiquement les lots, dates et contrôles QHSE, et générer les documents pour vos audits. Les fonctionnalités présentées sont indicatives et évolutives.",
+    impactLabel: 'Objectifs du prototype',
     impact: [
-      "Transparence totale de la chaîne d'approvisionnement",
-      "Lutte contre la contrefaçon",
-      "Conformité réglementaire facilitée",
+      "Viser une transparence accrue de la chaîne d'approvisionnement",
+      "Contribuer à la lutte contre la contrefaçon",
+      "Faciliter la conformité réglementaire",
     ],
     kpis: [
       { label: 'Traçabilité', value: '100%', note: 'lot → produit fini (démo)' },
@@ -293,6 +295,11 @@ export default function Projects() {
             Ces projets reflètent notre engagement envers la transparence et la création de valeur mesurable.
             <br />
             Chaque solution est pensée pour résoudre un problème réel et générer un impact concret.
+          </p>
+          <p className="text-sm text-gray-500 mt-4 max-w-3xl mx-auto">
+            Les informations sont qualifiées selon le niveau d’avancement du projet : fonctionnalité
+            disponible, estimation issue d’une étude, objectif de conception ou périmètre
+            expérimental.
           </p>
         </div>
       </div>

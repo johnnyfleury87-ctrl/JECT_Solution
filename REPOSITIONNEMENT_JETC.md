@@ -45,6 +45,16 @@ certifications non validés.
   Grille adaptée à 4 cartes (`grid-cols-1 md:grid-cols-2 xl:grid-cols-4`, `max-w-7xl`). Nouvel
   asset visuel `public/images/analyse-simulation-bg.svg` (illustration abstraite générique,
   aucun logo ni marque tierce).
+- Étape 6 : clarification des résultats/estimations/objectifs sur les 4 cartes projets.
+  L'intitulé de section devient spécifique à chaque projet (`impactLabel`) : "Résultats évalués
+  et fonctionnalités" (JETC OrgaPulse, valeur par défaut), "Objectifs de conception" (JETC
+  Immo), "Objectifs du prototype" (Traçabilité), "Périmètre du pilote" (Analyse & Simulation,
+  inchangé). Suppression de l'affirmation "100% fiables" (KPI JETC OrgaPulse) et du
+  pourcentage "~60%" (KPI JETC Immo, remplacé par une formulation qualitative sans chiffre,
+  par cohérence avec le libellé public modifié sur la même carte). Les éléments de
+  Traçabilité sont reformulés comme des objectifs recherchés (verbes "viser", "contribuer à",
+  "faciliter") plutôt que des résultats acquis. Aucun nouveau pourcentage créé, aucune
+  entreprise tierce citée. Ajout d'une note de qualification globale sous les 4 cartes.
 
 ## 3. Liste complète des étapes
 
@@ -60,7 +70,10 @@ certifications non validés.
   fonctionnalités, courte explication ajoutée. | ✅ Fait |
 | 5 | Ajout d'une 4e carte projet "Analyse & Simulation opérationnelle" (recherche de partenaire
   pilote) et adaptation de la grille à 4 cartes. | ✅ Fait |
-| 6 | (à définir avec l'utilisateur) | ⏳ À venir |
+| 6 | Clarification des résultats, estimations et objectifs sur les 4 cartes projets (intitulés
+  spécifiques par projet, suppression des affirmations "100%"/"60%", reformulation des objectifs
+  du prototype Traçabilité, note de qualification globale). | ✅ Fait |
+| 7 | (à définir avec l'utilisateur) | ⏳ À venir |
 
 ## 4. Fichiers modifiés à chaque étape
 
@@ -94,6 +107,21 @@ certifications non validés.
   à 4 cartes (`grid-cols-1 md:grid-cols-2 xl:grid-cols-4`, conteneur élargi à `max-w-7xl`).
 - `public/images/analyse-simulation-bg.svg` : nouveau fichier, illustration SVG abstraite
   (grille, barres, courbes, loupe) dans la palette violet/indigo, sans logo ni marque.
+
+### Étape 6 — Clarification résultats / estimations / objectifs
+- `components/Projects.js` :
+  - JETC OrgaPulse : item "Centralisation des données horaires" → "Centralisation et
+    fiabilisation des données horaires" ; KPI "Données horaires : 100% fiables" →
+    "Données horaires : Centralisées (issues du timbrage, fiabilisées progressivement)".
+  - JETC Immo : nouveau champ `impactLabel: 'Objectifs de conception'` ; item "Gain de temps
+    administratif estimé : 60%" → "Réduction attendue des tâches administratives répétitives" ;
+    KPI "Gain de temps : ~60%" → "Tâches administratives : Réduction attendue" (cohérence avec
+    le libellé public de la même carte).
+  - Traçabilité & Spotting Produits : nouveau champ `impactLabel: 'Objectifs du prototype'` ;
+    les 3 items reformulés en objectifs recherchés plutôt qu'en résultats acquis.
+  - Analyse & Simulation opérationnelle : `impactLabel: 'Périmètre du pilote'` conservé sans
+    modification.
+  - Ajout d'une note de qualification globale sous les 4 cartes (bloc `mt-12 text-center`).
 
 ## 5. Textes définitifs intégrés
 
@@ -186,6 +214,26 @@ certifications non validés.
 - Aucun KPI, aucune fonctionnalité détaillée ni capture d'écran ajoutés (champs volontairement
   omis pour ne créer aucun résultat chiffré ni contenu non fourni).
 
+### Étape 6 — Clarification résultats / estimations / objectifs (`components/Projects.js`)
+
+- JETC OrgaPulse : intitulé « Résultats évalués et fonctionnalités » (inchangé, valeur par
+  défaut) ; « Réduction estimée jusqu'à 30 % du temps de planification » (conservé) ; «
+  Visualisation de la charge et de l'activité » (conservé) ; « Centralisation et fiabilisation
+  des données horaires » (nouvelle formulation, remplace « Centralisation des données
+  horaires ») ; suppression de l'affirmation « 100% fiables » (KPI modal).
+- JETC Immo : intitulé « Objectifs de conception » (remplace « Impact mesuré / attendu ») ;
+  « Centralisation des documents et contrats » (conservé) ; « Automatisation des relances et
+  rappels » (conservé) ; « Réduction attendue des tâches administratives répétitives »
+  (remplace « Gain de temps administratif estimé : 60% »).
+- Traçabilité & Spotting Produits : intitulé « Objectifs du prototype » (remplace « Impact
+  mesuré / attendu ») ; éléments reformulés comme fonctions recherchées : « Viser une
+  transparence accrue de la chaîne d'approvisionnement », « Contribuer à la lutte contre la
+  contrefaçon », « Faciliter la conformité réglementaire ».
+- Analyse & Simulation opérationnelle : intitulé « Périmètre du pilote » conservé.
+- Note ajoutée sous les 4 cartes :
+  « Les informations sont qualifiées selon le niveau d'avancement du projet : fonctionnalité
+  disponible, estimation issue d'une étude, objectif de conception ou périmètre expérimental. »
+
 ## 6. Tests réalisés et leurs résultats
 
 ### Étape 2
@@ -224,22 +272,25 @@ certifications non validés.
   (`max-w-7xl`) pour laisser respirer les 4 cartes en ligne. À confirmer visuellement par
   l'utilisateur sur son propre navigateur/appareils si possible.
 
+### Étape 6
+- `npm run lint` → OK. Même avertissement préexistant non lié (`components/ProjectModal.js:156`).
+- `npm run test:security` → 33/33 tests passés (7 suites), 0 échec.
+- `npm run build` → build de production réussi, 8 pages générées, route `/` = 13,6 kB / 160 kB
+  First Load JS. Aucune régression détectée.
+
 ## 7. Points restant à traiter
 
 - Repositionner les autres sections de la page d'accueil (`Solutions`, `WorkProcess`, `Benefits`,
   `Pricing`, `ContactCTA`) si demandé dans une étape suivante.
 - Vérifier si `Navbar`/`Footer` ou les pages `/contact` et `/confidentialite` nécessitent un
   alignement avec le nouveau discours (à valider avec l'utilisateur).
-- Les KPIs affichés dans le modal (`kpis` : "-30% vs Excel manuel", "100% fiables", etc.) restent
-  formulés comme des résultats fermes plutôt qu'estimés ; non modifiés à l'étape 4 car non
-  demandé explicitement, mais à harmoniser avec la formulation "estimée" si une étape future le
-  demande.
-- Les deux autres projets ("JETC Immo", "Traçabilité & Spotting Produits") n'ont pas été revus à
-  cette étape ; leur section utilise désormais aussi l'intitulé "Résultats évalués et
-  fonctionnalités" (changement de libellé partagé).
-- Vérification visuelle du rendu responsive (mobile/tablette/ordinateur) de la nouvelle grille à
-  4 cartes non effectuée dans un vrai navigateur (aucun outil de capture d'écran disponible) :
-  seule une analyse des classes Tailwind a été faite. À confirmer par l'utilisateur.
+- Les KPI "Traçabilité : 100%" et "Délais réduits : -40%" (Traçabilité & Spotting Produits)
+  contiennent encore des pourcentages, mais portent déjà des notes qualificatives ("(démo)",
+  "estimation en cas de rappel") ; non modifiés à l'étape 6 car non demandé explicitement et
+  déjà correctement qualifiés comme non définitifs.
+- Vérification visuelle du rendu responsive (mobile/tablette/ordinateur) de la grille à 4 cartes
+  non effectuée dans un vrai navigateur (aucun outil de capture d'écran disponible) : seule une
+  analyse des classes Tailwind a été faite. À confirmer par l'utilisateur.
 - Étapes suivantes à définir avec l'utilisateur.
 
 ## 8. Hash des commits
@@ -250,7 +301,8 @@ certifications non validés.
 | 2 | `f4523fa` | feat: repositionnement hero page d'accueil (analyse operationnelle, automatisation, simulation) |
 | 3 | `391df91` | feat: actualisation section parcours Johnny Fleury |
 | 4 | `2748968` | feat: repositionnement JETC OrgaPulse (ex-ProdOrga) |
-| 5 | `6f66225`* | feat: ajout carte Analyse & Simulation opérationnelle |
+| 5 | `bafa04a` | feat: ajout carte Analyse & Simulation opérationnelle |
+| 6 | `5d55fc1`* | feat: clarification résultats, estimations et objectifs des projets |
 
 \* auto-référence impossible (le hash change dès qu'on l'inscrit dans le fichier qu'il décrit) :
 faire foi de `git log --oneline -1` pour le hash exact du commit courant de chaque étape.
